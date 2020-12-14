@@ -1,0 +1,9 @@
+/**
+ * Esempio di commento javadoc
+ */
+Esempio di codice /* con commento */
+Codice con stringa "/**" all'interno
+Altro codice
+/**
+ * Secondo commento javadoc
+ */
