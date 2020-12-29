@@ -2,7 +2,7 @@
 %public
 %class Lexer
 %unicode
-%standalone
+%standalone /* TODO: change to %cup */
 %line
 %column
 
@@ -17,26 +17,33 @@
 %}
 
 /* Fragments definition */
-LineTerminator = \r|\n|\r\n
-WhiteSpace     = {LineTerminator} | [ \t\f]
+LineTerm        = \r|\n|\r\n
+WhiteSpace      = {LineTerm} | [ \t\f]
+InputChar       = [^\r\n]
+
+JDWS            = {WhiteSpace}* "*" {WhiteSpace}*
+JDS             = "/**"
+JDE             = "*/"
+JDK             = "@param" | "@author" /* TODO: complete with all tokens */
+MD              = "#"+ {InputChar}* LineTerm
 
 %states CODE, STRING
 
 %%
 
 <YYINITIAL> {
-  "/**"           { return newToken(yystate(), 1, yytext()); }
-  "*/"            { 
+  {JDS}           { return newToken(yystate(), 1, yytext()); }
+  {JDE}           { 
                     newToken(yystate(), 2, yytext());
                     string.setLength(0); 
                     yybegin(CODE); 
                   }
-  {WhiteSpace}    { /* ignore */ }
+  {JDWS}          { /* ignore */ }
   .               { /* ignore */ }
 }
 
 <CODE> {
-  "/**"           { 
+  {JDS}           { 
                     yybegin(YYINITIAL);
                     string.append(yytext()); 
                     return newToken(yystate(), 1, string.toString()); 

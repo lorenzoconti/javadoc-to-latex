@@ -15,5 +15,5 @@ Easily compile and format Javadoc entities to LaTeX.
     ```
 3. Use the lexer against an input file:
     ```bash
-    java lexer test.txt
+    java Lexer test.txt
     ```

@@ -1,9 +1,15 @@
 /**
- * Esempio di commento javadoc
- */
-Esempio di codice /* con commento */
-Codice con stringa "/**" all'interno
-Altro codice
-/**
- * Secondo commento javadoc
- */
+* Returns an Image object that can then be painted on the screen. 
+*
+* @param  url  an absolute URL giving the base location of the image
+* @param  name the location of the image, relative to the url argument
+* @return      the image at the specified URL
+* @see         Image
+*/
+public Image getImage(URL url, String name) {
+  try {
+    return getImage(new URL(url, name));
+  } catch (MalformedURLException e) {
+    return null;
+  }
+}
