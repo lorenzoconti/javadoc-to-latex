@@ -1,8 +1,14 @@
+import java_cup.runtime.Symbol;
+
+// import java_cup.runtime.ComplexSymbolFactory;
+// import java_cup.runtime.ComplexSymbolFactory.Location;
+
 %%
 %public
 %class Lexer
 %unicode
-%standalone /* TODO: change to %cup */
+// %standalone 
+%cup
 %line
 %column
 
@@ -10,9 +16,13 @@
 %{
   StringBuffer string = new StringBuffer();
 
-  private int newToken(Integer state, Integer type, String text) {
-    System.out.println("State: " + state.toString() + "\t Type: " + type.toString() + "\t Text: " + text);
-    return type;
+  
+  private Symbol symbol(int type) {
+    return new Symbol(type, yyline, yycolumn);
+  }
+  private Symbol symbol(int state, int type, Object value) {
+    // System.out.println("State: " + state.toString() + "\t Type: " + type.toString() + "\t Text: " + value.toString());
+    return new Symbol(type, yyline, yycolumn, value);
   }
 %}
 
@@ -22,9 +32,10 @@ WhiteSpace      = {LineTerm} | [ \t\f]
 InputChar       = [^\r\n]
 
 JDWS            = {WhiteSpace}* "*" {WhiteSpace}*
+JDLine          = {JDWS} {InputChar}* {LineTerm}
 JDS             = "/**"
 JDE             = "*/"
-JDK             = "@param" | "@author" /* TODO: complete with all tokens */
+JDK             = ("@param" | "@author") [ \t\f]+ /* TODO: complete with all tokens */
 MD              = "#"+ {InputChar}* LineTerm
 
 %states CODE, STRING
@@ -32,24 +43,29 @@ MD              = "#"+ {InputChar}* LineTerm
 %%
 
 <YYINITIAL> {
-  {JDS}           { return newToken(yystate(), 1, yytext()); }
+  {JDS}           { return symbol(yystate(), sym.SEMI, yytext()); }
   {JDE}           { 
-                    newToken(yystate(), 2, yytext());
+                    symbol(yystate(), 2, yytext());
                     string.setLength(0); 
                     yybegin(CODE); 
                   }
-  {JDWS}          { /* ignore */ }
-  .               { /* ignore */ }
+  {JDK}           { return symbol(yystate(), 5, yytext().trim()); }
+  {JDWS}          { 
+                    Symbol token = symbol(yystate(), 3, string.toString()); 
+                    string.setLength(0); 
+                    return token;
+                  }
+  .               { string.append(yytext()); }
 }
 
 <CODE> {
   {JDS}           { 
                     yybegin(YYINITIAL);
                     string.append(yytext()); 
-                    return newToken(yystate(), 1, string.toString()); 
+                    return symbol(yystate(), 1, string.toString()); 
                   }
   \"              { 
-                    newToken(yystate(), 2, yytext());
+                    symbol(yystate(), 2, yytext());
                     string.append(yytext());
                     yybegin(STRING); 
                   }
@@ -66,7 +82,7 @@ MD              = "#"+ {InputChar}* LineTerm
   .               { string.append(yytext()); }
 }
 
-<<EOF>>           { return newToken(yystate(), 10, ""); }
+<<EOF>>           { return symbol(yystate(), 10, ""); }
 
 /* error fallback */
 [^]               { System.out.println("errore " + yytext()); }
