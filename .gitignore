@@ -27,3 +27,7 @@ hs_err_pid*
 
 *.class
 out
+
+Scanner.java
+sym.java
+parser.java
