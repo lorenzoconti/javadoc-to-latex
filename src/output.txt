@@ -1,3 +1,4 @@
+State: 0	 Type: 0	 Text: 
 State: 0	 Type: 4	 Text: 
 State: 0	 Type: 4	 Text: Returns an Image object that 2*2 can then be painted on the screen.
 State: 0	 Type: 4	 Text: 
@@ -8,17 +9,19 @@ State: 0	 Type: 4	 Text: name the location of the image, relative to the url arg
 State: 0	 Type: 3	 Text: @return
 State: 0	 Type: 4	 Text: the image at the specified URL
 State: 0	 Type: 2	 Text: @param
-State: 0	 Type: 1	 Text: Image
-State: 2	 Type: 5	 Text: public Image getImage(URL url, String name) {
-  try {
-    return getImage(new URL(url, "/**@author name"));
-  } catch (MalformedURLException e) {
-    return null;
-  }
-}
+State: 0	 Type: 4	 Text: Image
+State: 0	 Type: 1	 Text: /
+State: 0	 Type: 1	 Text: public Image getImage(URL url, String name) {
+State: 0	 Type: 1	 Text:   try {
+State: 0	 Type: 0	 Text: 
+State: 0	 Type: 3	 Text: @author
+State: 0	 Type: 1	 Text:     return getImage(new URL(url, "name"));
+State: 0	 Type: 1	 Text:   } catch (MalformedURLException e) {
+State: 0	 Type: 1	 Text:     return null;
+State: 0	 Type: 1	 Text:   }
+State: 0	 Type: 0	 Text: 
 State: 0	 Type: 2	 Text: @param
-State: 0	 Type: 1	 Text: SKUBIDIPPAPPA
-State: 2	 Type: 6	 Text: public Image getImage(URL url, String name) {
+State: 2	 Type: 6	 Text: }SKUBIDIPPAPPApublic Image getImage(URL url, String name) {
   try {
     return getImage(new URL(url, "/**@author name"));
   } catch (MalformedURLException e) {
@@ -26,9 +29,7 @@ State: 2	 Type: 6	 Text: public Image getImage(URL url, String name) {
   }
 }
 
-{@code } --> texttt (senza {})
-{@link mardown_label testo_del_link} --> \texttt{\hyperref[sec:hello]{this section}}
-{@linkplain ardown_label testo_del_link} --> \hyperref[sec:hello]{this section}
+
 
 
 

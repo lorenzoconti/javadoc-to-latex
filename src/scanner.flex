@@ -39,24 +39,24 @@ MD              = "#"+ {InputChar}* LineTerm
 
 <YYINITIAL> {
   {JDS}             {
-                        //symbol(yystate(), 0, "");
+                        symbol(yystate(), sym.JDS, "");
                     }
   {JDE}             {
-                        symbol(yystate(), 1, string.toString());
+                        symbol(yystate(), sym.JDE, string.toString());
                         string.setLength(0);
                         yybegin(CODE);
                     }
 
-  {JDKV}           { return symbol(yystate(), 2, yytext().trim()); }
+  {JDKV}           { return symbol(yystate(), sym.KEY_VALUE, yytext().trim()); }
 
-  {JDKD}           { return symbol(yystate(), 3, yytext().trim()); }
+  {JDKD}           { return symbol(yystate(), sym.KEY_DESCRIPTION, yytext().trim()); }
 
   {JDWS}          {
-                    Integer token = symbol(yystate(), 4, string.toString());
+                    Integer token = symbol(yystate(), sym.TEXT, string.toString());
                     string.setLength(0);
                     return token;
                   }
-  {LineTerm} {}
+  {LineTerm}     {}
 
   .               { string.append(yytext()); }
 }
@@ -64,7 +64,7 @@ MD              = "#"+ {InputChar}* LineTerm
 <CODE> {
 
   {JDS}           {
-                    Integer token = symbol(yystate(), 5, string.toString());
+                    Integer token = symbol(yystate(), sym.CODE, string.toString());
                     string.setLength(0);
                     yybegin(YYINITIAL);
                     return token;
@@ -81,7 +81,7 @@ MD              = "#"+ {InputChar}* LineTerm
   .               { string.append(yytext()); }
 
   <<EOF>>         {
-                    Integer token = symbol(yystate(), 6, string.toString());
+                    Integer token = symbol(yystate(), sym.CODE, string.toString());
                     string.setLength(0);
                     yybegin(YYINITIAL);
                     return token;

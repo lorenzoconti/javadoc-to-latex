@@ -1,0 +1,11 @@
+import java_cup.runtime.*;
+import java.util.*;
+
+terminal String JDS, JDE, KEY_VALUE, KEY_DESCRIPTION, TEXT, CODE;
+
+non terminal prog,
+
+start with prog;
+
+prog ::=
+

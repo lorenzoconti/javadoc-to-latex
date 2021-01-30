@@ -3,9 +3,16 @@
 ///////////////////////////////////
 import java_cup.runtime.*;
 import java.util.*;
+
+///////////////////////////////////////////
 init with {:
 symbol_table = new Hashtable<String,Integer>();
 :};
+///////////////////////////////////////////
+
+
+
+///////////////////////////////////////////
 parser code {:
 public Hashtable<String,Integer> symbol_table;
 
@@ -28,7 +35,11 @@ return (((Symbol)stack.elementAt(tos+position)).value);
 }
 
 :};
+///////////////////////////////////////////
 
+
+
+///////////////////////////////////////////
 terminal INIZIO, KBS, SERVER, TIME, DATA, PV, V, PP, ORA, DATE;
 terminal String CANZONE, IP;
 terminal Integer NUMERO;
