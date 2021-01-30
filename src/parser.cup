@@ -1,0 +1,85 @@
+///////////////////////////////////
+/// Parser esame 07-02-2006 //////
+///////////////////////////////////
+import java_cup.runtime.*;
+import java.util.*;
+init with {:
+symbol_table = new Hashtable<String,Integer>();
+:};
+parser code {:
+public Hashtable<String,Integer> symbol_table;
+
+public void report_error(String message, Object info) {
+StringBuffer m = new StringBuffer(message);
+if (info instanceof Symbol) {
+if (((Symbol)info).left != 1 && ((Symbol)info).right != 1) {
+if (((Symbol)info).left != -1 && ((Symbol)info).right != -1) {
+int line = (((Symbol)info).left)+1;
+int column = (((Symbol)info).right)+1;
+m.append(" (linea "+line+", colonna "+column+")");
+}
+}
+System.err.println(m);
+}
+}
+
+public Object stack(int position) {
+return (((Symbol)stack.elementAt(tos+position)).value);
+}
+
+:};
+
+terminal INIZIO, KBS, SERVER, TIME, DATA, PV, V, PP, ORA, DATE;
+terminal String CANZONE, IP;
+terminal Integer NUMERO;
+non terminal prog, prog_ok, mp3_list, dim, mp3, song_list, data_time, user_list,
+server_section, user, song, ip;
+non terminal Integer NT0;
+non terminal Integer lista_canzoni;
+start with prog;
+prog ::= prog_ok {: System.out.print("Syntax Correct\n"); :} | error {:
+parser.report_error("Error in file\n",null); :}
+;
+prog_ok ::= INIZIO PP mp3_list server_section
+;
+mp3_list ::= mp3 | mp3_list mp3
+;
+mp3 ::= dim song_list PV
+;
+dim ::= NUMERO:x KBS PP {: RESULT=x; :}
+;
+song ::= CANZONE:nome NUMERO:durata {:
+Integer rate = (Integer) parser.stack(-2);
+parser.symbol_table.put(nome, durata*rate);
+:}
+;
+song_list ::= song | song_list V NT0 song
+;
+NT0 ::= {: RESULT = (Integer) parser.stack(-2);:}
+;
+server_section ::= SERVER PP data_time user_list
+;
+data_time ::= TIME PP ORA DATA PP DATE {: System.out.println("OUTPUT:"); :}
+| DATA PP DATE TIME PP ORA {: System.out.println("OUTPUT:"); :}
+;
+user_list ::= user | user_list user
+;
+user ::= ip PP lista_canzoni:x PV
+{:
+System.out.println("TOTALE: " + x);
+:}
+;
+ip ::= IP:ip {: System.out.println(ip); :};
+lista_canzoni ::= CANZONE:nome_canzone
+{:
+Integer length= (Integer)parser.symbol_table.get(nome_canzone);
+System.out.println(nome_canzone + " " + length);
+RESULT = length;
+:}
+| lista_canzoni:x V CANZONE:nome_canzone
+{:
+Integer length= (Integer)parser.symbol_table.get(nome_canzone);
+System.out.println(nome_canzone + " " + length);
+RESULT = length + x;
+:}
+;

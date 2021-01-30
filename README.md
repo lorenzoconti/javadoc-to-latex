@@ -3,17 +3,21 @@ Easily compile and format Javadoc entities to LaTeX.
 
 # Usage
 
-## Lexer
-
+## Compilation
+1. Move to src 
+    ```bash
+    cd src
+    ```
 1. Compile the jflex lexer to Java:
     ```bash
-    jflex .\lexer.flex
+    jflex scanner.flex
     ```
-2. Compile the generated Java lexer with javac:
+1. Compile the cup parser to Java:
     ```bash
-    javac .\Lexer.java
+    java -jar ../lib/java-cup-11b.jar parser.cup
     ```
-3. Use the lexer against an input file:
+1. Compile the generated Java classes with javac:
     ```bash
-    java Lexer test.txt
+    javac -cp ../lib/java-cup-11b-runtime.jar *.java
     ```
+1. Run main
