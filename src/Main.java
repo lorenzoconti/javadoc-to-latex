@@ -1,6 +1,3 @@
-import example.Scanner;
-import example.parser;
-
 import java.io.*;
 
 public class Main {

@@ -1,11 +1,50 @@
 import java_cup.runtime.*;
 import java.util.*;
+import java.io.FileWriter;
 
-terminal String JDS, JDE, KEY_VALUE, KEY_DESCRIPTION, TEXT, CODE;
+init with {:
+    System.out.println("INIZIO del Parser\n");
 
-non terminal prog,
+    FileWriter out = new FileWriter("output.tex");
+:};
 
-start with prog;
+terminal KEY_VALUE, TEXT, CODE;
 
-prog ::=
+non terminal file, section, paragraph, javadoc;
+
+file ::= section
+{:
+    System.out.println("SECTION\n");
+:}
+;
+
+section ::= javadoc section
+{:
+    System.out.println("JAVADOC SECTION\n");
+:}
+;
+
+section ::= CODE section
+{:
+    System.out.println("CODE SECTION\n");
+:}
+;
+
+section ::=
+{:
+    System.out.println("NULL SECTION\n");
+:}
+;
+
+javadoc ::= TEXT
+{:
+    System.out.println("TEXT\n");
+:}
+;
+
+javadoc ::= KEY_VALUE TEXT
+{:
+    System.out.println("KEY_VALUE TEXT\n");
+:}
+;
 

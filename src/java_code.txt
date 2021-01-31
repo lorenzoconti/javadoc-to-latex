@@ -13,9 +13,24 @@ public Image getImage(URL url, String name) {
     return null;
   }
 }
-
-
+/**
+ * Returns an Image object that 2*2 can then be painted on the screen.
+ *
+ * @param  url  an absolute URL giving the base location of the image
+ * @param  name the location of the image, relative to the url argument
+ * @return      the image at the specified URL
+ * @param Image
+*/
+public Image getImage(URL url, String name) {
+  try {
+    return getImage(new URL(url, "/**@author name"));
+  } catch (MalformedURLException e) {
+    return null;
+  }
+}
 /** @param SKUBIDIPPAPPA */
+
+/** CACCA */
 
 public Image getImage(URL url, String name) {
   try {
@@ -24,12 +39,3 @@ public Image getImage(URL url, String name) {
     return null;
   }
 }
-
-
-
-
-
-
-
-
-
