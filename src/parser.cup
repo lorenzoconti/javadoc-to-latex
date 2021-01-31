@@ -1,50 +1,73 @@
 import java_cup.runtime.*;
 import java.util.*;
-import java.io.FileWriter;
+import java.io.*;
 
 init with {:
     System.out.println("INIZIO del Parser\n");
-
-    FileWriter out = new FileWriter("output.tex");
+    outputBuffer = new StringBuffer();
 :};
 
-terminal KEY_VALUE, TEXT, CODE;
+parser code {:
+  // String buffer used to store output program
+  public StringBuffer outputBuffer;
+:}
 
-non terminal file, section, paragraph, javadoc;
+action code {:
 
-file ::= section
+    private void dump(String s){
+         System.out.print(s);
+         parser.outputBuffer.append(s);
+     }
+
+:};
+
+terminal String KEY_VALUE, TEXT, CODE;
+
+non terminal String file, section, paragraph, javadoc, codeblock;
+
+file ::= section:sec
 {:
-    System.out.println("SECTION\n");
+    dump(sec);
+    BufferedWriter out = new BufferedWriter(new FileWriter("output.tex"));
+    String outText = parser.outputBuffer.toString();
+    out.write(outText);
+    out.close();
+    //TODO try catch
 :}
 ;
 
-section ::= javadoc section
+section ::= javadoc:jd section:sec
 {:
     System.out.println("JAVADOC SECTION\n");
+    RESULT = jd + "\n" + sec;
 :}
 ;
 
-section ::= CODE section
+section ::= CODE:code section:sec
 {:
     System.out.println("CODE SECTION\n");
+    RESULT = code + sec;
 :}
 ;
 
 section ::=
 {:
     System.out.println("NULL SECTION\n");
+    RESULT = "";
 :}
 ;
 
-javadoc ::= TEXT
+javadoc ::= TEXT:text
 {:
     System.out.println("TEXT\n");
+    RESULT = text;
 :}
 ;
 
-javadoc ::= KEY_VALUE TEXT
+javadoc ::= KEY_VALUE:key TEXT:text
 {:
     System.out.println("KEY_VALUE TEXT\n");
+    RESULT = key + " " + text;
 :}
 ;
 

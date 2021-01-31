@@ -1,8 +1,6 @@
-import java_cup.runtime.*;
-
 %%
-%class Scanner
-%cup
+%class Standalone
+%standalone
 %line
 %column
 
@@ -14,13 +12,13 @@ import java_cup.runtime.*;
       return string.toString();
   }
 
-  private Symbol symbol(Integer type) {
+  private Integer symbol(Integer type) {
     System.out.println("Type: " + type.toString());
-    return new Symbol(type, yyline, yycolumn);
+    return type;
   }
-  private Symbol symbol(Integer state, Integer type, Object value) {
+  private Integer symbol(Integer state, Integer type, Object value) {
     System.out.println("State: " + state.toString() + "\t Type: " + type.toString() + "\t Text: " + value.toString());
-    return new Symbol(type, yyline, yycolumn, value);
+    return type;
   }
 %}
 
@@ -44,8 +42,7 @@ MD              = "#"+ {InputChar}* LineTerm
 <YYINITIAL> {
 
   {JDS}           {
-                    //Integer token = symbol(yystate(), sym.CODE, string.toString());
-                    Symbol token = symbol(yystate(), sym.CODE, string.toString());
+                    Integer token = symbol(yystate(), 0, string.toString());
                     string.setLength(0);
                     yybegin(JAVADOC);
                     return token;
@@ -56,13 +53,14 @@ MD              = "#"+ {InputChar}* LineTerm
                     yybegin(STRING);
                   }
 
-  {WhiteSpace}     { string.append(yytext()); }
+   {WhiteSpace} {string.append(yytext()); }
 
-  {LineTerm}       {
-                       Symbol token = symbol(yystate(), sym.CODE, string.toString());
-                       string.setLength(0);
-                       return token;
-                     }
+   {LineTerm}    {
+          string.append(yytext());
+          Integer token = symbol(yystate(), 1, string.toString());
+          string.setLength(0);
+          return token;
+      }
 
   .               { string.append(yytext()); }
 
@@ -71,8 +69,8 @@ MD              = "#"+ {InputChar}* LineTerm
 <JAVADOC> {
 
   {JDE}             {
-                        //symbol(yystate(), sym.JDE, string.toString());
-                        Symbol token = symbol(yystate(), sym.TEXT, string.toString());
+
+                        Integer token = symbol(yystate(), 2, string.toString());
                         string.setLength(0);
                         yybegin(YYINITIAL);
                         return token;
@@ -80,18 +78,16 @@ MD              = "#"+ {InputChar}* LineTerm
                     }
 
   {JDKV}           {
-                        return symbol(yystate(), sym.KEY_VALUE, yytext().trim());
+                        return symbol(yystate(), 3, yytext().trim());
                         //return symbol(yystate(), 2, yytext().trim());
                     }
 
   {JDKD}           {
-                        return symbol(yystate(), sym.KEY_VALUE, yytext().trim());
-                        //return symbol(yystate(), 3, yytext().trim());
+                        return symbol(yystate(), 4, yytext().trim());
                     }
 
   {JDWS}          {
-                    Symbol token = symbol(yystate(), sym.TEXT, string.toString());
-                    //Integer token = symbol(yystate(), 4, string.toString());
+                    Integer token = symbol(yystate(), 5, string.toString());
                     string.setLength(0);
                     return token;
                   }
@@ -111,11 +107,11 @@ MD              = "#"+ {InputChar}* LineTerm
   .               { string.append(yytext()); }
 }
 
-  <<EOF>>         { return new Symbol(sym.EOF);}
+
 
 /* Error fallback */
 [^]               { System.out.println("errore " + yytext());
-                    return new Symbol(sym.error);
+                    return 6;
                     }
 
 

@@ -28,14 +28,11 @@ public Image getImage(URL url, String name) {
     return null;
   }
 }
+
 /** @param SKUBIDIPPAPPA */
 
 /** CACCA */
 
-public Image getImage(URL url, String name) {
-  try {
-    return getImage(new URL(url, "/**@author name"));
-  } catch (MalformedURLException e) {
-    return null;
-  }
-}
+CIAOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
+CIAOOOOOOOOOOOOOOOOOOOOOOOOOO
+CIAOOOOOOOOOOOOOOOO

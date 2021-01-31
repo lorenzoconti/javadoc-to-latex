@@ -6,6 +6,7 @@ public class Main {
             Scanner l = new Scanner(new FileReader("src/java_code.txt"));
             parser p = new parser(l);
             Object result = p.parse();
+            System.out.println(result);
         } catch (Exception e) {
             e.printStackTrace();
         }
