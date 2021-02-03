@@ -1,5 +1,3 @@
-
-
 /**
  * Returns an Image object that 2*2 can then be painted on the screen.
  *
@@ -23,6 +21,15 @@ public Image getImage(URL url, String name) {
  * @return      the image at the specified URL
  * @param Image
 */
+/**
+ * Returns an Image object that 2*2 can then be painted on the screen.
+ *
+ * @param  url  an absolute URL giving the base location of the image
+ * @param  name the location of the image, relative to the url argument
+ * @return      the image at the specified URL
+ * @param Image
+*/
+/** INLINE */
 public Image getImage(URL url, String name) {
   try {
     return getImage(new URL(url, "/**@author name"));
@@ -31,6 +38,7 @@ public Image getImage(URL url, String name) {
   }
 }
 
+/** @param esempio */
 
 public Image getImage(URL url, String name) {
   try {

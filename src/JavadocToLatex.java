@@ -1,4 +1,4 @@
-// $ANTLR 3.5.1 D:\\develop\\lfc\\javadoc-to-latex\\src\\JavadocToLatex.g 2021-02-03 22:05:54
+// $ANTLR 3.5.1 D:\\develop\\lfc\\javadoc-to-latex\\src\\JavadocToLatex.g 2021-02-03 22:26:34
 
 import org.antlr.runtime.*;
 import java.util.Stack;
@@ -38,15 +38,15 @@ public class JavadocToLatex extends Parser {
 
 
 	// $ANTLR start "start"
-	// D:\\develop\\lfc\\javadoc-to-latex\\src\\JavadocToLatex.g:4:1: start : ( jdSection | codeSection )* eof= EOF ;
+	// D:\\develop\\lfc\\javadoc-to-latex\\src\\JavadocToLatex.g:4:1: start : ( jdSection |cs= codeSection )* eof= EOF ;
 	public final void start() throws RecognitionException {
 		Token eof=null;
 
 		try {
-			// D:\\develop\\lfc\\javadoc-to-latex\\src\\JavadocToLatex.g:4:7: ( ( jdSection | codeSection )* eof= EOF )
-			// D:\\develop\\lfc\\javadoc-to-latex\\src\\JavadocToLatex.g:4:9: ( jdSection | codeSection )* eof= EOF
+			// D:\\develop\\lfc\\javadoc-to-latex\\src\\JavadocToLatex.g:4:7: ( ( jdSection |cs= codeSection )* eof= EOF )
+			// D:\\develop\\lfc\\javadoc-to-latex\\src\\JavadocToLatex.g:4:9: ( jdSection |cs= codeSection )* eof= EOF
 			{
-			// D:\\develop\\lfc\\javadoc-to-latex\\src\\JavadocToLatex.g:4:9: ( jdSection | codeSection )*
+			// D:\\develop\\lfc\\javadoc-to-latex\\src\\JavadocToLatex.g:4:9: ( jdSection |cs= codeSection )*
 			loop1:
 			while (true) {
 				int alt1=3;
@@ -60,21 +60,25 @@ public class JavadocToLatex extends Parser {
 
 				switch (alt1) {
 				case 1 :
-					// D:\\develop\\lfc\\javadoc-to-latex\\src\\JavadocToLatex.g:4:11: jdSection
+					// D:\\develop\\lfc\\javadoc-to-latex\\src\\JavadocToLatex.g:5:2: jdSection
 					{
-					pushFollow(FOLLOW_jdSection_in_start15);
+					System.out.println("\\begin(jd)\n");
+					pushFollow(FOLLOW_jdSection_in_start19);
 					jdSection();
 					state._fsp--;
 
+					System.out.println("\\end(jd)\n");
 					}
 					break;
 				case 2 :
-					// D:\\develop\\lfc\\javadoc-to-latex\\src\\JavadocToLatex.g:4:23: codeSection
+					// D:\\develop\\lfc\\javadoc-to-latex\\src\\JavadocToLatex.g:7:2: cs= codeSection
 					{
-					pushFollow(FOLLOW_codeSection_in_start19);
+					System.out.println("\\begin(code)\n");
+					pushFollow(FOLLOW_codeSection_in_start35);
 					codeSection();
 					state._fsp--;
 
+					System.out.println("\\end(code)\n");
 					}
 					break;
 
@@ -83,8 +87,8 @@ public class JavadocToLatex extends Parser {
 				}
 			}
 
-			eof=(Token)match(input,EOF,FOLLOW_EOF_in_start25); 
-			 System.out.println(eof + "\n"); 
+			eof=(Token)match(input,EOF,FOLLOW_EOF_in_start44); 
+			 System.out.println((eof!=null?eof.getText():null) + "\n"); 
 			}
 
 		}
@@ -101,15 +105,15 @@ public class JavadocToLatex extends Parser {
 
 
 	// $ANTLR start "codeSection"
-	// D:\\develop\\lfc\\javadoc-to-latex\\src\\JavadocToLatex.g:6:1: codeSection : (code= CODE )+ ;
+	// D:\\develop\\lfc\\javadoc-to-latex\\src\\JavadocToLatex.g:9:1: codeSection : (code= CODE )+ ;
 	public final void codeSection() throws RecognitionException {
 		Token code=null;
 
 		try {
-			// D:\\develop\\lfc\\javadoc-to-latex\\src\\JavadocToLatex.g:7:2: ( (code= CODE )+ )
-			// D:\\develop\\lfc\\javadoc-to-latex\\src\\JavadocToLatex.g:7:4: (code= CODE )+
+			// D:\\develop\\lfc\\javadoc-to-latex\\src\\JavadocToLatex.g:10:2: ( (code= CODE )+ )
+			// D:\\develop\\lfc\\javadoc-to-latex\\src\\JavadocToLatex.g:10:4: (code= CODE )+
 			{
-			// D:\\develop\\lfc\\javadoc-to-latex\\src\\JavadocToLatex.g:7:4: (code= CODE )+
+			// D:\\develop\\lfc\\javadoc-to-latex\\src\\JavadocToLatex.g:10:4: (code= CODE )+
 			int cnt2=0;
 			loop2:
 			while (true) {
@@ -121,10 +125,10 @@ public class JavadocToLatex extends Parser {
 
 				switch (alt2) {
 				case 1 :
-					// D:\\develop\\lfc\\javadoc-to-latex\\src\\JavadocToLatex.g:7:5: code= CODE
+					// D:\\develop\\lfc\\javadoc-to-latex\\src\\JavadocToLatex.g:10:5: code= CODE
 					{
-					code=(Token)match(input,CODE,FOLLOW_CODE_in_codeSection39); 
-					 System.out.println(code + "\n"); 
+					code=(Token)match(input,CODE,FOLLOW_CODE_in_codeSection58); 
+					 System.out.println((code!=null?code.getText():null) + "\n"); 
 					}
 					break;
 
@@ -150,31 +154,28 @@ public class JavadocToLatex extends Parser {
 	// $ANTLR end "codeSection"
 
 
-	public static class jdSection_return extends ParserRuleReturnScope {
-	};
-
 
 	// $ANTLR start "jdSection"
-	// D:\\develop\\lfc\\javadoc-to-latex\\src\\JavadocToLatex.g:10:1: jdSection : (code= JDS (text= TEXT | keyValue )* (key= KEY )? jde= JDE ) ;
-	public final JavadocToLatex.jdSection_return jdSection() throws RecognitionException {
-		JavadocToLatex.jdSection_return retval = new JavadocToLatex.jdSection_return();
-		retval.start = input.LT(1);
-
+	// D:\\develop\\lfc\\javadoc-to-latex\\src\\JavadocToLatex.g:13:1: jdSection : (code= JDS (text= TEXT | keyValue )* (key= KEY )? jde= JDE ) ;
+	public final void jdSection() throws RecognitionException {
 		Token code=null;
 		Token text=null;
 		Token key=null;
 		Token jde=null;
 
 		try {
-			// D:\\develop\\lfc\\javadoc-to-latex\\src\\JavadocToLatex.g:11:2: ( (code= JDS (text= TEXT | keyValue )* (key= KEY )? jde= JDE ) )
-			// D:\\develop\\lfc\\javadoc-to-latex\\src\\JavadocToLatex.g:12:2: (code= JDS (text= TEXT | keyValue )* (key= KEY )? jde= JDE )
+			// D:\\develop\\lfc\\javadoc-to-latex\\src\\JavadocToLatex.g:14:2: ( (code= JDS (text= TEXT | keyValue )* (key= KEY )? jde= JDE ) )
+			// D:\\develop\\lfc\\javadoc-to-latex\\src\\JavadocToLatex.g:15:2: (code= JDS (text= TEXT | keyValue )* (key= KEY )? jde= JDE )
 			{
-			// D:\\develop\\lfc\\javadoc-to-latex\\src\\JavadocToLatex.g:12:2: (code= JDS (text= TEXT | keyValue )* (key= KEY )? jde= JDE )
-			// D:\\develop\\lfc\\javadoc-to-latex\\src\\JavadocToLatex.g:13:2: code= JDS (text= TEXT | keyValue )* (key= KEY )? jde= JDE
+			// D:\\develop\\lfc\\javadoc-to-latex\\src\\JavadocToLatex.g:15:2: (code= JDS (text= TEXT | keyValue )* (key= KEY )? jde= JDE )
+			// D:\\develop\\lfc\\javadoc-to-latex\\src\\JavadocToLatex.g:16:2: code= JDS (text= TEXT | keyValue )* (key= KEY )? jde= JDE
 			{
-			code=(Token)match(input,JDS,FOLLOW_JDS_in_jdSection61); 
-			 System.out.println(code + "\n"); 
-			// D:\\develop\\lfc\\javadoc-to-latex\\src\\JavadocToLatex.g:14:4: (text= TEXT | keyValue )*
+			code=(Token)match(input,JDS,FOLLOW_JDS_in_jdSection80); 
+			 if (code != null){
+						System.out.println((code!=null?code.getText():null) + "\n"); 			
+					 }
+					
+			// D:\\develop\\lfc\\javadoc-to-latex\\src\\JavadocToLatex.g:20:4: (text= TEXT | keyValue )*
 			loop3:
 			while (true) {
 				int alt3=3;
@@ -192,16 +193,16 @@ public class JavadocToLatex extends Parser {
 
 				switch (alt3) {
 				case 1 :
-					// D:\\develop\\lfc\\javadoc-to-latex\\src\\JavadocToLatex.g:15:5: text= TEXT
+					// D:\\develop\\lfc\\javadoc-to-latex\\src\\JavadocToLatex.g:21:5: text= TEXT
 					{
-					text=(Token)match(input,TEXT,FOLLOW_TEXT_in_jdSection77); 
-					 System.out.println(text + "\n"); 
+					text=(Token)match(input,TEXT,FOLLOW_TEXT_in_jdSection96); 
+					 System.out.println((text!=null?text.getText():null) + "\n"); 
 					}
 					break;
 				case 2 :
-					// D:\\develop\\lfc\\javadoc-to-latex\\src\\JavadocToLatex.g:17:5: keyValue
+					// D:\\develop\\lfc\\javadoc-to-latex\\src\\JavadocToLatex.g:23:5: keyValue
 					{
-					pushFollow(FOLLOW_keyValue_in_jdSection92);
+					pushFollow(FOLLOW_keyValue_in_jdSection111);
 					keyValue();
 					state._fsp--;
 
@@ -213,7 +214,7 @@ public class JavadocToLatex extends Parser {
 				}
 			}
 
-			// D:\\develop\\lfc\\javadoc-to-latex\\src\\JavadocToLatex.g:19:7: (key= KEY )?
+			// D:\\develop\\lfc\\javadoc-to-latex\\src\\JavadocToLatex.g:25:4: (key= KEY )?
 			int alt4=2;
 			int LA4_0 = input.LA(1);
 			if ( (LA4_0==KEY) ) {
@@ -221,22 +222,20 @@ public class JavadocToLatex extends Parser {
 			}
 			switch (alt4) {
 				case 1 :
-					// D:\\develop\\lfc\\javadoc-to-latex\\src\\JavadocToLatex.g:19:7: key= KEY
+					// D:\\develop\\lfc\\javadoc-to-latex\\src\\JavadocToLatex.g:25:5: key= KEY
 					{
-					key=(Token)match(input,KEY,FOLLOW_KEY_in_jdSection107); 
+					key=(Token)match(input,KEY,FOLLOW_KEY_in_jdSection127); 
+					 System.out.println((key!=null?key.getText():null) + "\n"); 
 					}
 					break;
 
 			}
 
-			 System.out.println(key + "\n"); 
-			jde=(Token)match(input,JDE,FOLLOW_JDE_in_jdSection119); 
-			 System.out.println(jde + "\n"); 
+			jde=(Token)match(input,JDE,FOLLOW_JDE_in_jdSection140); 
+			 System.out.println((jde!=null?jde.getText():null) + "\n"); 
 			}
 
 			}
-
-			retval.stop = input.LT(-1);
 
 		}
 		catch (RecognitionException re) {
@@ -246,34 +245,25 @@ public class JavadocToLatex extends Parser {
 		finally {
 			// do for sure before leaving
 		}
-		return retval;
 	}
 	// $ANTLR end "jdSection"
 
 
-	public static class keyValue_return extends ParserRuleReturnScope {
-	};
-
 
 	// $ANTLR start "keyValue"
-	// D:\\develop\\lfc\\javadoc-to-latex\\src\\JavadocToLatex.g:24:1: keyValue : key= KEY text= TEXT ;
-	public final JavadocToLatex.keyValue_return keyValue() throws RecognitionException {
-		JavadocToLatex.keyValue_return retval = new JavadocToLatex.keyValue_return();
-		retval.start = input.LT(1);
-
+	// D:\\develop\\lfc\\javadoc-to-latex\\src\\JavadocToLatex.g:30:1: keyValue : key= KEY text= TEXT ;
+	public final void keyValue() throws RecognitionException {
 		Token key=null;
 		Token text=null;
 
 		try {
-			// D:\\develop\\lfc\\javadoc-to-latex\\src\\JavadocToLatex.g:25:2: (key= KEY text= TEXT )
-			// D:\\develop\\lfc\\javadoc-to-latex\\src\\JavadocToLatex.g:25:4: key= KEY text= TEXT
+			// D:\\develop\\lfc\\javadoc-to-latex\\src\\JavadocToLatex.g:31:2: (key= KEY text= TEXT )
+			// D:\\develop\\lfc\\javadoc-to-latex\\src\\JavadocToLatex.g:31:4: key= KEY text= TEXT
 			{
-			key=(Token)match(input,KEY,FOLLOW_KEY_in_keyValue141); 
-			text=(Token)match(input,TEXT,FOLLOW_TEXT_in_keyValue145); 
-			 System.out.println(key + " " + text); 
+			key=(Token)match(input,KEY,FOLLOW_KEY_in_keyValue162); 
+			text=(Token)match(input,TEXT,FOLLOW_TEXT_in_keyValue166); 
+			 System.out.println((key!=null?key.getText():null) + " " + (text!=null?text.getText():null)); 
 			}
-
-			retval.stop = input.LT(-1);
 
 		}
 		catch (RecognitionException re) {
@@ -283,7 +273,6 @@ public class JavadocToLatex extends Parser {
 		finally {
 			// do for sure before leaving
 		}
-		return retval;
 	}
 	// $ANTLR end "keyValue"
 
@@ -291,15 +280,15 @@ public class JavadocToLatex extends Parser {
 
 
 
-	public static final BitSet FOLLOW_jdSection_in_start15 = new BitSet(new long[]{0x0000000000000050L});
-	public static final BitSet FOLLOW_codeSection_in_start19 = new BitSet(new long[]{0x0000000000000050L});
-	public static final BitSet FOLLOW_EOF_in_start25 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_CODE_in_codeSection39 = new BitSet(new long[]{0x0000000000000012L});
-	public static final BitSet FOLLOW_JDS_in_jdSection61 = new BitSet(new long[]{0x00000000000001A0L});
-	public static final BitSet FOLLOW_TEXT_in_jdSection77 = new BitSet(new long[]{0x00000000000001A0L});
-	public static final BitSet FOLLOW_keyValue_in_jdSection92 = new BitSet(new long[]{0x00000000000001A0L});
-	public static final BitSet FOLLOW_KEY_in_jdSection107 = new BitSet(new long[]{0x0000000000000020L});
-	public static final BitSet FOLLOW_JDE_in_jdSection119 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_KEY_in_keyValue141 = new BitSet(new long[]{0x0000000000000100L});
-	public static final BitSet FOLLOW_TEXT_in_keyValue145 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_jdSection_in_start19 = new BitSet(new long[]{0x0000000000000050L});
+	public static final BitSet FOLLOW_codeSection_in_start35 = new BitSet(new long[]{0x0000000000000050L});
+	public static final BitSet FOLLOW_EOF_in_start44 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_CODE_in_codeSection58 = new BitSet(new long[]{0x0000000000000012L});
+	public static final BitSet FOLLOW_JDS_in_jdSection80 = new BitSet(new long[]{0x00000000000001A0L});
+	public static final BitSet FOLLOW_TEXT_in_jdSection96 = new BitSet(new long[]{0x00000000000001A0L});
+	public static final BitSet FOLLOW_keyValue_in_jdSection111 = new BitSet(new long[]{0x00000000000001A0L});
+	public static final BitSet FOLLOW_KEY_in_jdSection127 = new BitSet(new long[]{0x0000000000000020L});
+	public static final BitSet FOLLOW_JDE_in_jdSection140 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_KEY_in_keyValue162 = new BitSet(new long[]{0x0000000000000100L});
+	public static final BitSet FOLLOW_TEXT_in_keyValue166 = new BitSet(new long[]{0x0000000000000002L});
 }

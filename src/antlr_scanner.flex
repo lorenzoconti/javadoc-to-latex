@@ -13,6 +13,10 @@ import java.io.*;
 
 /* Code in the next section is copied into the generated lexer class. */
 %{
+
+
+  boolean debug = false;
+
   public StringBuffer string = new StringBuffer();
 
   public  String getString() {
@@ -45,7 +49,7 @@ import java.io.*;
   }
 
   private Token symbol(int type, String text) {
-      System.out.println(type + " " + text);
+      if(debug) { System.out.println(type + " " + text); }
       CommonToken token = new CommonToken(type, text);
       token.setLine(getLine());
       token.setCharPositionInLine(getColumn());
@@ -53,7 +57,7 @@ import java.io.*;
   }
 
   private Token symbol(int type) {
-      System.out.println(type);
+      if(debug) { System.out.println(type); }
       CommonToken token = new CommonToken(type, yytext());
       token.setLine(getLine());
       token.setCharPositionInLine(getColumn());
@@ -62,7 +66,7 @@ import java.io.*;
 
   @Override
     public String getSourceName() {
-      return "getSourceName";
+      return "JFLEX Scanner";
     }
 %}
 

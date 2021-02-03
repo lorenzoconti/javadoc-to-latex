@@ -321,6 +321,10 @@ public class JDTLScanner implements TokenSource {
   private boolean zzEOFDone;
 
   /* user code: */
+
+
+  boolean debug = false;
+
   public StringBuffer string = new StringBuffer();
 
   public  String getString() {
@@ -353,7 +357,7 @@ public class JDTLScanner implements TokenSource {
   }
 
   private Token symbol(int type, String text) {
-      System.out.println(type + " " + text);
+      if(debug) { System.out.println(type + " " + text); }
       CommonToken token = new CommonToken(type, text);
       token.setLine(getLine());
       token.setCharPositionInLine(getColumn());
@@ -361,7 +365,7 @@ public class JDTLScanner implements TokenSource {
   }
 
   private Token symbol(int type) {
-      System.out.println(type);
+      if(debug) { System.out.println(type); }
       CommonToken token = new CommonToken(type, yytext());
       token.setLine(getLine());
       token.setCharPositionInLine(getColumn());
@@ -370,7 +374,7 @@ public class JDTLScanner implements TokenSource {
 
   @Override
     public String getSourceName() {
-      return "getSourceName";
+      return "JFLEX Scanner";
     }
 
 
