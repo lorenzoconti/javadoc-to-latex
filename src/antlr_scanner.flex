@@ -1,8 +1,13 @@
-import java_cup.runtime.*;
+import org.antlr.runtime.*;
+import java.io.*;
 
 %%
-%class Scanner
-%cup
+%class JDTLScanner
+
+%implements TokenSource
+%type Token
+%public
+
 %line
 %column
 
@@ -14,14 +19,51 @@ import java_cup.runtime.*;
       return string.toString();
   }
 
-  private Symbol symbol(Integer type) {
-    System.out.println("Type: " + type.toString());
-    return new Symbol(type, yyline, yycolumn);
+  public Token nextToken() {
+      try {
+        return yylex();
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+      return null;
   }
-  private Symbol symbol(Integer state, Integer type, Object value) {
-    System.out.println("State: " + state.toString() + "\t Type: " + type.toString() + "\t Text: " + value.toString());
-    return new Symbol(type, yyline, yycolumn, value);
+
+  public void setLine(int line) {
+      this.yyline = line-1;
   }
+
+  public void setColumn(int column) {
+      this.yycolumn = column;
+  }
+
+  public int getLine() {
+      return this.yyline+1;
+  }
+
+  public int getColumn() {
+      return this.yycolumn;
+  }
+
+  private Token symbol(int type, String text) {
+      System.out.println(type + " " + text);
+      CommonToken token = new CommonToken(type, text);
+      token.setLine(getLine());
+      token.setCharPositionInLine(getColumn());
+      return token;
+  }
+
+  private Token symbol(int type) {
+      System.out.println(type);
+      CommonToken token = new CommonToken(type, yytext());
+      token.setLine(getLine());
+      token.setCharPositionInLine(getColumn());
+      return token;
+  }
+
+  @Override
+    public String getSourceName() {
+      return "getSourceName";
+    }
 %}
 
 /* Fragments definition */
@@ -41,60 +83,56 @@ MD              = "#"+ {InputChar}* LineTerm
 
 %%
 
+// CODE SECTION
 <YYINITIAL> {
 
-  {JDS}           {
-                    //Integer token = symbol(yystate(), sym.CODE, string.toString());
-                    Symbol token = symbol(yystate(), sym.CODE, string.toString());
+  // JDS /**
+  {JDS}          {
+                    Token token = symbol(sym.JDS, string.toString());
                     string.setLength(0);
                     yybegin(JAVADOC);
                     return token;
                   }
-
+  // STRING
   \"              {
                     string.append(yytext());
                     yybegin(STRING);
                   }
 
-  {WhiteSpace}     { string.append(yytext()); }
 
+  // CODE
   {LineTerm}       {
-                       Symbol token = symbol(yystate(), sym.CODE, string.toString());
+                       Token token = symbol(sym.CODE, string.toString());
                        string.setLength(0);
                        return token;
                      }
 
+  // APPEND
   .               { string.append(yytext()); }
 
 }
 
 <JAVADOC> {
 
+  // JDE */
   {JDE}             {
-                        //symbol(yystate(), sym.JDE, string.toString());
-                        Symbol token = symbol(yystate(), sym.TEXT, string.toString());
+                        Token token = symbol(sym.JDE, string.toString());
                         string.setLength(0);
                         yybegin(YYINITIAL);
                         return token;
 
                     }
 
-  {JDKV}           {
-                        return symbol(yystate(), sym.KEY_VALUE, yytext().trim());
-                        //return symbol(yystate(), 2, yytext().trim());
-                    }
+  {JDKV}           { return symbol(sym.KEY, yytext().trim()); }
 
-  {JDKD}           {
-                        return symbol(yystate(), sym.KEY_VALUE, yytext().trim());
-                        //return symbol(yystate(), 3, yytext().trim());
-                    }
+  {JDKD}           { return symbol(sym.KEY, yytext().trim()); }
 
   {JDWS}          {
-                    Symbol token = symbol(yystate(), sym.TEXT, string.toString());
-                    //Integer token = symbol(yystate(), 4, string.toString());
+                    Token token = symbol(sym.TEXT, string.toString());
                     string.setLength(0);
                     return token;
                   }
+
   {LineTerm}     {}
 
   .               { string.append(yytext()); }
@@ -108,14 +146,20 @@ MD              = "#"+ {InputChar}* LineTerm
                     yybegin(YYINITIAL);
                   }
   {WhiteSpace}    { string.append(yytext()); }
+
   .               { string.append(yytext()); }
 }
 
-  <<EOF>>         { return new Symbol(sym.EOF);}
 
-/* Error fallback */
-[^]               { System.out.println("errore " + yytext());
-                    return new Symbol(sym.error);
+<<EOF>>         {
+                    Token token = symbol(sym.EOF, string.toString());
+                    string.setLength(0);
+                    return token;
+                }
+
+// ERROR
+[^]                 { System.out.println("error " + yytext());
+                        return symbol(sym.ERROR);
                     }
 
 

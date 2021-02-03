@@ -1,3 +1,5 @@
+
+
 /**
  * Returns an Image object that 2*2 can then be painted on the screen.
  *
@@ -29,10 +31,11 @@ public Image getImage(URL url, String name) {
   }
 }
 
-/** @param SKUBIDIPPAPPA */
 
-/** CACCA */
-
-CIAOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
-CIAOOOOOOOOOOOOOOOOOOOOOOOOOO
-CIAOOOOOOOOOOOOOOOO
+public Image getImage(URL url, String name) {
+  try {
+    return getImage(new URL(url, "/**@author name"));
+  } catch (MalformedURLException e) {
+    return null;
+  }
+}

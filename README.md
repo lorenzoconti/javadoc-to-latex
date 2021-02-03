@@ -10,7 +10,7 @@ Easily compile and format Javadoc entities to LaTeX.
     ```
 1. Compile the jflex lexer to Java:
     ```bash
-    jflex scanner.flex
+    jflex cup_scanner.flex
     ```
 1. Compile the cup parser to Java:
     ```bash
