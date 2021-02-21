@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 // $ANTLR 3.5.1 D:\\develop\\lfc\\javadoc-to-latex\\src\\JavadocToLatex.g 2021-02-21 18:18:02
+=======
+// $ANTLR 3.5.1 C:\\projects\\unibg\\javadoc-to-latex\\src\\JavadocToLatex.g 2021-02-21 18:01:49
+>>>>>>> 26e7081dfc308a286d9892df8607dafcfec88186
 
 
 
@@ -39,7 +43,7 @@ public class JavadocToLatex extends Parser {
 	}
 
 	@Override public String[] getTokenNames() { return JavadocToLatex.tokenNames; }
-	@Override public String getGrammarFileName() { return "D:\\develop\\lfc\\javadoc-to-latex\\src\\JavadocToLatex.g"; }
+	@Override public String getGrammarFileName() { return "C:\\projects\\unibg\\javadoc-to-latex\\src\\JavadocToLatex.g"; }
 
 
 
@@ -80,15 +84,15 @@ public class JavadocToLatex extends Parser {
 
 
 	// $ANTLR start "start"
-	// D:\\develop\\lfc\\javadoc-to-latex\\src\\JavadocToLatex.g:43:1: start : ( jdSection |cs= codeSection )* eof= EOF ;
+	// C:\\projects\\unibg\\javadoc-to-latex\\src\\JavadocToLatex.g:43:1: start : ( jdSection |cs= codeSection )* eof= EOF ;
 	public final void start() throws RecognitionException {
 		Token eof=null;
 
 		try {
-			// D:\\develop\\lfc\\javadoc-to-latex\\src\\JavadocToLatex.g:43:7: ( ( jdSection |cs= codeSection )* eof= EOF )
-			// D:\\develop\\lfc\\javadoc-to-latex\\src\\JavadocToLatex.g:43:9: ( jdSection |cs= codeSection )* eof= EOF
+			// C:\\projects\\unibg\\javadoc-to-latex\\src\\JavadocToLatex.g:43:7: ( ( jdSection |cs= codeSection )* eof= EOF )
+			// C:\\projects\\unibg\\javadoc-to-latex\\src\\JavadocToLatex.g:43:9: ( jdSection |cs= codeSection )* eof= EOF
 			{
-			// D:\\develop\\lfc\\javadoc-to-latex\\src\\JavadocToLatex.g:43:9: ( jdSection |cs= codeSection )*
+			// C:\\projects\\unibg\\javadoc-to-latex\\src\\JavadocToLatex.g:43:9: ( jdSection |cs= codeSection )*
 			loop1:
 			while (true) {
 				int alt1=3;
@@ -102,7 +106,11 @@ public class JavadocToLatex extends Parser {
 
 				switch (alt1) {
 				case 1 :
+<<<<<<< HEAD
 					// D:\\develop\\lfc\\javadoc-to-latex\\src\\JavadocToLatex.g:43:11: jdSection
+=======
+					// C:\\projects\\unibg\\javadoc-to-latex\\src\\JavadocToLatex.g:44:6: jdSection
+>>>>>>> 26e7081dfc308a286d9892df8607dafcfec88186
 					{
 					pushFollow(FOLLOW_jdSection_in_start26);
 					jdSection();
@@ -111,7 +119,11 @@ public class JavadocToLatex extends Parser {
 					}
 					break;
 				case 2 :
+<<<<<<< HEAD
 					// D:\\develop\\lfc\\javadoc-to-latex\\src\\JavadocToLatex.g:43:23: cs= codeSection
+=======
+					// C:\\projects\\unibg\\javadoc-to-latex\\src\\JavadocToLatex.g:46:6: cs= codeSection
+>>>>>>> 26e7081dfc308a286d9892df8607dafcfec88186
 					{
 					pushFollow(FOLLOW_codeSection_in_start32);
 					codeSection();
@@ -143,16 +155,28 @@ public class JavadocToLatex extends Parser {
 
 
 	// $ANTLR start "codeSection"
+<<<<<<< HEAD
 	// D:\\develop\\lfc\\javadoc-to-latex\\src\\JavadocToLatex.g:46:1: codeSection : (code= CODE )+ ;
+=======
+	// C:\\projects\\unibg\\javadoc-to-latex\\src\\JavadocToLatex.g:52:1: codeSection : (code= CODE )+ ;
+>>>>>>> 26e7081dfc308a286d9892df8607dafcfec88186
 	public final void codeSection() throws RecognitionException {
 		Token code=null;
 
 		try {
+<<<<<<< HEAD
 			// D:\\develop\\lfc\\javadoc-to-latex\\src\\JavadocToLatex.g:47:2: ( (code= CODE )+ )
 			// D:\\develop\\lfc\\javadoc-to-latex\\src\\JavadocToLatex.g:49:2: (code= CODE )+
 			{
 			writeLine("\\begin(code)\n");
 			// D:\\develop\\lfc\\javadoc-to-latex\\src\\JavadocToLatex.g:51:2: (code= CODE )+
+=======
+			// C:\\projects\\unibg\\javadoc-to-latex\\src\\JavadocToLatex.g:53:2: ( (code= CODE )+ )
+			// C:\\projects\\unibg\\javadoc-to-latex\\src\\JavadocToLatex.g:54:6: (code= CODE )+
+			{
+			 writeLine("\\begin(code)\n"); 
+			// C:\\projects\\unibg\\javadoc-to-latex\\src\\JavadocToLatex.g:56:6: (code= CODE )+
+>>>>>>> 26e7081dfc308a286d9892df8607dafcfec88186
 			int cnt2=0;
 			loop2:
 			while (true) {
@@ -164,7 +188,11 @@ public class JavadocToLatex extends Parser {
 
 				switch (alt2) {
 				case 1 :
+<<<<<<< HEAD
 					// D:\\develop\\lfc\\javadoc-to-latex\\src\\JavadocToLatex.g:52:3: code= CODE
+=======
+					// C:\\projects\\unibg\\javadoc-to-latex\\src\\JavadocToLatex.g:57:10: code= CODE
+>>>>>>> 26e7081dfc308a286d9892df8607dafcfec88186
 					{
 					code=(Token)match(input,CODE,FOLLOW_CODE_in_codeSection68); 
 					writeLine(code);
@@ -195,12 +223,17 @@ public class JavadocToLatex extends Parser {
 
 
 	// $ANTLR start "jdSection"
+<<<<<<< HEAD
 	// D:\\develop\\lfc\\javadoc-to-latex\\src\\JavadocToLatex.g:57:1: jdSection : (code= JDS (text= TEXT | keyValue )* keyJDE ) ;
+=======
+	// C:\\projects\\unibg\\javadoc-to-latex\\src\\JavadocToLatex.g:61:1: jdSection : (code= JDS (text= TEXT | keyValue )* (key= KEY )? jde= JDE ) ;
+>>>>>>> 26e7081dfc308a286d9892df8607dafcfec88186
 	public final void jdSection() throws RecognitionException {
 		Token code=null;
 		Token text=null;
 
 		try {
+<<<<<<< HEAD
 			// D:\\develop\\lfc\\javadoc-to-latex\\src\\JavadocToLatex.g:58:2: ( (code= JDS (text= TEXT | keyValue )* keyJDE ) )
 			// D:\\develop\\lfc\\javadoc-to-latex\\src\\JavadocToLatex.g:60:2: (code= JDS (text= TEXT | keyValue )* keyJDE )
 			{
@@ -212,6 +245,20 @@ public class JavadocToLatex extends Parser {
 							  	  System.out.println("\\begin(jd)\n");
 					            		
 			// D:\\develop\\lfc\\javadoc-to-latex\\src\\JavadocToLatex.g:64:3: (text= TEXT | keyValue )*
+=======
+			// C:\\projects\\unibg\\javadoc-to-latex\\src\\JavadocToLatex.g:62:2: ( (code= JDS (text= TEXT | keyValue )* (key= KEY )? jde= JDE ) )
+			// C:\\projects\\unibg\\javadoc-to-latex\\src\\JavadocToLatex.g:63:2: (code= JDS (text= TEXT | keyValue )* (key= KEY )? jde= JDE )
+			{
+			// C:\\projects\\unibg\\javadoc-to-latex\\src\\JavadocToLatex.g:63:2: (code= JDS (text= TEXT | keyValue )* (key= KEY )? jde= JDE )
+			// C:\\projects\\unibg\\javadoc-to-latex\\src\\JavadocToLatex.g:64:2: code= JDS (text= TEXT | keyValue )* (key= KEY )? jde= JDE
+			{
+			code=(Token)match(input,JDS,FOLLOW_JDS_in_jdSection139); 
+
+			                        endCode(code);
+			                        System.out.println("\\begin(jd)\n");
+					            
+			// C:\\projects\\unibg\\javadoc-to-latex\\src\\JavadocToLatex.g:68:4: (text= TEXT | keyValue )*
+>>>>>>> 26e7081dfc308a286d9892df8607dafcfec88186
 			loop3:
 			while (true) {
 				int alt3=3;
@@ -260,14 +307,22 @@ public class JavadocToLatex extends Parser {
 				}
 				switch (alt3) {
 				case 1 :
+<<<<<<< HEAD
 					// D:\\develop\\lfc\\javadoc-to-latex\\src\\JavadocToLatex.g:65:6: text= TEXT
+=======
+					// C:\\projects\\unibg\\javadoc-to-latex\\src\\JavadocToLatex.g:69:5: text= TEXT
+>>>>>>> 26e7081dfc308a286d9892df8607dafcfec88186
 					{
 					text=(Token)match(input,TEXT,FOLLOW_TEXT_in_jdSection125); 
 					 System.out.println((text!=null?text.getText():null) + "\n"); 
 					}
 					break;
 				case 2 :
+<<<<<<< HEAD
 					// D:\\develop\\lfc\\javadoc-to-latex\\src\\JavadocToLatex.g:67:6: keyValue
+=======
+					// C:\\projects\\unibg\\javadoc-to-latex\\src\\JavadocToLatex.g:71:5: keyValue
+>>>>>>> 26e7081dfc308a286d9892df8607dafcfec88186
 					{
 					pushFollow(FOLLOW_keyValue_in_jdSection144);
 					keyValue();
@@ -281,9 +336,26 @@ public class JavadocToLatex extends Parser {
 				}
 			}
 
+<<<<<<< HEAD
 			pushFollow(FOLLOW_keyJDE_in_jdSection156);
 			keyJDE();
 			state._fsp--;
+=======
+			// C:\\projects\\unibg\\javadoc-to-latex\\src\\JavadocToLatex.g:73:4: (key= KEY )?
+			int alt4=2;
+			int LA4_0 = input.LA(1);
+			if ( (LA4_0==KEY) ) {
+				alt4=1;
+			}
+			switch (alt4) {
+				case 1 :
+					// C:\\projects\\unibg\\javadoc-to-latex\\src\\JavadocToLatex.g:74:6: key= KEY
+					{
+					key=(Token)match(input,KEY,FOLLOW_KEY_in_jdSection197); 
+					 System.out.println((key!=null?key.getText():null)); 
+					}
+					break;
+>>>>>>> 26e7081dfc308a286d9892df8607dafcfec88186
 
 			}
 
@@ -304,12 +376,17 @@ public class JavadocToLatex extends Parser {
 
 
 	// $ANTLR start "keyValue"
+<<<<<<< HEAD
 	// D:\\develop\\lfc\\javadoc-to-latex\\src\\JavadocToLatex.g:78:1: keyValue : (key= KEY_PARAM text= TEXT |key= KEY_EXCEPTION text= TEXT |key= KEY_AUTHOR text= TEXT |key= KEY_CODE text= TEXT );
+=======
+	// C:\\projects\\unibg\\javadoc-to-latex\\src\\JavadocToLatex.g:81:1: keyValue : key= KEY text= TEXT ;
+>>>>>>> 26e7081dfc308a286d9892df8607dafcfec88186
 	public final void keyValue() throws RecognitionException {
 		Token key=null;
 		Token text=null;
 
 		try {
+<<<<<<< HEAD
 			// D:\\develop\\lfc\\javadoc-to-latex\\src\\JavadocToLatex.g:79:2: (key= KEY_PARAM text= TEXT |key= KEY_EXCEPTION text= TEXT |key= KEY_AUTHOR text= TEXT |key= KEY_CODE text= TEXT )
 			int alt4=4;
 			switch ( input.LA(1) ) {
@@ -337,6 +414,14 @@ public class JavadocToLatex extends Parser {
 				NoViableAltException nvae =
 					new NoViableAltException("", 4, 0, input);
 				throw nvae;
+=======
+			// C:\\projects\\unibg\\javadoc-to-latex\\src\\JavadocToLatex.g:82:2: (key= KEY text= TEXT )
+			// C:\\projects\\unibg\\javadoc-to-latex\\src\\JavadocToLatex.g:82:4: key= KEY text= TEXT
+			{
+			key=(Token)match(input,KEY,FOLLOW_KEY_in_keyValue245); 
+			text=(Token)match(input,TEXT,FOLLOW_TEXT_in_keyValue249); 
+			 System.out.print((key!=null?key.getText():null) + " " + (text!=null?text.getText():null)); 
+>>>>>>> 26e7081dfc308a286d9892df8607dafcfec88186
 			}
 			switch (alt4) {
 				case 1 :
