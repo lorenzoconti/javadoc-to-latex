@@ -3,8 +3,10 @@
  *
  * @param  url  an absolute URL giving the base location of the image
  * @param  name the location of the image, relative to the url argument
+ * aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
  * @return      the image at the specified URL
  * @param Image
+ * qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
 */
 public Image getImage(URL url, String name) {
   try {

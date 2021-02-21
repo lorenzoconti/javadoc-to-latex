@@ -1,123 +1,53 @@
-"C:\Program Files\Java\jdk1.8.0_231\bin\java.exe" "-javaagent:C:\Users\loren\AppData\Local\JetBrains\IntelliJ IDEA Community Edition 2019.3.3\lib\idea_rt.jar=58575:C:\Users\loren\AppData\Local\JetBrains\IntelliJ IDEA Community Edition 2019.3.3\bin" -Dfile.encoding=UTF-8 -classpath "C:\Program Files\Java\jdk1.8.0_231\jre\lib\charsets.jar;C:\Program Files\Java\jdk1.8.0_231\jre\lib\deploy.jar;C:\Program Files\Java\jdk1.8.0_231\jre\lib\ext\access-bridge-64.jar;C:\Program Files\Java\jdk1.8.0_231\jre\lib\ext\cldrdata.jar;C:\Program Files\Java\jdk1.8.0_231\jre\lib\ext\dnsns.jar;C:\Program Files\Java\jdk1.8.0_231\jre\lib\ext\jaccess.jar;C:\Program Files\Java\jdk1.8.0_231\jre\lib\ext\jfxrt.jar;C:\Program Files\Java\jdk1.8.0_231\jre\lib\ext\localedata.jar;C:\Program Files\Java\jdk1.8.0_231\jre\lib\ext\nashorn.jar;C:\Program Files\Java\jdk1.8.0_231\jre\lib\ext\sunec.jar;C:\Program Files\Java\jdk1.8.0_231\jre\lib\ext\sunjce_provider.jar;C:\Program Files\Java\jdk1.8.0_231\jre\lib\ext\sunmscapi.jar;C:\Program Files\Java\jdk1.8.0_231\jre\lib\ext\sunpkcs11.jar;C:\Program Files\Java\jdk1.8.0_231\jre\lib\ext\zipfs.jar;C:\Program Files\Java\jdk1.8.0_231\jre\lib\javaws.jar;C:\Program Files\Java\jdk1.8.0_231\jre\lib\jce.jar;C:\Program Files\Java\jdk1.8.0_231\jre\lib\jfr.jar;C:\Program Files\Java\jdk1.8.0_231\jre\lib\jfxswt.jar;C:\Program Files\Java\jdk1.8.0_231\jre\lib\jsse.jar;C:\Program Files\Java\jdk1.8.0_231\jre\lib\management-agent.jar;C:\Program Files\Java\jdk1.8.0_231\jre\lib\plugin.jar;C:\Program Files\Java\jdk1.8.0_231\jre\lib\resources.jar;C:\Program Files\Java\jdk1.8.0_231\jre\lib\rt.jar;D:\develop\lfc\javadoc-to-latex\out\production\javadoc-to-latex;D:\develop\lfc\javadoc-to-latex\lib\java-cup-11b.jar;D:\develop\lfc\javadoc-to-latex\lib\java-cup-11b-runtime.jar;D:\develop\lfc\javadoc-to-latex\lib\antlr-3.4-complete.jar" Main
 \begin(jd)
 
 Returns an Image object that 2*2 can then be painted on the screen.
 
-@param url  an absolute URL giving the base location of the image
-@param name the location of the image, relative to the url argument
-@return the image at the specified URL
-@param Image
-
+@param url  an absolute URL giving the base location of the image@param name the location of the image, relative to the url argument@return the image at the specified URL@paramImage
 \end(jd)
-
-
-
-
 \begin(code)
-
 public Image getImage(URL url, String name) {
-
   try {
-
     return getImage(new URL(url, "/**@author name"));
-
   } catch (MalformedURLException e) {
-
     return null;
-
   }
-
-\end(code)
-
-\begin(jd)
-
 }
-
-
+\end(code)
+\begin(jd)
 
 Returns an Image object that 2*2 can then be painted on the screen.
 
-
-
-@param url  an absolute URL giving the base location of the image
-@param name the location of the image, relative to the url argument
-@return the image at the specified URL
-@param
-
-Image
-
+@param url  an absolute URL giving the base location of the image@param name the location of the image, relative to the url argument@return the image at the specified URL@paramImage
 \end(jd)
-
 \begin(jd)
-
-
-
-
 
 Returns an Image object that 2*2 can then be painted on the screen.
 
-
-
-@param url  an absolute URL giving the base location of the image
-@param name the location of the image, relative to the url argument
-@return the image at the specified URL
-@param
-
-Image
-
+@param url  an absolute URL giving the base location of the image@param name the location of the image, relative to the url argument@return the image at the specified URL@paramImage
 \end(jd)
-
 \begin(jd)
-
-
-
 INLINE
-
 \end(jd)
-
 \begin(code)
-
 public Image getImage(URL url, String name) {
-
   try {
-
     return getImage(new URL(url, "/**@author name"));
-
   } catch (MalformedURLException e) {
-
     return null;
-
   }
-
+}
 \end(code)
-
 \begin(jd)
-
-}
-
-@param
-
-esempio
-
+@param-----------esempio
 \end(jd)
-
 \begin(code)
-
 public Image getImage(URL url, String name) {
-
   try {
-
     return getImage(new URL(url, "/**@author name"));
-
   } catch (MalformedURLException e) {
-
     return null;
-
   }
-
-\end(code)
-
 }
-
+\end(code)
 
 Process finished with exit code 0
