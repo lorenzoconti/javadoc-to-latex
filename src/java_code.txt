@@ -4,8 +4,8 @@
  * @param  url  an absolute URL giving the base location of the image
  * @param  name the location of the image, relative to the url argument
  * aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
- * @return      the image at the specified URL
- * @param Image
+ * @return the image at the specified URL
+ * @author Lorenzo Conti
  * qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
 */
 public Image getImage(URL url, String name) {
@@ -21,7 +21,7 @@ public Image getImage(URL url, String name) {
  * @param  url  an absolute URL giving the base location of the image
  * @param  name the location of the image, relative to the url argument
  * @return      the image at the specified URL
- * @param Image
+ * @exception Mammt
 */
 /**
  * Returns an Image object that 2*2 can then be painted on the screen.
@@ -29,7 +29,7 @@ public Image getImage(URL url, String name) {
  * @param  url  an absolute URL giving the base location of the image
  * @param  name the location of the image, relative to the url argument
  * @return      the image at the specified URL
- * @param Image
+ * @code LMFAO
 */
 /** INLINE */
 public Image getImage(URL url, String name) {

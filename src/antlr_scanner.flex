@@ -78,9 +78,13 @@ InputChar       = [^\r\n]
 JDWS            = {LineTerm} {WhiteSpace}* "*" {WhiteSpace}*
 JDS             = ({LineTerm}* | {WhiteSpace}*) "/**" {WhiteSpace}*
 JDE             = {LineTerm}* {WhiteSpace}* "*/" {LineTerm}*
-JDKV            = ("@param" | "@exception" | "@provides" | "@throws" | "@uses" | "@version") [ \t\f]+
-JDKD            = ("@author" | "@deprecated" | "@return" | "@serial" | "@serialData" | "@since" | "@see")[ \t\f]+
-JDKINLINE       = ("@code" | "@link" | "@linkplain") [ \t\f]+
+KEY_PARAM           = ("@param") [ \t\f]+
+KEY_EXCEPTION       = ("@exception") [ \t\f]+
+KEY_AUTHOR          = ("@author") [ \t\f]+
+KEY_CODE            = ("@code") [ \t\f]+
+// JDKV            = ("@param" | "@exception" | "@provides" | "@throws" | "@uses" | "@version") [ \t\f]+
+// JDKD            = ("@author" | "@deprecated" | "@return" | "@serial" | "@serialData" | "@since" | "@see")[ \t\f]+
+// JDKINLINE       = ("@code" | "@link" | "@linkplain") [ \t\f]+
 MD              = "#"+ {InputChar}* LineTerm
 
 %states JAVADOC, STRING
@@ -127,15 +131,23 @@ MD              = "#"+ {InputChar}* LineTerm
 
                     }
 
-  {JDKV}           { return symbol(sym.KEY, yytext().trim()); }
+  // {JDKV}             { return symbol(sym.KEY, yytext().trim()); }
 
-  {JDKD}           { return symbol(sym.KEY, yytext().trim()); }
+  // {JDKD}             { return symbol(sym.KEY, yytext().trim()); }
 
-  {JDWS}          {
-                    Token token = symbol(sym.TEXT, string.toString());
-                    string.setLength(0);
-                    return token;
-                  }
+  {KEY_PARAM}           { return symbol(sym.KEY_PARAM, yytext().trim()); }
+
+  {KEY_EXCEPTION}       { return symbol(sym.KEY_EXCEPTION, yytext().trim()); }
+
+  {KEY_AUTHOR}          { return symbol(sym.KEY_AUTHOR, yytext().trim()); }
+
+  {KEY_CODE}            { return symbol(sym.KEY_CODE, yytext().trim()); }
+
+{JDWS}                  {
+                            Token token = symbol(sym.TEXT, string.toString());
+                            string.setLength(0);
+                            return token;
+                        }
 
   {LineTerm}     {}
 

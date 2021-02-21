@@ -40,51 +40,76 @@ parser grammar JavadocToLatex;
 
 }
 
-start : ( 
-	    jdSection
-	    |
-	    cs=codeSection
-	    )*
-	    eof=EOF { endCode($eof); }
-        ;
+start : ( jdSection | cs=codeSection )* eof=EOF {endCode($eof);} ;
 
 
-codeSection
-	:
-	    { writeLine("\\begin(code)\n"); }
-
-	    (
-	        code=CODE { writeLine($code); }
-	    )+
-	;
-
-jdSection
-	:
+codeSection 
+	: 
+	
+	{writeLine("\\begin(code)\n");}
+	
 	(
-	code=JDS        {
-                        endCode($code);
-                        System.out.println("\\begin(jd)\n");
-		            }
-	  (
-	  	text=TEXT   { System.out.println($text.text + "\n"); }
-	  	|
-	  	keyValue
-	  )*
-	  (
-	    key=KEY     { System.out.println($key.text); }) ?
-	    jde=JDE     { System.out.println($jde.text + "\n"); }
-	  )
-
-	  { System.out.print("\\end(jd)\n"); }
+		code=CODE 		{writeLine($code);}
+	 )+
 	;
+	
+
+jdSection 
+	:	
+		
+	(
+		code=JDS        	{ endCode($code);
+				  	  System.out.println("\\begin(jd)\n");
+		            		}
+		(
+		  	text=TEXT   	{ System.out.println($text.text + "\n"); }
+		  	|
+		  	keyValue
+		)*
+		
+		keyJDE
+	) 
+	  
+
+	{ System.out.print("\\end(jd)\n"); }
+	;
+	
 
 keyValue
-	: key=KEY text=TEXT { System.out.print($key.text + " " + $text.text); }
+	: 
+		key=KEY_PARAM 	text=TEXT 	{ System.out.print("PARAM " + $key.text + " " + $text.text); }
+	| 
+		key=KEY_EXCEPTION text=TEXT 	{ System.out.print("EXCEPTION " + $key.text + " " + $text.text); }
+	| 
+		key=KEY_AUTHOR 	text=TEXT 	{ System.out.print("AUTHOR " + $key.text + " " + $text.text); }
+	| 
+		key=KEY_CODE text=TEXT		{ System.out.print("CODE " + $key.text + " " + $text.text); }
+	;
+	
+keyJDE 
+	:
+	(
+		(key=KEY_PARAM 		{ System.out.println("PARAM " + $key.text); }) ?
+		jde=JDE     		{ System.out.println($jde.text + "\n"); }
+	) 
+	|
+	(
+		(key=KEY_EXCEPTION 	{ System.out.println("EXCEPTION " + $key.text); }) ?
+		jde=JDE     		{ System.out.println($jde.text + "\n"); }
+	)
+	|
+	(
+		(key=KEY_AUTHOR 	{ System.out.println("AUTHOR " + $key.text); }) ?
+		jde=JDE     		{ System.out.println($jde.text + "\n"); }
+	)
+	|
+	(
+		(key=KEY_CODE 		{ System.out.println("CODE " + $key.text); }) ?
+		jde=JDE     		{ System.out.println($jde.text + "\n"); }
+	)	
 	;
 
 
-
- 
 
 
 

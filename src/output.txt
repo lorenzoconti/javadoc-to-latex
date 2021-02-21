@@ -2,9 +2,16 @@
 
 Returns an Image object that 2*2 can then be painted on the screen.
 
-@param url  an absolute URL giving the base location of the image@param name the location of the image, relative to the url argument@return the image at the specified URL@paramImage
+
+PARAM @param url  an absolute URL giving the base location of the imagePARAM @param name the location of the image, relative to the url argumentaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+@return the image at the specified URL
+
+AUTHOR @author Lorenzo Contiqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+
 \end(jd)
 \begin(code)
+
 public Image getImage(URL url, String name) {
   try {
     return getImage(new URL(url, "/**@author name"));
@@ -15,20 +22,39 @@ public Image getImage(URL url, String name) {
 \end(code)
 \begin(jd)
 
-Returns an Image object that 2*2 can then be painted on the screen.
 
-@param url  an absolute URL giving the base location of the image@param name the location of the image, relative to the url argument@return the image at the specified URL@paramImage
-\end(jd)
-\begin(jd)
 
 Returns an Image object that 2*2 can then be painted on the screen.
 
-@param url  an absolute URL giving the base location of the image@param name the location of the image, relative to the url argument@return the image at the specified URL@paramImage
+
+
+PARAM @param url  an absolute URL giving the base location of the imagePARAM @param name the location of the image, relative to the url argument@return      the image at the specified URL
+
+EXCEPTION @exception
+Mammt
+
 \end(jd)
 \begin(jd)
+
+
+
+Returns an Image object that 2*2 can then be painted on the screen.
+
+
+
+PARAM @param url  an absolute URL giving the base location of the imagePARAM @param name the location of the image, relative to the url argument@return      the image at the specified URL
+
+CODE @code
+LMFAO
+
+\end(jd)
+\begin(jd)
+
 INLINE
+
 \end(jd)
 \begin(code)
+
 public Image getImage(URL url, String name) {
   try {
     return getImage(new URL(url, "/**@author name"));
@@ -38,9 +64,13 @@ public Image getImage(URL url, String name) {
 }
 \end(code)
 \begin(jd)
-@param-----------esempio
+
+PARAM @param
+esempio
+
 \end(jd)
 \begin(code)
+
 public Image getImage(URL url, String name) {
   try {
     return getImage(new URL(url, "/**@author name"));
