@@ -4,13 +4,6 @@ parser grammar JavadocToLatex;
 }
 
 @members {
-    String LatexDocOpen = String.join("\n"
-        ,"\\documentclass{article}"
-        ,"\\usepackage[utf8]{inputenc}"
-        ,"\\usepackage{listings}"
-        ,"\\usepackage{xcolor}"
-    );
-
     StringBuffer translation = new StringBuffer ();
 
     public String getTranslation () {
