@@ -10,7 +10,7 @@
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib/java-cup-11b.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/antlr-3.4-complete.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -28,7 +28,16 @@
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib/antlr-3.4-complete.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/java-cup-11b.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/jflex-1.7.0-2.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
