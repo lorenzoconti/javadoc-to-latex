@@ -21,3 +21,10 @@ Easily compile and format Javadoc entities to LaTeX.
     javac -cp ../lib/java-cup-11b-runtime.jar *.java
     ```
 1. Run main
+
+# To do
+* (Fabio) Aggiungere funzionalità di caricamento preambolo nel file latex e generazione del file latex completo
+* (Fabio) Gestire semantica del codice
+* Spostare la semantica in metodi
+* Gestire liste delle chiavi
+* Gestione degli errori (tipo "/** EOF")
