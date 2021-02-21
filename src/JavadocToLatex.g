@@ -4,6 +4,12 @@ parser grammar JavadocToLatex;
 }
 
 @members {
+    String LatexDocOpen = String.join("\n"
+        ,"\\documentclass{article}"
+        ,"\\usepackage[utf8]{inputenc}"
+        ,"\\usepackage{listings}"
+        ,"\\usepackage{xcolor}"
+    );
 
     StringBuffer translation = new StringBuffer ();
 
@@ -12,12 +18,10 @@ parser grammar JavadocToLatex;
     }
 
     void endCode(Token token) {
-
         String text = token.getText();
 
         if (token != null && text.replace("\n", "").trim().length() > 0) {
-
-            translation.append(text);
+            translation.append(text + "\n");
             translation.append("\\end(code)\n");
 
             System.out.print(text);
@@ -25,22 +29,25 @@ parser grammar JavadocToLatex;
         }
     }
 
-
     void writeLine(Token token) {
-
         String text = token.getText();
         writeLine(text);
     }
 
     void writeLine(String text) {
-
         translation.append(text);
         System.out.println(text);
     }
-
 }
 
-start : ( jdSection | cs=codeSection )* eof=EOF {endCode($eof);} ;
+start : { writeLine(LatexDocOpen); }
+        (
+	    jdSection
+	    |
+	    cs=codeSection
+	    )*
+	    eof=EOF { endCode($eof); }
+        ;
 
 
 codeSection 

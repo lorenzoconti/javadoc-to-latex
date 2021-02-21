@@ -31,3 +31,4 @@ out
 Scanner.java
 parser.java
 JavadocToLatex.java
+JDTLScanner.java

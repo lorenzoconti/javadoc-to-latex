@@ -10,7 +10,7 @@ public class Main {
             JavadocToLatex parser = new JavadocToLatex(tokenStream);
             parser.start();
 
-            try (PrintWriter out = new PrintWriter("output.tex")) {
+            try (PrintWriter out = new PrintWriter("src/output.tex")) {
                 out.print(parser.getTranslation());
             }
 
