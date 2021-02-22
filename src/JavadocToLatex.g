@@ -9,16 +9,13 @@ parser grammar JavadocToLatex;
     public String getTranslation () {
         return translation.toString();
     }
-
+ 
     void endCode(Token token) {
         String text = token.getText();
 
         if (token != null && text.replace("\n", "").trim().length() > 0) {
-            translation.append(text + "\n");
-            translation.append("\\end(code)\n");
-
-            System.out.print(text);
-            System.out.print("\n\\end(code)\n");
+            writeLine(text);
+            writeLine("\\end{lstlisting}");
         }
     }
 
@@ -28,13 +25,12 @@ parser grammar JavadocToLatex;
     }
 
     void writeLine(String text) {
-        translation.append(text);
+        translation.append(text + "\n");
         System.out.println(text);
     }
 }
 
-start : { writeLine(LatexDocOpen); }
-        (
+start : (
 	    jdSection
 	    |
 	    cs=codeSection
@@ -46,7 +42,7 @@ start : { writeLine(LatexDocOpen); }
 codeSection 
 	: 
 	
-	{writeLine("\\begin(code)\n");}
+	{writeLine("\\begin{lstlisting}[language=Java]");}
 	
 	(
 		code=CODE 		{writeLine($code);}
