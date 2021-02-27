@@ -26,10 +26,9 @@ public Image getImage(URL url, String name) {
 /**
  * Returns an Image object that 2*2 can then be painted on the screen.
  *
- * @param  url  an absolute URL giving the base location of the image
+ * @param  url  an absolute URL giving {@code URL} the base location of the image
  * @param  name the location of the image, relative to the url argument
  * @return      the image at the specified URL
- * @code LMFAO
 */
 /** INLINE */
 public Image getImage(URL url, String name) {
@@ -40,7 +39,7 @@ public Image getImage(URL url, String name) {
   }
 }
 
-/** @param esempio */
+/** @param URL questo è un {@code URL} ciaooo */
 
 public Image getImage(URL url, String name) {
   try {

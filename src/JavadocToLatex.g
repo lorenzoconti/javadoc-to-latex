@@ -28,14 +28,19 @@ parser grammar JavadocToLatex;
         translation.append(text + "\n");
         System.out.println(text);
     }
+    
+    Javadoc jd = new Javadoc();   
+    
+    boolean debug = true;
+    StringBuffer buffer = new StringBuffer();
 }
 
 start : (
-	    jdSection
+	    {jd = new Javadoc();}  jdSection  {System.out.print(jd.getTranslation());}
 	    |
 	    cs=codeSection
-	    )*
-	    eof=EOF { endCode($eof); }
+	)*
+	eof=EOF { endCode($eof); }
         ;
 
 
@@ -58,7 +63,8 @@ jdSection
 				  	  System.out.println("\\begin(jd)\n");
 		            		}
 		(
-		  	text=TEXT   	{ System.out.println($text.text + "\n"); }
+			// inline* text=TEXT per commenti inline nella descrizione
+		  	text=TEXT   	{ jd.addDescription($text.text, debug); }
 		  	|
 		  	keyValue
 		)*
@@ -73,36 +79,50 @@ jdSection
 
 keyValue
 	: 
-		key=KEY_PARAM 	text=TEXT 	{ System.out.print("PARAM " + $key.text + " " + $text.text); }
-	| 
-		key=KEY_EXCEPTION text=TEXT 	{ System.out.print("EXCEPTION " + $key.text + " " + $text.text); }
-	| 
-		key=KEY_AUTHOR 	text=TEXT 	{ System.out.print("AUTHOR " + $key.text + " " + $text.text); }
-	| 
-		key=KEY_CODE text=TEXT		{ System.out.print("CODE " + $key.text + " " + $text.text); }
+		(
+			key=KEY_PARAM 			{ buffer.setLength(0);} 
+			inline* 			
+			text=TEXT 	
+		)					{ jd.addParam(buffer.toString(), $text.text, debug); }
+	| 		
+			key=KEY_AUTHOR text=TEXT 	{ jd.addAuthor($text.text, debug); } // TODO: controllare se è un autore o una lista di autori				
+							  
+	| 	(
+			key=KEY_EXCEPTION 		{ buffer.setLength(0);} 
+			inline* 	
+			text=TEXT
+		) 					{ jd.addException(buffer.toString(), $text.text, debug); }
+	;
+
+inline
+	:	before=OPEN_BRACE key=KEY_CODE inline_text=CLOSED_BRACE
+		{ buffer.append($before.text + " \\texttt{" + $inline_text.text + "}");  }		
 	;
 	
 keyJDE 
-	:
+	: 
 	(
-		(key=KEY_PARAM 		{ System.out.println("PARAM " + $key.text); }) ?
-		jde=JDE     		{ System.out.println($jde.text + "\n"); }
+		key=KEY_PARAM 		{ System.out.print("PARAM " + $key.text); }
+		inline*			
+		jde=JDE     		{ System.out.print($jde.text + "\n"); }
 	) 
 	|
 	(
-		(key=KEY_EXCEPTION 	{ System.out.println("EXCEPTION " + $key.text); }) ?
+		key=KEY_EXCEPTION 	{ System.out.println("EXCEPTION " + $key.text); }
 		jde=JDE     		{ System.out.println($jde.text + "\n"); }
 	)
 	|
 	(
-		(key=KEY_AUTHOR 	{ System.out.println("AUTHOR " + $key.text); }) ?
+		key=KEY_AUTHOR 		{ System.out.println("AUTHOR " + $key.text); }
 		jde=JDE     		{ System.out.println($jde.text + "\n"); }
 	)
 	|
 	(
-		(key=KEY_CODE 		{ System.out.println("CODE " + $key.text); }) ?
+		key=KEY_CODE 		{ System.out.println("CODE " + $key.text); }
 		jde=JDE     		{ System.out.println($jde.text + "\n"); }
 	)	
+	|
+	text=JDE			{ System.out.println("COMMENT " + $text.text); }
 	;
 
 

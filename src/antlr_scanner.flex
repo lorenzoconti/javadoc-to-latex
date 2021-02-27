@@ -86,6 +86,8 @@ KEY_CODE            = ("@code") [ \t\f]+
 // JDKD            = ("@author" | "@deprecated" | "@return" | "@serial" | "@serialData" | "@since" | "@see")[ \t\f]+
 // JDKINLINE       = ("@code" | "@link" | "@linkplain") [ \t\f]+
 MD              = "#"+ {InputChar}* LineTerm
+OPEN_BRACE      = "{"
+CLOSED_BRACE    = "}"
 
 %states JAVADOC, STRING
 
@@ -142,6 +144,18 @@ MD              = "#"+ {InputChar}* LineTerm
   {KEY_AUTHOR}          { return symbol(sym.KEY_AUTHOR, yytext().trim()); }
 
   {KEY_CODE}            { return symbol(sym.KEY_CODE, yytext().trim()); }
+
+  {OPEN_BRACE}          {
+                            Token token = symbol(sym.OPEN_BRACE, string.toString());
+                            string.setLength(0);
+                            return token;
+                        }
+
+  {CLOSED_BRACE}        {
+                            Token token = symbol(sym.CLOSED_BRACE, string.toString());
+                            string.setLength(0);
+                            return token;
+                        }
 
 {JDWS}                  {
                             Token token = symbol(sym.TEXT, string.toString());
