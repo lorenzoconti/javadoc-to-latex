@@ -1,0 +1,94 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+
+\usepackage{listings}
+\usepackage{xcolor}
+
+\setlength\parindent{0pt}
+\setlength{\parskip}{12pt}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+  backgroundcolor=\color{backcolour},   commentstyle=\color{codegreen},
+  keywordstyle=\color{magenta},
+  numberstyle=\tiny\color{codegray},
+  stringstyle=\color{codepurple},
+  basicstyle=\ttfamily\footnotesize,
+  breakatwhitespace=false,
+  breaklines=true,
+  captionpos=b,
+  keepspaces=true,
+  numbers=left,
+  numbersep=5pt,
+  showspaces=false,
+  showstringspaces=false,
+  showtabs=false,
+  tabsize=2
+}
+
+\lstset{style=mystyle}
+
+\title{JavaDoc to LaTeX}
+\begin{document}
+\textbf{Author:} Lorenzo Conti
+
+\textbf{Description:}
+Returns an Image object that 2*2 can then be painted on the screen.aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@return the image at the specified URL
+
+\textbf{Parameters:}
+\begin{itemize}
+  \item\texttt{url}  an absolute URL giving the base location of the image url  an absolute URL giving the base location of the image
+  \item\texttt{name} the location of the image, relative to the url argument name the location of the image, relative to the url argument
+\end{itemize}
+
+\begin{lstlisting}[language=Java]
+public Image getImage(URL url, String name) {
+  try {
+    return getImage(new URL(url, "/**@author name"));
+  } catch (MalformedURLException e) {
+    return null;
+  }
+}
+\end{lstlisting}
+\textbf{Description:}
+Returns an Image object that 2*2 can then be painted on the screen.@return      the image at the specified URL
+
+\textbf{Parameters:}
+\begin{itemize}
+  \item\texttt{url}  an absolute URL giving the base location of the image url  an absolute URL giving the base location of the image
+  \item\texttt{name} the location of the image, relative to the url argument name the location of the image, relative to the url argument
+\end{itemize}
+
+\textbf{Description:}
+Returns an Image object that 2*2 can then be painted on the screen.
+
+\textbf{Parameters:}
+\begin{itemize}
+  \item\texttt{url}  an absolute URL giving  \texttt{URL}  the base location of the image
+  \item\texttt{name} the location of the image, relative to the url argument name the location of the image, relative to the url argument
+\end{itemize}
+
+\begin{lstlisting}[language=Java]
+public Image getImage(URL url, String name) {
+  try {
+    return getImage(new URL(url, "/**@author name"));
+  } catch (MalformedURLException e) {
+    return null;
+  }
+}
+\end{lstlisting}
+\begin{lstlisting}[language=Java]
+public Image getImage(URL url, String name) {
+  try {
+    return getImage(new URL(url, "/**@author name"));
+  } catch (MalformedURLException e) {
+    return null;
+  }
+}
+\end{lstlisting}
+
+\end{document}

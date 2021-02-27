@@ -1,5 +1,5 @@
 # javadoc-to-latex
-Easily compile and format Javadoc entities to LaTeX.
+Easily compile and format util.Javadoc entities to LaTeX.
 
 # Usage
 
@@ -23,8 +23,7 @@ Easily compile and format Javadoc entities to LaTeX.
 1. Run main
 
 # To do
-* (Fabio) Aggiungere funzionalità di caricamento preambolo nel file latex e generazione del file latex completo
-* (Fabio) Gestire semantica del codice
+* Gestione dei tag inline
 * Spostare la semantica in metodi
 * Gestire liste delle chiavi
 * Gestione degli errori (tipo "/** EOF")

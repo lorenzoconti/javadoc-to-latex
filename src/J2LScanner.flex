@@ -2,7 +2,7 @@ import org.antlr.runtime.*;
 import java.io.*;
 
 %%
-%class JDTLScanner
+%class J2LScanner
 
 %implements TokenSource
 %type Token
@@ -95,43 +95,41 @@ CLOSED_BRACE    = "}"
 
 // CODE SECTION
 <YYINITIAL> {
-
   // JDS /**
-  {JDS}          {
-                    Token token = symbol(sym.JDS, string.toString());
-                    string.setLength(0);
-                    yybegin(JAVADOC);
-                    return token;
-                  }
+  {JDS}                 {
+                            Token token = symbol(sym.JDS, string.toString());
+                            string.setLength(0);
+                            yybegin(JAVADOC);
+                            return token;
+                        }
   // STRING
-  \"              {
-                    string.append(yytext());
-                    yybegin(STRING);
-                  }
+  \"                    {
+                            string.append(yytext());
+                            yybegin(STRING);
+                        }
 
 
   // CODE
-  {LineTerm}       {
-                       Token token = symbol(sym.CODE, string.toString());
-                       string.setLength(0);
-                       return token;
-                     }
+  {LineTerm}            {
+                           Token token = symbol(sym.CODE, string.toString());
+                           string.setLength(0);
+                           return token;
+                        }
 
   // APPEND
-  .               { string.append(yytext()); }
+  .                     { string.append(yytext()); }
 
 }
 
+
 <JAVADOC> {
-
   // JDE */
-  {JDE}             {
-                        Token token = symbol(sym.JDE, string.toString());
-                        string.setLength(0);
-                        yybegin(YYINITIAL);
-                        return token;
-
-                    }
+  {JDE}                 {
+                            Token token = symbol(sym.JDE, string.toString());
+                            string.setLength(0);
+                            yybegin(YYINITIAL);
+                            return token;
+                        }
 
   // {JDKV}             { return symbol(sym.KEY, yytext().trim()); }
 
@@ -163,33 +161,30 @@ CLOSED_BRACE    = "}"
                             return token;
                         }
 
-  {LineTerm}     {}
+  {LineTerm}            {}
 
-  .               { string.append(yytext()); }
+  .                     { string.append(yytext()); }
 }
-
 
 
 <STRING> {
-  \"              {
-                    string.append(yytext());
-                    yybegin(YYINITIAL);
-                  }
-  {WhiteSpace}    { string.append(yytext()); }
+  \"                    {
+                            string.append(yytext());
+                            yybegin(YYINITIAL);
+                        }
+  {WhiteSpace}          { string.append(yytext()); }
 
-  .               { string.append(yytext()); }
+  .                     { string.append(yytext()); }
 }
 
 
-<<EOF>>         {
-                    Token token = symbol(sym.EOF, string.toString());
-                    string.setLength(0);
-                    return token;
-                }
+<<EOF>>                 {
+                            Token token = symbol(sym.EOF, string.toString());
+                            string.setLength(0);
+                            return token;
+                        }
 
 // ERROR
-[^]                 { System.out.println("error " + yytext());
-                        return symbol(sym.ERROR);
-                    }
-
-
+[^]                     { System.out.println("error " + yytext());
+                            return symbol(sym.ERROR);
+                        }

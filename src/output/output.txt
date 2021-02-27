@@ -1,0 +1,71 @@
+"C:\Program Files\Java\jdk1.8.0_241\bin\java.exe" "-javaagent:C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2019.3.3\lib\idea_rt.jar=50468:C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2019.3.3\bin" -Dfile.encoding=UTF-8 -classpath "C:\Program Files\Java\jdk1.8.0_241\jre\lib\charsets.jar;C:\Program Files\Java\jdk1.8.0_241\jre\lib\deploy.jar;C:\Program Files\Java\jdk1.8.0_241\jre\lib\ext\access-bridge-64.jar;C:\Program Files\Java\jdk1.8.0_241\jre\lib\ext\cldrdata.jar;C:\Program Files\Java\jdk1.8.0_241\jre\lib\ext\dnsns.jar;C:\Program Files\Java\jdk1.8.0_241\jre\lib\ext\jaccess.jar;C:\Program Files\Java\jdk1.8.0_241\jre\lib\ext\jfxrt.jar;C:\Program Files\Java\jdk1.8.0_241\jre\lib\ext\localedata.jar;C:\Program Files\Java\jdk1.8.0_241\jre\lib\ext\nashorn.jar;C:\Program Files\Java\jdk1.8.0_241\jre\lib\ext\sunec.jar;C:\Program Files\Java\jdk1.8.0_241\jre\lib\ext\sunjce_provider.jar;C:\Program Files\Java\jdk1.8.0_241\jre\lib\ext\sunmscapi.jar;C:\Program Files\Java\jdk1.8.0_241\jre\lib\ext\sunpkcs11.jar;C:\Program Files\Java\jdk1.8.0_241\jre\lib\ext\zipfs.jar;C:\Program Files\Java\jdk1.8.0_241\jre\lib\javaws.jar;C:\Program Files\Java\jdk1.8.0_241\jre\lib\jce.jar;C:\Program Files\Java\jdk1.8.0_241\jre\lib\jfr.jar;C:\Program Files\Java\jdk1.8.0_241\jre\lib\jfxswt.jar;C:\Program Files\Java\jdk1.8.0_241\jre\lib\jsse.jar;C:\Program Files\Java\jdk1.8.0_241\jre\lib\management-agent.jar;C:\Program Files\Java\jdk1.8.0_241\jre\lib\plugin.jar;C:\Program Files\Java\jdk1.8.0_241\jre\lib\resources.jar;C:\Program Files\Java\jdk1.8.0_241\jre\lib\rt.jar;C:\projects\unibg\javadoc-to-latex\out\production\javadoc-to-latex;C:\projects\unibg\javadoc-to-latex\lib\antlr-3.4-complete.jar;C:\projects\unibg\javadoc-to-latex\lib\java-cup-11b-runtime.jar;C:\projects\unibg\javadoc-to-latex\lib\java-cup-11b.jar;C:\projects\unibg\javadoc-to-latex\lib\jflex-1.7.0-2.jar" Main --with-preamble
+\begin(jd)
+
+DEBUG:
+DEBUG: Returns an Image object that 2*2 can then be painted on the screen.
+DEBUG:
+DEBUG: \texttt{url}  an absolute URL giving the base location of the image url  an absolute URL giving the base location of the image
+DEBUG: \texttt{name} the location of the image, relative to the url argument name the location of the image, relative to the url argument
+DEBUG: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+DEBUG: @return the image at the specified URL
+DEBUG: Lorenzo Conti
+COMMENT qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+\end(jd)
+Returns an Image object that 2*2 can then be painted on the screen.aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@return the image at the specified URL [\texttt{url}  an absolute URL giving the base location of the image url  an absolute URL giving the base location of the image, \texttt{name} the location of the image, relative to the url argument name the location of the image, relative to the url argument] [Lorenzo Conti] []\begin{lstlisting}[language=Java]
+public Image getImage(URL url, String name) {
+  try {
+    return getImage(new URL(url, "/**@author name"));
+  } catch (MalformedURLException e) {
+    return null;
+  }
+}
+\end{lstlisting}
+\begin(jd)
+
+DEBUG:
+DEBUG: Returns an Image object that 2*2 can then be painted on the screen.
+DEBUG:
+DEBUG: \texttt{url}  an absolute URL giving the base location of the image url  an absolute URL giving the base location of the image
+DEBUG: \texttt{name} the location of the image, relative to the url argument name the location of the image, relative to the url argument
+DEBUG: @return      the image at the specified URL
+EXCEPTION @exception
+Mammt
+
+\end(jd)
+Returns an Image object that 2*2 can then be painted on the screen.@return      the image at the specified URL [\texttt{url}  an absolute URL giving the base location of the image url  an absolute URL giving the base location of the image, \texttt{name} the location of the image, relative to the url argument name the location of the image, relative to the url argument] [] []\begin(jd)
+
+DEBUG:
+DEBUG: Returns an Image object that 2*2 can then be painted on the screen.
+DEBUG:
+DEBUG: \texttt{url}  an absolute URL giving  \texttt{URL}  the base location of the image
+DEBUG: \texttt{name} the location of the image, relative to the url argument name the location of the image, relative to the url argument
+COMMENT @return      the image at the specified URL
+\end(jd)
+Returns an Image object that 2*2 can then be painted on the screen. [\texttt{url}  an absolute URL giving  \texttt{URL}  the base location of the image, \texttt{name} the location of the image, relative to the url argument name the location of the image, relative to the url argument] [] []\begin(jd)
+
+COMMENT INLINE
+\end(jd)
+ [] [] []\begin{lstlisting}[language=Java]
+public Image getImage(URL url, String name) {
+  try {
+    return getImage(new URL(url, "/**@author name"));
+  } catch (MalformedURLException e) {
+    return null;
+  }
+}
+\end{lstlisting}
+\begin(jd)
+
+PARAM @param ciaooo
+\end(jd)
+ [] [] []\begin{lstlisting}[language=Java]
+public Image getImage(URL url, String name) {
+  try {
+    return getImage(new URL(url, "/**@author name"));
+  } catch (MalformedURLException e) {
+    return null;
+  }
+}
+\end{lstlisting}
+
+Process finished with exit code 0
