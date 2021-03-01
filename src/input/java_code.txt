@@ -1,12 +1,11 @@
 /**
  * Returns an Image object that 2*2 can then be painted on the screen.
  *
- * @param  url  an absolute URL giving the base location of the image
- * @param  name the location of the image, relative to the url argument
- * aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
- * @return the image at the specified URL
- * @author Lorenzo Conti
- * qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+ * @param url  an absolute URL giving the base location of the {@code image} lorenzo@param.it  name the location of the image
+ * eskere {@code fuck} cammello
+ *      prova {@code piscia} cavallo {@code sniffotutto}
+ * @param Lorenzo
+ * ultimissimo {@code ultimissimo} CIAO
 */
 public Image getImage(URL url, String name) {
   try {
@@ -21,7 +20,8 @@ public Image getImage(URL url, String name) {
  * @param  url  an absolute URL giving the base location of the image
  * @param  name the location of the image, relative to the url argument
  * @return      the image at the specified URL
- * @exception Mammt
+ * @exception Mammt xiaone
+ * aaaaaaaa
 */
 /**
  * Returns an Image object that 2*2 can then be painted on the screen.

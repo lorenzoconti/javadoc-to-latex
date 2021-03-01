@@ -10,6 +10,12 @@ public class Javadoc {
 
     public StringBuffer description;
 
+    public ArrayList<String> listPointer = new ArrayList<String>();
+    public StringBuffer descriptionPointer = new StringBuffer();
+
+    boolean lastDescription = true;
+
+
     public StringBuffer buffer = new StringBuffer();
     boolean debug;
 
@@ -26,6 +32,7 @@ public class Javadoc {
     }
 
     public String getTranslation() {
+
         if(!this.authors.isEmpty()) {
             if(this.authors.size() == 1) _append("\\textbf{Author:} " + this.authors.get(0));
             else _append("\\textbf{Authors:} " + String.join(", ", this.authors));
@@ -57,8 +64,12 @@ public class Javadoc {
         return this.output.toString();
     }
 
-    public void addParam(String inline, String text) {
-        String[] splitted = _split(inline, text);
+    public void addParam(String content) {
+
+        lastDescription = false;
+        listPointer = params;
+
+        String[] splitted = _split(content);
         String param = splitted[0];
         String body = splitted[1];
 
@@ -69,14 +80,19 @@ public class Javadoc {
     }
 
     public void addDescription(String text) {
+
         String output = text;
 
         this.description.append(output);
         _debug(output);
     }
 
-    public void addException(String inline, String text) {
-        String[] splitted = _split(inline, text);
+    public void addException(String content) {
+
+        lastDescription = false;
+        listPointer = exceptions;
+
+        String[] splitted = _split(content);
         String param = splitted[0];
         String body = splitted[1];
 
@@ -87,24 +103,39 @@ public class Javadoc {
     }
 
     public void addAuthor(String author){
-        // TODO: controllare se è un autore o una lista di autori
 
+        lastDescription = false;
+        listPointer = authors;
+
+        // TODO: controllare se è un autore o una lista di autori
         this.authors.add(author);
         _debug(author);
     }
 
     /* ------- PRIVATE METHODS ------- */
 
-    private String[] _split(String inline, String text) {
+    private String[] _split(String content) {
         String[] splitted;
 
-        if (inline.length() > 0) splitted = inline.split(" ", 2);
-        else splitted = text.split(" ", 2);
+        // TODO if (content.length() > 0) splitted = content.split(" ", 2);
+        // TODO: ELSE
+        splitted = content.split(" ", 2);
 
         String param = splitted[0];
-        String body = splitted[1] + " " + text;
+        String body = "" ;
+
+        if (splitted.length > 1) body = splitted[1];
 
         return new String[] {param, body};
+    }
+
+    public void addLastLine(String text) {
+        if (lastDescription) {
+            descriptionPointer.append(text);
+        }
+        else {
+            listPointer.add(text);
+        }
     }
 
     private void _debug(String text) {
