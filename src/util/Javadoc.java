@@ -11,9 +11,9 @@ public class Javadoc {
     public StringBuffer description;
 
     public ArrayList<String> listPointer = new ArrayList<String>();
-    public StringBuffer descriptionPointer = new StringBuffer();
 
     boolean lastDescription = true;
+    boolean requiresSplit = true;
 
 
     public StringBuffer buffer = new StringBuffer();
@@ -63,20 +63,34 @@ public class Javadoc {
 
         return this.output.toString();
     }
+/** KEY_PARAM e JDE*/
 
     public void addParam(String content) {
 
         lastDescription = false;
         listPointer = params;
 
-        String[] splitted = _split(content);
-        String param = splitted[0];
-        String body = splitted[1];
+        if (content.trim().length() > 0) {
 
-        String output = "\\texttt{" + param + "} " + body;
+            requiresSplit = false;
 
-        this.params.add(output);
-        _debug(output);
+            String[] splitted = _split(content);
+            String param = splitted[0];
+
+            String output = "\\texttt{" + param + "}";
+
+            if (splitted.length > 1) {
+                String body = splitted[1];
+                output = output.concat(" " + body);
+            }
+
+            this.params.add(output);
+            _debug(output);
+        }
+        else {
+            requiresSplit = true;
+        }
+
     }
 
     public void addDescription(String text) {
@@ -84,6 +98,7 @@ public class Javadoc {
         String output = text;
 
         this.description.append(output);
+
         _debug(output);
     }
 
@@ -131,10 +146,17 @@ public class Javadoc {
 
     public void addLastLine(String text) {
         if (lastDescription) {
-            descriptionPointer.append(text);
+            this.description.append(text);
         }
         else {
-            listPointer.add(text);
+            if (requiresSplit) {
+                if (listPointer.equals(this.params))        { addParam(text); }
+                if (listPointer.equals(this.exceptions))    { addException(text); }
+                if (listPointer.equals(this.authors))       { addAuthor(text); }
+            }
+            else {
+                listPointer.set(listPointer.size() - 1, listPointer.get(listPointer.size() - 1).concat(text));
+            }
         }
     }
 

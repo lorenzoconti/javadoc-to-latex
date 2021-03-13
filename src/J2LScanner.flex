@@ -14,7 +14,6 @@ import java.io.*;
 /* Code in the next section is copied into the generated lexer class. */
 %{
 
-
   boolean debug = false;
 
   public StringBuffer string = new StringBuffer();
@@ -155,7 +154,7 @@ CLOSED_BRACE    = "}"
                             return token;
                         }
 
-{JDWS}                  {
+    {JDWS}                  {
                             Token token = symbol(sym.TEXT, string.toString());
                             string.setLength(0);
                             return token;

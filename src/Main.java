@@ -10,7 +10,12 @@ public class Main {
             J2LScanner scanner = new J2LScanner(new FileReader("src/input/java_code.txt"));
             CommonTokenStream tokenStream = new CommonTokenStream(scanner);
             J2LParser parser = new J2LParser(tokenStream);
-            parser.start();
+            try {
+                parser.start();
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
 
             try (PrintWriter out = new PrintWriter("src/output/output.tex")) {
                 Boolean withPreamble = argv.length > 0 && argv[0].equals("--with-preamble");
@@ -28,3 +33,6 @@ public class Main {
         }
     }
 }
+
+
+

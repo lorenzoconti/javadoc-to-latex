@@ -32,10 +32,30 @@ parser grammar J2LParser;
         translation.append(text + "\n");
         System.out.println(text);
     }
+    
+    public void displayRecognitionError(String[] tokenNames, RecognitionException e) {
+      	
+	String msg = getErrorMessage(e, tokenNames);    
+	String capmsg = msg.substring(0, 1).toUpperCase() + msg.substring(1); 
+	
+	String unexpectedTokenText = e.token.getText();
+	
+	String unexpectedTokenType = tokenNames[e.getUnexpectedType()];
+	
+	BitSet follow = computeContextSensitiveRuleFOLLOW();
+	
+	System.err.println(
+	"JavadocToLatex Parser ERROR at line " + e.line + " and column " + e.charPositionInLine + ".\n" 
+	+ capmsg);
+	
+	// JavadocToLatex Parser ERROR at line: 30:21 required (...)+ loop did not match anything at input 'Lorenzo'
+    }
+    
+    // error
 }
 
 start
-    : (                         { jd = new Javadoc(debug); }
+    : (                         //{ jd = new Javadoc(debug); }
 	    jdSection               { translation.append(jd.getTranslation()); }
 	    |
 	    codeSection
@@ -53,7 +73,7 @@ codeSection
 
 
 jdSection 
-	: (
+	: (					{ jd = new Javadoc(debug); }
 		code=JDS        		{ endCode($code); System.out.println("\\begin(jd)\n"); }
 		(
 			description=TEXT	{ jd.addDescription($description.text); }
@@ -86,8 +106,16 @@ keyValue
 	        )*	
 	  ) 					{ jd.addException(jd.buffer.toString()); }
     |
-    key=KEY_AUTHOR text=TEXT 			{ jd.addAuthor($text.text); } // TODO: controllare se � un autore o una lista di autori
+    	  (
+            key=KEY_AUTHOR             { jd.buffer.setLength(0);}
+            (
+                inline
+                |
+                text=TEXT            { jd.buffer.append($text.text + " "); }
+            )*
+      )                     { jd.addAuthor(jd.buffer.toString()); }
 ;
+
 
 
 inline
@@ -103,38 +131,3 @@ inline
 	                            }
 ;
 
-/**
- * Returns an Image object that 2*2 can then be painted on the screen.
- *
- * @param url  an absolute URL giving the base location of the {@code image} lorenzo@param.it  name the location of the image
- * eskere {@code fuck} cammello
- * prova {@code piscia} cavallo {@code sniffotutto}
- * @param Lorenzo Conti					KEY_PARAM, TEXT, INLINE, JDE 
- * ciaooo {@code ultimissimo} ciao
- */
-
-keyJDE 
-	: (
-	        key=KEY_PARAM	 		{ jd.buffer.setLength(0);}
-	        (
-	            inline
-	            |
-	            text=TEXT			{ jd.buffer.append($text.text + " "); }
-	        )*	
-	        jde=JDE				{ jd.buffer.append($jde.text); }
-	  )       				{ jd.addParam(jd.buffer.toString()); }
-	| 
-	  (
-	        key=KEY_EXCEPTION 		{ jd.buffer.setLength(0);}
-	        (
-	            inline
-	            |
-	            text=TEXT			{ jd.buffer.append($text.text + " "); }
-	        )*	
-	        jde=JDE				{ jd.buffer.append($jde.text); }
-	  ) 					{ jd.addException(jd.buffer.toString()); }
-	|
-	key=KEY_AUTHOR text=TEXT 			{ jd.addAuthor($text.text); } 
-	|
-	text=JDE			        { System.out.println("COMMENT " + $text.text); }
-;
