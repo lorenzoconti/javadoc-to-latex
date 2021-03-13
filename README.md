@@ -23,7 +23,13 @@ Easily compile and format util.Javadoc entities to LaTeX.
 1. Run main
 
 # To do
-* Gestione dei tag inline
-* Spostare la semantica in metodi
-* Gestire liste delle chiavi
-* Gestione degli errori (tipo "/** EOF")
+* Gestire liste delle chiavi e dei tag inline
+* trim spazi e tab all'inizio
+* Implementazione Author
+* Implementazione del resto
+* Warning: keys non ordinate ~ mischiate
+* Warning: missing descrizione
+* Error: version
+* Error: testo mancante in inline (es. {@code })
+* Error: testo mancante dopo chiavi
+
