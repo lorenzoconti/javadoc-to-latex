@@ -32,3 +32,5 @@ Scanner.java
 parser.java
 JavadocToLatex.java
 JDTLScanner.java
+J2LParser.java
+J2LScanner.java
