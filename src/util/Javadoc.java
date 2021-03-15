@@ -42,7 +42,7 @@ public class Javadoc {
         }
 
         if(this.version.length() > 0) {
-            _append("\\textbf{Version:} " + this.version.toString());
+            _append("\\textbf{Version:} :" + this.version.toString());
             _append("");
         }
 
