@@ -10,6 +10,7 @@ public class Javadoc {
     public ArrayList<String> exceptions;
 
     public StringBuffer description;
+    public StringBuffer version;
 
     public ArrayList<String> listPointer = new ArrayList<String>();
 
@@ -40,6 +41,11 @@ public class Javadoc {
             _append("");
         }
 
+        if(this.version.length() > 0) {
+            _append("\\textbf{Version:}" + this.version.toString());
+            _append("");
+        }
+
         if(this.description.length() > 0) {
             _append("\\textbf{Description:}");
             _append(this.description.toString());
@@ -64,7 +70,6 @@ public class Javadoc {
 
         return this.output.toString();
     }
-/** KEY_PARAM e JDE*/
 
     public void addParam(String content) {
 
@@ -95,11 +100,14 @@ public class Javadoc {
     }
 
     public void addDescription(String text) {
-
         String output = text;
-
         this.description.append(output);
+        _debug(output);
+    }
 
+    public void addVersion(String text) {
+        String output = text;
+        this.version.append(output);
         _debug(output);
     }
 

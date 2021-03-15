@@ -63,45 +63,49 @@ jdSection:
 
 keyValue
 	: (
-	        key=KEY_PARAM 			{ jd.buffer.setLength(0);}
-	        (
-	            inline
-	            |
-	            text=TEXT			{ jd.buffer.append($text.text + " "); }
-	        )*	
-	    )       				{ jd.addParam(jd.buffer.toString()); }
-	| 
-	  (
-	        key=KEY_EXCEPTION 		{ jd.buffer.setLength(0);}
-	        (
-	            inline
-	            |
-	            text=TEXT			{ jd.buffer.append($text.text + " "); }
-	        )*	
-	  ) 					{ jd.addException(jd.buffer.toString()); }
-    |
-    	  (
-            key=KEY_AUTHOR             { jd.buffer.setLength(0);}
-            (
-                inline
-                |
-                text=TEXT            { jd.buffer.append($text.text + " "); }
-            )*
-      )                     { jd.addAuthor(jd.buffer.toString()); }
+		key=KEY_PARAM			{ jd.buffer.setLength(0);}
+		(
+			inline
+			|
+			text=TEXT			{ jd.buffer.append($text.text + " "); }
+		)*
+)								{ jd.addParam(jd.buffer.toString()); }
+	|
+     	(
+		key=KEY_EXCEPTION		{ jd.buffer.setLength(0);}
+		(
+			inline
+			|
+			text=TEXT			{ jd.buffer.append($text.text + " "); }
+		)*
+	)							{ jd.addException(jd.buffer.toString()); }
+	|
+	(
+		key=KEY_AUTHOR			{ jd.buffer.setLength(0);}
+		(
+			inline
+			|
+			text=TEXT			{ jd.buffer.append($text.text + " "); }
+		)*
+	)							{ jd.addAuthor(jd.buffer.toString()); }
+	|
+	(
+		key=KEY_VERSION			{ jd.buffer.setLength(0);}
+		text=TEXT?				{ jd.buffer.append($text.text + " "); }
+	)							{ jd.addVersion(jd.buffer.toString()); }
 ;
 
 
 
 inline
 	: before=OPEN_BRACE key=KEY_CODE inline_text=CLOSED_BRACE
-	                            { 
-	                           	if (jd.buffer.toString().isEmpty() && $before.text.length() <= 1)  {
-	                           		// TODO: gestire errore	
-	                           		System.out.println("ERROR: undeclared parameter.");
-	                           	}
-	                            	else {
-	                            		jd.buffer.append($before.text + "\\texttt{" + $inline_text.text + "} ");  
-	                            	}
-	                            }
+    {
+        if (jd.buffer.toString().isEmpty() && $before.text.length() <= 1)  {
+            // TODO: gestire errore
+            System.out.println("ERROR: undeclared parameter.");
+        } else {
+            jd.buffer.append($before.text + "\\texttt{" + $inline_text.text + "} ");
+        }
+    }
 ;
 

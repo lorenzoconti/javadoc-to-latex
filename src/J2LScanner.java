@@ -69,8 +69,8 @@ public class J2LScanner implements TokenSource {
     "\1\0\1\6\7\0\1\7\4\0\1\10\20\0\1\11"+
     "\40\0\1\12\1\0\1\13\1\14\1\15\2\0\1\16"+
     "\1\17\3\0\1\20\1\21\1\22\1\23\1\0\1\24"+
-    "\1\0\1\25\1\26\2\0\1\27\2\0\1\30\1\0"+
-    "\1\31\7\0\1\3\u01a2\0\2\3\326\0\u0100\3";
+    "\1\25\1\26\1\27\1\30\1\0\1\31\2\0\1\32"+
+    "\1\0\1\33\7\0\1\3\u01a2\0\2\3\326\0\u0100\3";
 
   private static int [] zzUnpackcmap_blocks() {
     int [] result = new int[1024];
@@ -99,11 +99,11 @@ public class J2LScanner implements TokenSource {
   private static final String ZZ_ACTION_PACKED_0 =
     "\3\0\2\1\1\2\2\3\1\2\1\4\2\1\1\5"+
     "\1\3\1\5\2\1\1\6\1\7\1\10\10\0\1\11"+
-    "\1\12\4\0\1\13\1\11\15\0\1\14\4\0\1\15"+
-    "\1\16\3\0\1\17";
+    "\1\12\5\0\1\13\1\11\20\0\1\14\5\0\1\15"+
+    "\1\0\1\16\3\0\1\17\1\0\1\20";
 
   private static int [] zzUnpackAction() {
-    int [] result = new int[60];
+    int [] result = new int[68];
     int offset = 0;
     offset = zzUnpackAction(ZZ_ACTION_PACKED_0, offset, result);
     return result;
@@ -128,17 +128,18 @@ public class J2LScanner implements TokenSource {
   private static final int [] ZZ_ROWMAP = zzUnpackRowMap();
 
   private static final String ZZ_ROWMAP_PACKED_0 =
-    "\0\0\0\32\0\64\0\116\0\150\0\202\0\116\0\150"+
-    "\0\234\0\116\0\266\0\320\0\352\0\320\0\u0104\0\u011e"+
-    "\0\u0138\0\116\0\116\0\116\0\150\0\266\0\202\0\u0152"+
-    "\0\320\0\u011e\0\u016c\0\u0186\0\u01a0\0\u01ba\0\u01d4\0\u01ee"+
-    "\0\u0208\0\u0222\0\u023c\0\u0256\0\u0270\0\u028a\0\u02a4\0\u02be"+
-    "\0\u02d8\0\u02f2\0\u030c\0\u0326\0\u0340\0\u035a\0\u0374\0\u038e"+
-    "\0\u03a8\0\u035a\0\u03c2\0\u03dc\0\u03f6\0\u0410\0\u03dc\0\u03f6"+
-    "\0\u042a\0\u0444\0\u045e\0\u045e";
+    "\0\0\0\34\0\70\0\124\0\160\0\214\0\124\0\160"+
+    "\0\250\0\124\0\304\0\340\0\374\0\340\0\u0118\0\u0134"+
+    "\0\u0150\0\124\0\124\0\124\0\160\0\304\0\214\0\u016c"+
+    "\0\340\0\u0134\0\u0188\0\u01a4\0\u01c0\0\u01dc\0\u01f8\0\u0214"+
+    "\0\u0230\0\u024c\0\u0268\0\u0284\0\u02a0\0\u02bc\0\u02d8\0\u02f4"+
+    "\0\u0310\0\u032c\0\u0348\0\u0364\0\u0380\0\u039c\0\u03b8\0\u03d4"+
+    "\0\u03f0\0\u040c\0\u0428\0\u0444\0\u0460\0\u03f0\0\u047c\0\u0498"+
+    "\0\u04b4\0\u04d0\0\u04ec\0\u0498\0\u0508\0\u04d0\0\u0524\0\u0540"+
+    "\0\u055c\0\u0540\0\u0578\0\u0578";
 
   private static int [] zzUnpackRowMap() {
-    int [] result = new int[60];
+    int [] result = new int[68];
     int offset = 0;
     offset = zzUnpackRowMap(ZZ_ROWMAP_PACKED_0, offset, result);
     return result;
@@ -162,30 +163,32 @@ public class J2LScanner implements TokenSource {
 
   private static final String ZZ_TRANS_PACKED_0 =
     "\1\4\1\5\1\6\1\7\1\10\1\11\1\12\1\4"+
-    "\1\13\22\4\1\14\1\15\1\7\1\16\1\17\1\4"+
-    "\1\20\1\4\1\21\16\4\1\22\1\23\2\4\2\7"+
-    "\1\4\1\7\1\24\23\4\33\0\1\25\2\0\1\25"+
-    "\3\0\1\26\23\0\1\27\2\0\1\27\2\0\1\26"+
-    "\23\0\1\6\2\0\1\27\2\0\1\26\30\0\1\30"+
-    "\23\0\1\31\2\0\1\31\2\0\1\32\23\0\1\33"+
-    "\1\34\1\0\1\33\1\34\1\0\1\35\23\0\1\33"+
-    "\1\15\1\0\1\33\1\34\1\0\1\35\32\0\1\36"+
-    "\33\0\1\37\1\40\1\0\1\41\5\0\1\42\15\0"+
-    "\1\43\23\0\1\33\2\0\1\33\2\0\1\35\23\0"+
-    "\1\31\1\34\1\0\1\31\1\34\1\0\1\32\23\0"+
-    "\1\44\2\0\1\44\3\0\1\36\23\0\1\36\2\0"+
-    "\1\36\52\0\1\45\25\0\1\46\36\0\1\47\14\0"+
-    "\1\50\20\0\1\43\2\0\1\43\26\0\1\44\2\0"+
-    "\1\44\52\0\1\51\20\0\1\52\30\0\1\53\42\0"+
-    "\1\54\23\0\1\55\30\0\1\56\31\0\1\57\26\0"+
-    "\1\60\41\0\1\61\10\0\1\62\2\0\1\62\50\0"+
-    "\1\63\26\0\1\64\35\0\1\65\32\0\1\66\5\0"+
-    "\1\67\2\0\1\67\26\0\1\70\2\0\1\70\44\0"+
-    "\1\71\34\0\1\72\30\0\1\73\11\0\1\74\2\0"+
-    "\1\74\25\0";
+    "\1\13\24\4\1\14\1\15\1\7\1\16\1\17\1\4"+
+    "\1\20\1\4\1\21\20\4\1\22\1\23\2\4\2\7"+
+    "\1\4\1\7\1\24\25\4\35\0\1\25\2\0\1\25"+
+    "\3\0\1\26\25\0\1\27\2\0\1\27\2\0\1\26"+
+    "\25\0\1\6\2\0\1\27\2\0\1\26\32\0\1\30"+
+    "\25\0\1\31\2\0\1\31\2\0\1\32\25\0\1\33"+
+    "\1\34\1\0\1\33\1\34\1\0\1\35\25\0\1\33"+
+    "\1\15\1\0\1\33\1\34\1\0\1\35\34\0\1\36"+
+    "\35\0\1\37\1\40\1\0\1\41\5\0\1\42\4\0"+
+    "\1\43\12\0\1\44\25\0\1\33\2\0\1\33\2\0"+
+    "\1\35\25\0\1\31\1\34\1\0\1\31\1\34\1\0"+
+    "\1\32\25\0\1\45\2\0\1\45\3\0\1\36\25\0"+
+    "\1\36\2\0\1\36\55\0\1\46\26\0\1\47\42\0"+
+    "\1\50\14\0\1\51\36\0\1\52\17\0\1\44\2\0"+
+    "\1\44\30\0\1\45\2\0\1\45\55\0\1\53\21\0"+
+    "\1\54\32\0\1\55\44\0\1\56\33\0\1\57\25\0"+
+    "\1\60\32\0\1\61\33\0\1\62\30\0\1\63\46\0"+
+    "\1\64\30\0\1\65\12\0\1\66\2\0\1\66\52\0"+
+    "\1\67\30\0\1\70\32\0\1\71\40\0\1\72\35\0"+
+    "\1\73\6\0\1\74\2\0\1\74\51\0\1\75\12\0"+
+    "\1\76\2\0\1\76\46\0\1\77\35\0\1\100\34\0"+
+    "\1\101\12\0\1\102\2\0\1\102\50\0\1\103\13\0"+
+    "\1\104\2\0\1\104\27\0";
 
   private static int [] zzUnpackTrans() {
-    int [] result = new int[1144];
+    int [] result = new int[1428];
     int offset = 0;
     offset = zzUnpackTrans(ZZ_TRANS_PACKED_0, offset, result);
     return result;
@@ -229,11 +232,11 @@ public class J2LScanner implements TokenSource {
 
   private static final String ZZ_ATTRIBUTE_PACKED_0 =
     "\3\0\1\11\2\1\1\11\2\1\1\11\7\1\3\11"+
-    "\10\0\2\1\4\0\2\1\15\0\1\1\4\0\2\1"+
-    "\3\0\1\1";
+    "\10\0\2\1\5\0\2\1\20\0\1\1\5\0\1\1"+
+    "\1\0\1\1\3\0\1\1\1\0\1\1";
 
   private static int [] zzUnpackAttribute() {
-    int [] result = new int[60];
+    int [] result = new int[68];
     int offset = 0;
     offset = zzUnpackAttribute(ZZ_ATTRIBUTE_PACKED_0, offset, result);
     return result;
@@ -311,7 +314,6 @@ public class J2LScanner implements TokenSource {
   private boolean zzEOFDone;
 
   /* user code: */
-
 
   boolean debug = false;
 
@@ -768,58 +770,58 @@ public class J2LScanner implements TokenSource {
             { string.append(yytext());
             }
             // fall through
-          case 16: break;
+          case 17: break;
           case 2:
             { Token token = symbol(sym.CODE, string.toString());
                            string.setLength(0);
                            return token;
             }
             // fall through
-          case 17: break;
+          case 18: break;
           case 3:
             { System.out.println("error " + yytext());
                             return symbol(sym.ERROR);
             }
             // fall through
-          case 18: break;
+          case 19: break;
           case 4:
             { string.append(yytext());
                             yybegin(STRING);
             }
             // fall through
-          case 19: break;
+          case 20: break;
           case 5:
             { 
             }
             // fall through
-          case 20: break;
+          case 21: break;
           case 6:
             { Token token = symbol(sym.OPEN_BRACE, string.toString());
                             string.setLength(0);
                             return token;
             }
             // fall through
-          case 21: break;
+          case 22: break;
           case 7:
             { Token token = symbol(sym.CLOSED_BRACE, string.toString());
                             string.setLength(0);
                             return token;
             }
             // fall through
-          case 22: break;
+          case 23: break;
           case 8:
             { string.append(yytext());
                             yybegin(YYINITIAL);
             }
             // fall through
-          case 23: break;
+          case 24: break;
           case 9:
             { Token token = symbol(sym.TEXT, string.toString());
                             string.setLength(0);
                             return token;
             }
             // fall through
-          case 24: break;
+          case 25: break;
           case 10:
             { Token token = symbol(sym.JDE, string.toString());
                             string.setLength(0);
@@ -827,7 +829,7 @@ public class J2LScanner implements TokenSource {
                             return token;
             }
             // fall through
-          case 25: break;
+          case 26: break;
           case 11:
             { Token token = symbol(sym.JDS, string.toString());
                             string.setLength(0);
@@ -835,27 +837,32 @@ public class J2LScanner implements TokenSource {
                             return token;
             }
             // fall through
-          case 26: break;
+          case 27: break;
           case 12:
             { return symbol(sym.KEY_CODE, yytext().trim());
             }
             // fall through
-          case 27: break;
+          case 28: break;
           case 13:
             { return symbol(sym.KEY_PARAM, yytext().trim());
             }
             // fall through
-          case 28: break;
+          case 29: break;
           case 14:
             { return symbol(sym.KEY_AUTHOR, yytext().trim());
             }
             // fall through
-          case 29: break;
+          case 30: break;
           case 15:
+            { return symbol(sym.KEY_VERSION, yytext().trim());
+            }
+            // fall through
+          case 31: break;
+          case 16:
             { return symbol(sym.KEY_EXCEPTION, yytext().trim());
             }
             // fall through
-          case 30: break;
+          case 32: break;
           default:
             zzScanError(ZZ_NO_MATCH);
         }
