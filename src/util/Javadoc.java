@@ -31,10 +31,10 @@ public class Javadoc {
         this.exceptions = new ArrayList<String>();
 
         this.description = new StringBuffer();
+        this.version = new StringBuffer();
     }
 
     public String getTranslation() {
-
         if(!this.authors.isEmpty()) {
             if(this.authors.size() == 1) _append("\\textbf{Author:} " + this.authors.get(0));
             else _append("\\textbf{Authors:} " + String.join(", ", this.authors));
@@ -42,7 +42,7 @@ public class Javadoc {
         }
 
         if(this.version.length() > 0) {
-            _append("\\textbf{Version:}" + this.version.toString());
+            _append("\\textbf{Version:} " + this.version.toString());
             _append("");
         }
 
@@ -72,12 +72,10 @@ public class Javadoc {
     }
 
     public void addParam(String content) {
-
         lastDescription = false;
         listPointer = params;
 
         if (content.trim().length() > 0) {
-
             requiresSplit = false;
 
             String[] splitted = _split(content);
@@ -112,7 +110,6 @@ public class Javadoc {
     }
 
     public void addException(String content) {
-
         lastDescription = false;
         listPointer = exceptions;
 
@@ -127,12 +124,10 @@ public class Javadoc {
     }
 
     public void addAuthor(String author){
-
         lastDescription = false;
         listPointer = authors;
 
         String[] output = author.trim().split(",");
-
         listPointer.addAll(Arrays.asList(output));
 
         _debug(author);

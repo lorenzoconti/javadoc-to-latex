@@ -141,7 +141,7 @@ CLOSED_BRACE    = "}"
 
   {KEY_AUTHOR}          { return symbol(sym.KEY_AUTHOR, yytext().trim()); }
 
-  {KEY_VERSION}         { return symbol(sym.KEY_VERSIONz, yytext().trim()); }
+  {KEY_VERSION}         { return symbol(sym.KEY_VERSION, yytext().trim()); }
 
   {KEY_CODE}            { return symbol(sym.KEY_CODE, yytext().trim()); }
 

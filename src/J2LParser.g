@@ -69,9 +69,9 @@ keyValue
 			|
 			text=TEXT			{ jd.buffer.append($text.text + " "); }
 		)*
-)								{ jd.addParam(jd.buffer.toString()); }
+	)							{ jd.addParam(jd.buffer.toString()); }
 	|
-     	(
+     (
 		key=KEY_EXCEPTION		{ jd.buffer.setLength(0);}
 		(
 			inline
@@ -91,7 +91,9 @@ keyValue
 	|
 	(
 		key=KEY_VERSION			{ jd.buffer.setLength(0);}
-		text=TEXT?				{ jd.buffer.append($text.text + " "); }
+		(
+		text=TEXT				{ jd.buffer.append($text.text + " "); }
+		)?
 	)							{ jd.addVersion(jd.buffer.toString()); }
 ;
 
