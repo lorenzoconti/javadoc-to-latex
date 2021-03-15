@@ -2,6 +2,7 @@ package util;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import org.antlr.runtime.Token;
 
 public class Javadoc {
 
@@ -163,6 +164,16 @@ public class Javadoc {
             else {
                 listPointer.set(listPointer.size() - 1, listPointer.get(listPointer.size() - 1).concat(text));
             }
+        }
+    }
+
+    public void addInlineCode(String before, Token key, String inline) {
+
+        if (this.buffer.toString().isEmpty() && before.length() <= 1)  {
+            System.err.println("Undeclared parameter or missing description at line " + key.getLine() + " before the inline code.");
+        }
+        else {
+            this.buffer.append(before).append("\\texttt{").append(inline).append("}");
         }
     }
 

@@ -27,11 +27,16 @@ Easily compile and format util.Javadoc entities to LaTeX.
 * trim spazi e tab all'inizio
 * Implementazione Author (Lorenzo)
 * Implementazione del resto
+  
+* trim spazi e tab all'inizio  
+
 * Warning: keys non ordinate ~ mischiate
 * Warning: missing descrizione
+  
 * Error: version
 * Error: testo mancante in inline (es. {@code })
 * Error: testo mancante dopo chiavi
 
-* Conversione classe code
+* Commentare Javadoc.java e code.java con javadoc
+
 

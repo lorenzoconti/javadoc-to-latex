@@ -11,9 +11,7 @@ public Image getImage(URL url, String name) {
     PRIMO
   }
 }
-/**
- * Returns an Image object that 2*2 can then be painted on the screen.
-*/
+/** Returns an Image object that 2*2 can then be painted {@code prova con code} on the screen. */
 public Image getImage(URL url, String name) {
     return getImage(new URL(url, "name"));
     SECONDO
