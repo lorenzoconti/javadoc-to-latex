@@ -17,91 +17,87 @@ parser grammar J2LParser;
  
     public void displayRecognitionError(String[] tokenNames, RecognitionException e) {
       	
-	String msg = getErrorMessage(e, tokenNames);    
-	String capmsg = msg.substring(0, 1).toUpperCase() + msg.substring(1); 
-	
-	System.err.println(
-	"JavadocToLatex Parser ERROR at line " + e.line + " and column " + e.charPositionInLine + ".\n" 
-	+ capmsg);
+		String msg = getErrorMessage(e, tokenNames);    
+		String capmsg = msg.substring(0, 1).toUpperCase() + msg.substring(1); 
+		
+		System.err.println(
+		"JavadocToLatex Parser ERROR at line " + e.line + " and column " + e.charPositionInLine + ".\n" 
+		+ capmsg);
 	
 	}
 }
 
 start: 
-    (                         		
-	    jdSection               	{ translation.append(jd.getTranslation()); }
-	    |
-	    codeSection					
-	)*
-    eof=EOF                     	{ 	if ($eof != null) c.addCode($eof.text);
+    	(                         		
+	    	jdSection               	{ translation.append(jd.getTranslation()); }
+	    	|
+	    	codeSection					
+		)*
+    	eof=EOF                     	{ 	if ($eof != null) c.addCode($eof.text);
     									translation.append(c.getTranslation()); }
 ;
 
 
 codeSection:                          	{ c = new Code(debug); }
-	(
-		code=CODE 						{ c.addCode($code.text); }
-	)+
+		(
+			code=CODE 						{ c.addCode($code.text); }
+		)+
 ;
 
 
 jdSection:
 		(								{ 	jd = new Javadoc(debug); }
-		code=JDS        				{ 	if ($code != null) c.addCode($code.text);
+			code=JDS        			{ 	if ($code != null) c.addCode($code.text);
     										translation.append(c.getTranslation()); }
+    									{ jd.buffer.setLength(0);}
 		(
-			description=TEXT			{ jd.addDescription($description.text); }
-		)*	
+			description=TEXT			{ jd.buffer.append($description.text + " "); }
+			|
+			inline
+		)*								{ jd.addDescription(jd.buffer.toString());}
 		(
-			// inline* text=TEXT per commenti inline nella descrizione
 		  	keyValue		  	
 		)*
-		jde=JDE		    { jd.addLastLine($jde.text); }
-	)                           { System.out.print("\\end(jd)\n"); }
+		jde=JDE		    				{ jd.addLastLine($jde.text); }
+	)
 ;
 
 
-keyValue
-	: (
-	        key=KEY_PARAM 			{ jd.buffer.setLength(0);}
+keyValue:
+		(
+	        key=KEY_PARAM 				{ jd.buffer.setLength(0);}
 	        (
 	            inline
 	            |
-	            text=TEXT			{ jd.buffer.append($text.text + " "); }
+	            text=TEXT				{ jd.buffer.append($text.text + " "); }
 	        )*	
-	    )       				{ jd.addParam(jd.buffer.toString()); }
-	| 
-	  (
-	        key=KEY_EXCEPTION 		{ jd.buffer.setLength(0);}
+	    )       						{ jd.addParam(jd.buffer.toString()); }
+		| 
+	  	(
+	        key=KEY_EXCEPTION 			{ jd.buffer.setLength(0);}
 	        (
 	            inline
 	            |
-	            text=TEXT			{ jd.buffer.append($text.text + " "); }
+	            text=TEXT				{ jd.buffer.append($text.text + " "); }
 	        )*	
-	  ) 					{ jd.addException(jd.buffer.toString()); }
-    |
-    	  (
-            key=KEY_AUTHOR             { jd.buffer.setLength(0);}
+	  	) 								{ jd.addException(jd.buffer.toString()); }
+    	|
+    	(
+			key=KEY_AUTHOR             	{ jd.buffer.setLength(0);}
             (
                 inline
                 |
-                text=TEXT            { jd.buffer.append($text.text + " "); }
+                text=TEXT            	{ jd.buffer.append($text.text + " "); }
             )*
-      )                     { jd.addAuthor(jd.buffer.toString()); }
+      	)                     			{ jd.addAuthor(jd.buffer.toString()); }
 ;
 
+// @param {@code }
 
-
-inline
-	: before=OPEN_BRACE key=KEY_CODE inline_text=CLOSED_BRACE
-	                            { 
-	                           	if (jd.buffer.toString().isEmpty() && $before.text.length() <= 1)  {
-	                           		// TODO: gestire errore	
-	                           		System.out.println("ERROR: undeclared parameter.");
-	                           	}
-	                            	else {
-	                            		jd.buffer.append($before.text + "\\texttt{" + $inline_text.text + "} ");  
-	                            	}
-	                            }
+inline:	(
+			before=OPEN_BRACE key=KEY_CODE inline_text=CLOSED_BRACE
+		)
+		{ jd.addInlineCode($before.text, $key, $inline_text.text); }
+		
 ;
 
