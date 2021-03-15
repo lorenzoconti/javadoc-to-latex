@@ -24,6 +24,8 @@ Easily compile and format util.Javadoc entities to LaTeX.
 
 # To do
 * Gestire liste delle chiavi e dei tag inline
+* trim spazi e tab all'inizio
+* Implementazione Author (Lorenzo)
 * Implementazione del resto
   
 * trim spazi e tab all'inizio  

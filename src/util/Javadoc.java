@@ -11,6 +11,7 @@ public class Javadoc {
     public ArrayList<String> exceptions;
 
     public StringBuffer description;
+    public StringBuffer version;
 
     public ArrayList<String> listPointer = new ArrayList<String>();
 
@@ -38,6 +39,11 @@ public class Javadoc {
         if(!this.authors.isEmpty()) {
             if(this.authors.size() == 1) _append("\\textbf{Author:} " + this.authors.get(0));
             else _append("\\textbf{Authors:} " + String.join(", ", this.authors));
+            _append("");
+        }
+
+        if(this.version.length() > 0) {
+            _append("\\textbf{Version:}" + this.version.toString());
             _append("");
         }
 
@@ -95,11 +101,14 @@ public class Javadoc {
     }
 
     public void addDescription(String text) {
-
         String output = text;
-
         this.description.append(output);
+        _debug(output);
+    }
 
+    public void addVersion(String text) {
+        String output = text;
+        this.version.append(output);
         _debug(output);
     }
 

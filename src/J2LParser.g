@@ -63,33 +63,38 @@ jdSection:
 ;
 
 
-keyValue:
+keyValue
+	: (
+		key=KEY_PARAM			{ jd.buffer.setLength(0);}
 		(
-	        key=KEY_PARAM 				{ jd.buffer.setLength(0);}
-	        (
-	            inline
-	            |
-	            text=TEXT				{ jd.buffer.append($text.text + " "); }
-	        )*	
-	    )       						{ jd.addParam(jd.buffer.toString()); }
-		| 
-	  	(
-	        key=KEY_EXCEPTION 			{ jd.buffer.setLength(0);}
-	        (
-	            inline
-	            |
-	            text=TEXT				{ jd.buffer.append($text.text + " "); }
-	        )*	
-	  	) 								{ jd.addException(jd.buffer.toString()); }
-    	|
-    	(
-			key=KEY_AUTHOR             	{ jd.buffer.setLength(0);}
-            (
-                inline
-                |
-                text=TEXT            	{ jd.buffer.append($text.text + " "); }
-            )*
-      	)                     			{ jd.addAuthor(jd.buffer.toString()); }
+			inline
+			|
+			text=TEXT			{ jd.buffer.append($text.text + " "); }
+		)*
+)								{ jd.addParam(jd.buffer.toString()); }
+	|
+     	(
+		key=KEY_EXCEPTION		{ jd.buffer.setLength(0);}
+		(
+			inline
+			|
+			text=TEXT			{ jd.buffer.append($text.text + " "); }
+		)*
+	)							{ jd.addException(jd.buffer.toString()); }
+	|
+	(
+		key=KEY_AUTHOR			{ jd.buffer.setLength(0);}
+		(
+			inline
+			|
+			text=TEXT			{ jd.buffer.append($text.text + " "); }
+		)*
+	)							{ jd.addAuthor(jd.buffer.toString()); }
+	|
+	(
+		key=KEY_VERSION			{ jd.buffer.setLength(0);}
+		text=TEXT?				{ jd.buffer.append($text.text + " "); }
+	)							{ jd.addVersion(jd.buffer.toString()); }
 ;
 
 // @param {@code }

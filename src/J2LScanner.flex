@@ -77,10 +77,11 @@ InputChar       = [^\r\n]
 JDWS            = {LineTerm} {WhiteSpace}* "*" {WhiteSpace}*
 JDS             = ({LineTerm}* | {WhiteSpace}*) "/**" {WhiteSpace}*
 JDE             = {LineTerm}* {WhiteSpace}* "*/" {LineTerm}*
-KEY_PARAM           = ("@param") [ \t\f]+
-KEY_EXCEPTION       = ("@exception") [ \t\f]+
-KEY_AUTHOR          = ("@author") [ \t\f]+
-KEY_CODE            = ("@code") [ \t\f]+
+KEY_PARAM       = ("@param") [ \t\f]+
+KEY_EXCEPTION   = ("@exception") [ \t\f]+
+KEY_AUTHOR      = ("@author") [ \t\f]+
+KEY_CODE        = ("@code") [ \t\f]+
+KEY_VERSION     = ("@version") [ \t\f]+
 // JDKV            = ("@param" | "@exception" | "@provides" | "@throws" | "@uses" | "@version") [ \t\f]+
 // JDKD            = ("@author" | "@deprecated" | "@return" | "@serial" | "@serialData" | "@since" | "@see")[ \t\f]+
 // JDKINLINE       = ("@code" | "@link" | "@linkplain") [ \t\f]+
@@ -139,6 +140,8 @@ CLOSED_BRACE    = "}"
   {KEY_EXCEPTION}       { return symbol(sym.KEY_EXCEPTION, yytext().trim()); }
 
   {KEY_AUTHOR}          { return symbol(sym.KEY_AUTHOR, yytext().trim()); }
+
+  {KEY_VERSION}         { return symbol(sym.KEY_VERSIONz, yytext().trim()); }
 
   {KEY_CODE}            { return symbol(sym.KEY_CODE, yytext().trim()); }
 
