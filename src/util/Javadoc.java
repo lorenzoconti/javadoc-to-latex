@@ -73,6 +73,11 @@ public class Javadoc {
     }
 
     public void addParam(String content) {
+
+        if (!listPointer.equals(params)) {
+            System.out.println("Warning: @param found among other Javadoc keywords.\nYou should put all the paramaters descriptions together.");
+        }
+
         lastDescription = false;
         listPointer = params;
 
@@ -99,18 +104,22 @@ public class Javadoc {
     }
 
     public void addDescription(String text) {
-        String output = text;
-        this.description.append(output);
-        _debug(output);
+
+        this.description.append(text);
+        _debug(text);
     }
 
     public void addVersion(String text) {
-        String output = text;
-        this.version.append(output);
-        _debug(output);
+        this.version.append(text);
+        _debug(text);
     }
 
     public void addException(String content) {
+
+        if (!listPointer.equals(exceptions)) {
+            System.out.println("Warning: @exception found among other Javadoc keywords.\nYou should put all the exceptions descriptions together.");
+        }
+
         lastDescription = false;
         listPointer = exceptions;
 
@@ -125,6 +134,11 @@ public class Javadoc {
     }
 
     public void addAuthor(String author){
+
+        if (!listPointer.equals(params)) {
+            System.out.println("Warning: @author found among other Javadoc keywords.\nYou should put all the authors together.");
+        }
+
         lastDescription = false;
         listPointer = authors;
 
@@ -139,8 +153,6 @@ public class Javadoc {
     private String[] _split(String content) {
         String[] splitted;
 
-        // TODO if (content.length() > 0) splitted = content.split(" ", 2);
-        // TODO: ELSE
         splitted = content.split(" ", 2);
 
         String param = splitted[0];
@@ -152,6 +164,7 @@ public class Javadoc {
     }
 
     public void addLastLine(String text) {
+
         if (lastDescription) {
             this.description.append(text);
         }

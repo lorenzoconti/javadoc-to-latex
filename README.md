@@ -39,4 +39,6 @@ Easily compile and format util.Javadoc entities to LaTeX.
 
 * Commentare Javadoc.java e code.java con javadoc
 
+* Problema con VERSION e Key_Version Text? (JDE da problemi perchè dopo version si può andare a capo e scrivere una nuova e ultima riga)
+
 
