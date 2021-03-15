@@ -2,32 +2,21 @@
  * Returns an Image object that 2*2 can then be painted on the screen.
  *
  * @author Lorenzo Conti, Paolo Fosci, Giuseppe Psaila
- * @author Fabio Sangregorio
- * SamueleXFerri
 */
 public Image getImage(URL url, String name) {
     /**
-     * @author Lorenzo Conti, Paolo Fosci, Giuseppe Psaila
-     * @author Fabio Sangregorio
-     * SamueleXFerri
+     * @param parametro Lorenzo Conti, Paolo Fosci, Giuseppe Psaila
     */
     return getImage(new URL(url, "/**@author name"));
-  } catch (MalformedURLException e) {
-    return null;
+    PRIMO
   }
 }
 /**
  * Returns an Image object that 2*2 can then be painted on the screen.
- *
- * @author Lorenzo Conti, Paolo Fosci, Giuseppe Psaila
- * @author Fabio Sangregorio
- * SamueleXFerri
 */
 public Image getImage(URL url, String name) {
-    return getImage(new URL(url, "/**@author name"));
-  } catch (MalformedURLException e) {
-    return null;
-  }
+    return getImage(new URL(url, "name"));
+    SECONDO
 }
 /** inline */
     /** inline */

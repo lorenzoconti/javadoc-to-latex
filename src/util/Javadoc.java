@@ -16,7 +16,7 @@ public class Javadoc {
     boolean lastDescription = true;
     boolean requiresSplit = true;
 
-
+    // used in J2LParser.g
     public StringBuffer buffer = new StringBuffer();
     boolean debug;
 

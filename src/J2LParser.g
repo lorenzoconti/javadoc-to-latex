@@ -6,38 +6,15 @@ parser grammar J2LParser;
 
 @members {
     boolean debug = false;
-    boolean exitFromCodeSection = true;
 
     StringBuffer translation = new StringBuffer ();
     Javadoc jd = new Javadoc(debug);
-
+    Code c = new Code(debug);	
+	
     public String getTranslation () {
         return translation.toString();
     }
  
-    void endCode(Token token) {
-        String text = token.getText();
-        
-        System.out.println(text);
-
-        if (token != null && exitFromCodeSection) {
-            writeLine(text);
-            writeLine("\\end{lstlisting}");
-            exitFromCodeSection = false;
-        }
-    } 
-		/** aaaaaaaaaaaaaa 
-	*/
-    void writeLine(Token token) {
-        String text = token.getText();
-        writeLine(text); 
-    }
-
-    void writeLine(String text) {
-        translation.append(text + "\n");
-        if (debug) { System.out.println(text);}
-    }
-    
     public void displayRecognitionError(String[] tokenNames, RecognitionException e) {
       	
 	String msg = getErrorMessage(e, tokenNames);    
@@ -47,35 +24,33 @@ parser grammar J2LParser;
 	"JavadocToLatex Parser ERROR at line " + e.line + " and column " + e.charPositionInLine + ".\n" 
 	+ capmsg);
 	
-	// JavadocToLatex Parser ERROR at line: 30:21 required (...)+ loop did not match anything at input 'Lorenzo'
-    }
-    
-    // error
+	}
 }
 
-start
-    : (                         //{ jd = new Javadoc(debug); }
-	    jdSection               { translation.append(jd.getTranslation()); }
+start: 
+    (                         		
+	    jdSection               	{ translation.append(jd.getTranslation()); }
 	    |
-	    codeSection
+	    codeSection					
 	)*
-    eof=EOF                     { endCode($eof); }
+    eof=EOF                     	{ 	if ($eof != null) c.addCode($eof.text);
+    									translation.append(c.getTranslation()); }
 ;
 
 
-codeSection
-    :                           {writeLine("\\begin{lstlisting}[language=Java]"); exitFromCodeSection=true;}
+codeSection:                          	{ c = new Code(debug); }
 	(
-		code=CODE 		        {writeLine($code); }
+		code=CODE 						{ c.addCode($code.text); }
 	)+
 ;
 
 
-jdSection 
-	: (					{ jd = new Javadoc(debug); }
-		code=JDS        		{ endCode($code); System.out.println("\\begin(jd)\n"); }
+jdSection:
+		(								{ 	jd = new Javadoc(debug); }
+		code=JDS        				{ 	if ($code != null) c.addCode($code.text);
+    										translation.append(c.getTranslation()); }
 		(
-			description=TEXT	{ jd.addDescription($description.text); }
+			description=TEXT			{ jd.addDescription($description.text); }
 		)*	
 		(
 			// inline* text=TEXT per commenti inline nella descrizione
