@@ -33,3 +33,5 @@ Easily compile and format util.Javadoc entities to LaTeX.
 * Error: testo mancante in inline (es. {@code })
 * Error: testo mancante dopo chiavi
 
+* Conversione classe code
+

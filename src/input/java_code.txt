@@ -1,14 +1,16 @@
 /**
  * Returns an Image object that 2*2 can then be painted on the screen.
  *
- * @param url  an absolute URL giving the base location of the {@code image} lorenzo@param.it  name the location of the image
- * vvvvvvv {@code ccccccc} aaaaaaa
- *      prova {@code eeeeee} aaaaaa {@code oooooo}
- * @param Lorenzo
- * ultimissimo {@code ultimissimo} CIAO
+ * @author Lorenzo Conti, Paolo Fosci, Giuseppe Psaila
+ * @author Fabio Sangregorio
+ * SamueleXFerri
 */
 public Image getImage(URL url, String name) {
-  try {
+    /**
+     * @author Lorenzo Conti, Paolo Fosci, Giuseppe Psaila
+     * @author Fabio Sangregorio
+     * SamueleXFerri
+    */
     return getImage(new URL(url, "/**@author name"));
   } catch (MalformedURLException e) {
     return null;
@@ -17,30 +19,21 @@ public Image getImage(URL url, String name) {
 /**
  * Returns an Image object that 2*2 can then be painted on the screen.
  *
- * @param  url  an absolute URL giving the base location of the image
- * @param  name the location of the image, relative to the url argument
- * @param paolofosci @param.com
- * @return the image at the specified URL
- * @exception except description
+ * @author Lorenzo Conti, Paolo Fosci, Giuseppe Psaila
+ * @author Fabio Sangregorio
+ * SamueleXFerri
 */
-
-/** Inline comment */
 public Image getImage(URL url, String name) {
-  try {
-  /** @author Lorenzo
-  */
     return getImage(new URL(url, "/**@author name"));
   } catch (MalformedURLException e) {
     return null;
   }
 }
+/** inline */
+    /** inline */
 
-/** @param URL questo è un {@code URL} ciaooo */
 
-public Image getImage(URL url, String name) {
-  try {
-    return getImage(new URL(url, "/**@author name"));
-  } catch (MalformedURLException e) {
-    return null;
-  }
-}
+        /**
+        * inline
+        *
+        */

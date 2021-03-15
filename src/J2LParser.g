@@ -6,6 +6,7 @@ parser grammar J2LParser;
 
 @members {
     boolean debug = false;
+    boolean exitFromCodeSection = true;
 
     StringBuffer translation = new StringBuffer ();
     Javadoc jd = new Javadoc(debug);
@@ -16,33 +17,31 @@ parser grammar J2LParser;
  
     void endCode(Token token) {
         String text = token.getText();
+        
+        System.out.println(text);
 
-        if (token != null && text.replace("\n", "").trim().length() > 0) {
+        if (token != null && exitFromCodeSection) {
             writeLine(text);
             writeLine("\\end{lstlisting}");
+            exitFromCodeSection = false;
         }
-    }
-
+    } 
+		/** aaaaaaaaaaaaaa 
+	*/
     void writeLine(Token token) {
         String text = token.getText();
-        writeLine(text);
+        writeLine(text); 
     }
 
     void writeLine(String text) {
         translation.append(text + "\n");
-        System.out.println(text);
+        if (debug) { System.out.println(text);}
     }
     
     public void displayRecognitionError(String[] tokenNames, RecognitionException e) {
       	
 	String msg = getErrorMessage(e, tokenNames);    
 	String capmsg = msg.substring(0, 1).toUpperCase() + msg.substring(1); 
-	
-	String unexpectedTokenText = e.token.getText();
-	
-	String unexpectedTokenType = tokenNames[e.getUnexpectedType()];
-	
-	BitSet follow = computeContextSensitiveRuleFOLLOW();
 	
 	System.err.println(
 	"JavadocToLatex Parser ERROR at line " + e.line + " and column " + e.charPositionInLine + ".\n" 
@@ -65,9 +64,9 @@ start
 
 
 codeSection
-    :                           {writeLine("\\begin{lstlisting}[language=Java]");}
+    :                           {writeLine("\\begin{lstlisting}[language=Java]"); exitFromCodeSection=true;}
 	(
-		code=CODE 		        {writeLine($code);}
+		code=CODE 		        {writeLine($code); }
 	)+
 ;
 

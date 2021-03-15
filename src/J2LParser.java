@@ -1,4 +1,4 @@
-// $ANTLR 3.5.1 D:\\develop\\lfc\\javadoc-to-latex\\src\\J2LParser.g 2021-03-13 17:04:24
+// $ANTLR 3.5.1 D:\\develop\\lfc\\javadoc-to-latex\\src\\J2LParser.g 2021-03-13 18:37:57
 
     import util.*;
 
@@ -47,6 +47,7 @@ public class J2LParser extends Parser {
 
 
 	    boolean debug = false;
+	    boolean exitFromCodeSection = true;
 
 	    StringBuffer translation = new StringBuffer ();
 	    Javadoc jd = new Javadoc(debug);
@@ -57,33 +58,31 @@ public class J2LParser extends Parser {
 	 
 	    void endCode(Token token) {
 	        String text = token.getText();
+	        
+	        System.out.println(text);
 
-	        if (token != null && text.replace("\n", "").trim().length() > 0) {
-	            writeLine(text);
+	        if (token != null && exitFromCodeSection) {
+	            writeLine(text.replace("\n", ""));
 	            writeLine("\\end{lstlisting}");
+	            exitFromCodeSection = false;
 	        }
-	    }
-
+	    } 
+			/** aaaaaaaaaaaaaa 
+		*/
 	    void writeLine(Token token) {
 	        String text = token.getText();
-	        writeLine(text);
+	        writeLine(text); 
 	    }
 
 	    void writeLine(String text) {
 	        translation.append(text + "\n");
-	        System.out.println(text);
+	        if (debug) { System.out.println(text);}
 	    }
 	    
 	    public void displayRecognitionError(String[] tokenNames, RecognitionException e) {
 	      	
 		String msg = getErrorMessage(e, tokenNames);    
 		String capmsg = msg.substring(0, 1).toUpperCase() + msg.substring(1); 
-		
-		String unexpectedTokenText = e.token.getText();
-		
-		String unexpectedTokenType = tokenNames[e.getUnexpectedType()];
-		
-		BitSet follow = computeContextSensitiveRuleFOLLOW();
 		
 		System.err.println(
 		"JavadocToLatex Parser ERROR at line " + e.line + " and column " + e.charPositionInLine + ".\n" 
@@ -97,15 +96,15 @@ public class J2LParser extends Parser {
 
 
 	// $ANTLR start "start"
-	// D:\\develop\\lfc\\javadoc-to-latex\\src\\J2LParser.g:57:1: start : ( jdSection | codeSection )* eof= EOF ;
+	// D:\\develop\\lfc\\javadoc-to-latex\\src\\J2LParser.g:56:1: start : ( jdSection | codeSection )* eof= EOF ;
 	public final void start() throws RecognitionException {
 		Token eof=null;
 
 		try {
-			// D:\\develop\\lfc\\javadoc-to-latex\\src\\J2LParser.g:58:5: ( ( jdSection | codeSection )* eof= EOF )
-			// D:\\develop\\lfc\\javadoc-to-latex\\src\\J2LParser.g:58:7: ( jdSection | codeSection )* eof= EOF
+			// D:\\develop\\lfc\\javadoc-to-latex\\src\\J2LParser.g:57:5: ( ( jdSection | codeSection )* eof= EOF )
+			// D:\\develop\\lfc\\javadoc-to-latex\\src\\J2LParser.g:57:7: ( jdSection | codeSection )* eof= EOF
 			{
-			// D:\\develop\\lfc\\javadoc-to-latex\\src\\J2LParser.g:58:7: ( jdSection | codeSection )*
+			// D:\\develop\\lfc\\javadoc-to-latex\\src\\J2LParser.g:57:7: ( jdSection | codeSection )*
 			loop1:
 			while (true) {
 				int alt1=3;
@@ -119,7 +118,7 @@ public class J2LParser extends Parser {
 
 				switch (alt1) {
 				case 1 :
-					// D:\\develop\\lfc\\javadoc-to-latex\\src\\J2LParser.g:59:6: jdSection
+					// D:\\develop\\lfc\\javadoc-to-latex\\src\\J2LParser.g:58:6: jdSection
 					{
 					pushFollow(FOLLOW_jdSection_in_start60);
 					jdSection();
@@ -129,7 +128,7 @@ public class J2LParser extends Parser {
 					}
 					break;
 				case 2 :
-					// D:\\develop\\lfc\\javadoc-to-latex\\src\\J2LParser.g:61:6: codeSection
+					// D:\\develop\\lfc\\javadoc-to-latex\\src\\J2LParser.g:60:6: codeSection
 					{
 					pushFollow(FOLLOW_codeSection_in_start90);
 					codeSection();
@@ -161,16 +160,16 @@ public class J2LParser extends Parser {
 
 
 	// $ANTLR start "codeSection"
-	// D:\\develop\\lfc\\javadoc-to-latex\\src\\J2LParser.g:67:1: codeSection : (code= CODE )+ ;
+	// D:\\develop\\lfc\\javadoc-to-latex\\src\\J2LParser.g:66:1: codeSection : (code= CODE )+ ;
 	public final void codeSection() throws RecognitionException {
 		Token code=null;
 
 		try {
-			// D:\\develop\\lfc\\javadoc-to-latex\\src\\J2LParser.g:68:5: ( (code= CODE )+ )
-			// D:\\develop\\lfc\\javadoc-to-latex\\src\\J2LParser.g:68:33: (code= CODE )+
+			// D:\\develop\\lfc\\javadoc-to-latex\\src\\J2LParser.g:67:5: ( (code= CODE )+ )
+			// D:\\develop\\lfc\\javadoc-to-latex\\src\\J2LParser.g:67:33: (code= CODE )+
 			{
-			writeLine("\\begin{lstlisting}[language=Java]");
-			// D:\\develop\\lfc\\javadoc-to-latex\\src\\J2LParser.g:69:2: (code= CODE )+
+			writeLine("\\begin{lstlisting}[language=Java]"); exitFromCodeSection=true;
+			// D:\\develop\\lfc\\javadoc-to-latex\\src\\J2LParser.g:68:2: (code= CODE )+
 			int cnt2=0;
 			loop2:
 			while (true) {
@@ -182,10 +181,10 @@ public class J2LParser extends Parser {
 
 				switch (alt2) {
 				case 1 :
-					// D:\\develop\\lfc\\javadoc-to-latex\\src\\J2LParser.g:70:3: code= CODE
+					// D:\\develop\\lfc\\javadoc-to-latex\\src\\J2LParser.g:69:3: code= CODE
 					{
 					code=(Token)match(input,CODE,FOLLOW_CODE_in_codeSection173); 
-					writeLine(code);
+					writeLine(code); 
 					}
 					break;
 
@@ -213,23 +212,23 @@ public class J2LParser extends Parser {
 
 
 	// $ANTLR start "jdSection"
-	// D:\\develop\\lfc\\javadoc-to-latex\\src\\J2LParser.g:75:1: jdSection : (code= JDS (description= TEXT )* ( keyValue )* jde= JDE ) ;
+	// D:\\develop\\lfc\\javadoc-to-latex\\src\\J2LParser.g:74:1: jdSection : (code= JDS (description= TEXT )* ( keyValue )* jde= JDE ) ;
 	public final void jdSection() throws RecognitionException {
 		Token code=null;
 		Token description=null;
 		Token jde=null;
 
 		try {
-			// D:\\develop\\lfc\\javadoc-to-latex\\src\\J2LParser.g:76:2: ( (code= JDS (description= TEXT )* ( keyValue )* jde= JDE ) )
-			// D:\\develop\\lfc\\javadoc-to-latex\\src\\J2LParser.g:76:4: (code= JDS (description= TEXT )* ( keyValue )* jde= JDE )
+			// D:\\develop\\lfc\\javadoc-to-latex\\src\\J2LParser.g:75:2: ( (code= JDS (description= TEXT )* ( keyValue )* jde= JDE ) )
+			// D:\\develop\\lfc\\javadoc-to-latex\\src\\J2LParser.g:75:4: (code= JDS (description= TEXT )* ( keyValue )* jde= JDE )
 			{
-			// D:\\develop\\lfc\\javadoc-to-latex\\src\\J2LParser.g:76:4: (code= JDS (description= TEXT )* ( keyValue )* jde= JDE )
-			// D:\\develop\\lfc\\javadoc-to-latex\\src\\J2LParser.g:76:10: code= JDS (description= TEXT )* ( keyValue )* jde= JDE
+			// D:\\develop\\lfc\\javadoc-to-latex\\src\\J2LParser.g:75:4: (code= JDS (description= TEXT )* ( keyValue )* jde= JDE )
+			// D:\\develop\\lfc\\javadoc-to-latex\\src\\J2LParser.g:75:10: code= JDS (description= TEXT )* ( keyValue )* jde= JDE
 			{
 			 jd = new Javadoc(debug); 
 			code=(Token)match(input,JDS,FOLLOW_JDS_in_jdSection213); 
 			 endCode(code); System.out.println("\\begin(jd)\n"); 
-			// D:\\develop\\lfc\\javadoc-to-latex\\src\\J2LParser.g:78:3: (description= TEXT )*
+			// D:\\develop\\lfc\\javadoc-to-latex\\src\\J2LParser.g:77:3: (description= TEXT )*
 			loop3:
 			while (true) {
 				int alt3=2;
@@ -240,7 +239,7 @@ public class J2LParser extends Parser {
 
 				switch (alt3) {
 				case 1 :
-					// D:\\develop\\lfc\\javadoc-to-latex\\src\\J2LParser.g:79:4: description= TEXT
+					// D:\\develop\\lfc\\javadoc-to-latex\\src\\J2LParser.g:78:4: description= TEXT
 					{
 					description=(Token)match(input,TEXT,FOLLOW_TEXT_in_jdSection235); 
 					 jd.addDescription((description!=null?description.getText():null)); 
@@ -252,7 +251,7 @@ public class J2LParser extends Parser {
 				}
 			}
 
-			// D:\\develop\\lfc\\javadoc-to-latex\\src\\J2LParser.g:81:3: ( keyValue )*
+			// D:\\develop\\lfc\\javadoc-to-latex\\src\\J2LParser.g:80:3: ( keyValue )*
 			loop4:
 			while (true) {
 				int alt4=2;
@@ -263,7 +262,7 @@ public class J2LParser extends Parser {
 
 				switch (alt4) {
 				case 1 :
-					// D:\\develop\\lfc\\javadoc-to-latex\\src\\J2LParser.g:83:6: keyValue
+					// D:\\develop\\lfc\\javadoc-to-latex\\src\\J2LParser.g:82:6: keyValue
 					{
 					pushFollow(FOLLOW_keyValue_in_jdSection258);
 					keyValue();
@@ -298,13 +297,13 @@ public class J2LParser extends Parser {
 
 
 	// $ANTLR start "keyValue"
-	// D:\\develop\\lfc\\javadoc-to-latex\\src\\J2LParser.g:90:1: keyValue : ( (key= KEY_PARAM ( inline |text= TEXT )* ) | (key= KEY_EXCEPTION ( inline |text= TEXT )* ) | (key= KEY_AUTHOR ( inline |text= TEXT )+ ) );
+	// D:\\develop\\lfc\\javadoc-to-latex\\src\\J2LParser.g:89:1: keyValue : ( (key= KEY_PARAM ( inline |text= TEXT )* ) | (key= KEY_EXCEPTION ( inline |text= TEXT )* ) | (key= KEY_AUTHOR ( inline |text= TEXT )* ) );
 	public final void keyValue() throws RecognitionException {
 		Token key=null;
 		Token text=null;
 
 		try {
-			// D:\\develop\\lfc\\javadoc-to-latex\\src\\J2LParser.g:91:2: ( (key= KEY_PARAM ( inline |text= TEXT )* ) | (key= KEY_EXCEPTION ( inline |text= TEXT )* ) | (key= KEY_AUTHOR ( inline |text= TEXT )+ ) )
+			// D:\\develop\\lfc\\javadoc-to-latex\\src\\J2LParser.g:90:2: ( (key= KEY_PARAM ( inline |text= TEXT )* ) | (key= KEY_EXCEPTION ( inline |text= TEXT )* ) | (key= KEY_AUTHOR ( inline |text= TEXT )* ) )
 			int alt8=3;
 			switch ( input.LA(1) ) {
 			case KEY_PARAM:
@@ -329,14 +328,14 @@ public class J2LParser extends Parser {
 			}
 			switch (alt8) {
 				case 1 :
-					// D:\\develop\\lfc\\javadoc-to-latex\\src\\J2LParser.g:91:4: (key= KEY_PARAM ( inline |text= TEXT )* )
+					// D:\\develop\\lfc\\javadoc-to-latex\\src\\J2LParser.g:90:4: (key= KEY_PARAM ( inline |text= TEXT )* )
 					{
-					// D:\\develop\\lfc\\javadoc-to-latex\\src\\J2LParser.g:91:4: (key= KEY_PARAM ( inline |text= TEXT )* )
-					// D:\\develop\\lfc\\javadoc-to-latex\\src\\J2LParser.g:92:10: key= KEY_PARAM ( inline |text= TEXT )*
+					// D:\\develop\\lfc\\javadoc-to-latex\\src\\J2LParser.g:90:4: (key= KEY_PARAM ( inline |text= TEXT )* )
+					// D:\\develop\\lfc\\javadoc-to-latex\\src\\J2LParser.g:91:10: key= KEY_PARAM ( inline |text= TEXT )*
 					{
 					key=(Token)match(input,KEY_PARAM,FOLLOW_KEY_PARAM_in_keyValue336); 
 					 jd.buffer.setLength(0);
-					// D:\\develop\\lfc\\javadoc-to-latex\\src\\J2LParser.g:93:10: ( inline |text= TEXT )*
+					// D:\\develop\\lfc\\javadoc-to-latex\\src\\J2LParser.g:92:10: ( inline |text= TEXT )*
 					loop5:
 					while (true) {
 						int alt5=3;
@@ -350,7 +349,7 @@ public class J2LParser extends Parser {
 
 						switch (alt5) {
 						case 1 :
-							// D:\\develop\\lfc\\javadoc-to-latex\\src\\J2LParser.g:94:14: inline
+							// D:\\develop\\lfc\\javadoc-to-latex\\src\\J2LParser.g:93:14: inline
 							{
 							pushFollow(FOLLOW_inline_in_keyValue367);
 							inline();
@@ -359,7 +358,7 @@ public class J2LParser extends Parser {
 							}
 							break;
 						case 2 :
-							// D:\\develop\\lfc\\javadoc-to-latex\\src\\J2LParser.g:96:14: text= TEXT
+							// D:\\develop\\lfc\\javadoc-to-latex\\src\\J2LParser.g:95:14: text= TEXT
 							{
 							text=(Token)match(input,TEXT,FOLLOW_TEXT_in_keyValue399); 
 							 jd.buffer.append((text!=null?text.getText():null) + " "); 
@@ -377,14 +376,14 @@ public class J2LParser extends Parser {
 					}
 					break;
 				case 2 :
-					// D:\\develop\\lfc\\javadoc-to-latex\\src\\J2LParser.g:100:4: (key= KEY_EXCEPTION ( inline |text= TEXT )* )
+					// D:\\develop\\lfc\\javadoc-to-latex\\src\\J2LParser.g:99:4: (key= KEY_EXCEPTION ( inline |text= TEXT )* )
 					{
-					// D:\\develop\\lfc\\javadoc-to-latex\\src\\J2LParser.g:100:4: (key= KEY_EXCEPTION ( inline |text= TEXT )* )
-					// D:\\develop\\lfc\\javadoc-to-latex\\src\\J2LParser.g:101:10: key= KEY_EXCEPTION ( inline |text= TEXT )*
+					// D:\\develop\\lfc\\javadoc-to-latex\\src\\J2LParser.g:99:4: (key= KEY_EXCEPTION ( inline |text= TEXT )* )
+					// D:\\develop\\lfc\\javadoc-to-latex\\src\\J2LParser.g:100:10: key= KEY_EXCEPTION ( inline |text= TEXT )*
 					{
 					key=(Token)match(input,KEY_EXCEPTION,FOLLOW_KEY_EXCEPTION_in_keyValue457); 
 					 jd.buffer.setLength(0);
-					// D:\\develop\\lfc\\javadoc-to-latex\\src\\J2LParser.g:102:10: ( inline |text= TEXT )*
+					// D:\\develop\\lfc\\javadoc-to-latex\\src\\J2LParser.g:101:10: ( inline |text= TEXT )*
 					loop6:
 					while (true) {
 						int alt6=3;
@@ -398,7 +397,7 @@ public class J2LParser extends Parser {
 
 						switch (alt6) {
 						case 1 :
-							// D:\\develop\\lfc\\javadoc-to-latex\\src\\J2LParser.g:103:14: inline
+							// D:\\develop\\lfc\\javadoc-to-latex\\src\\J2LParser.g:102:14: inline
 							{
 							pushFollow(FOLLOW_inline_in_keyValue487);
 							inline();
@@ -407,7 +406,7 @@ public class J2LParser extends Parser {
 							}
 							break;
 						case 2 :
-							// D:\\develop\\lfc\\javadoc-to-latex\\src\\J2LParser.g:105:14: text= TEXT
+							// D:\\develop\\lfc\\javadoc-to-latex\\src\\J2LParser.g:104:14: text= TEXT
 							{
 							text=(Token)match(input,TEXT,FOLLOW_TEXT_in_keyValue519); 
 							 jd.buffer.append((text!=null?text.getText():null) + " "); 
@@ -425,15 +424,14 @@ public class J2LParser extends Parser {
 					}
 					break;
 				case 3 :
-					// D:\\develop\\lfc\\javadoc-to-latex\\src\\J2LParser.g:109:8: (key= KEY_AUTHOR ( inline |text= TEXT )+ )
+					// D:\\develop\\lfc\\javadoc-to-latex\\src\\J2LParser.g:108:8: (key= KEY_AUTHOR ( inline |text= TEXT )* )
 					{
-					// D:\\develop\\lfc\\javadoc-to-latex\\src\\J2LParser.g:109:8: (key= KEY_AUTHOR ( inline |text= TEXT )+ )
-					// D:\\develop\\lfc\\javadoc-to-latex\\src\\J2LParser.g:110:13: key= KEY_AUTHOR ( inline |text= TEXT )+
+					// D:\\develop\\lfc\\javadoc-to-latex\\src\\J2LParser.g:108:8: (key= KEY_AUTHOR ( inline |text= TEXT )* )
+					// D:\\develop\\lfc\\javadoc-to-latex\\src\\J2LParser.g:109:13: key= KEY_AUTHOR ( inline |text= TEXT )*
 					{
 					key=(Token)match(input,KEY_AUTHOR,FOLLOW_KEY_AUTHOR_in_keyValue579); 
 					 jd.buffer.setLength(0);
-					// D:\\develop\\lfc\\javadoc-to-latex\\src\\J2LParser.g:111:13: ( inline |text= TEXT )+
-					int cnt7=0;
+					// D:\\develop\\lfc\\javadoc-to-latex\\src\\J2LParser.g:110:13: ( inline |text= TEXT )*
 					loop7:
 					while (true) {
 						int alt7=3;
@@ -447,7 +445,7 @@ public class J2LParser extends Parser {
 
 						switch (alt7) {
 						case 1 :
-							// D:\\develop\\lfc\\javadoc-to-latex\\src\\J2LParser.g:112:17: inline
+							// D:\\develop\\lfc\\javadoc-to-latex\\src\\J2LParser.g:111:17: inline
 							{
 							pushFollow(FOLLOW_inline_in_keyValue625);
 							inline();
@@ -456,7 +454,7 @@ public class J2LParser extends Parser {
 							}
 							break;
 						case 2 :
-							// D:\\develop\\lfc\\javadoc-to-latex\\src\\J2LParser.g:114:17: text= TEXT
+							// D:\\develop\\lfc\\javadoc-to-latex\\src\\J2LParser.g:113:17: text= TEXT
 							{
 							text=(Token)match(input,TEXT,FOLLOW_TEXT_in_keyValue663); 
 							 jd.buffer.append((text!=null?text.getText():null) + " "); 
@@ -464,11 +462,8 @@ public class J2LParser extends Parser {
 							break;
 
 						default :
-							if ( cnt7 >= 1 ) break loop7;
-							EarlyExitException eee = new EarlyExitException(7, input);
-							throw eee;
+							break loop7;
 						}
-						cnt7++;
 					}
 
 					}
@@ -492,15 +487,15 @@ public class J2LParser extends Parser {
 
 
 	// $ANTLR start "inline"
-	// D:\\develop\\lfc\\javadoc-to-latex\\src\\J2LParser.g:121:1: inline : before= OPEN_BRACE key= KEY_CODE inline_text= CLOSED_BRACE ;
+	// D:\\develop\\lfc\\javadoc-to-latex\\src\\J2LParser.g:120:1: inline : before= OPEN_BRACE key= KEY_CODE inline_text= CLOSED_BRACE ;
 	public final void inline() throws RecognitionException {
 		Token before=null;
 		Token key=null;
 		Token inline_text=null;
 
 		try {
-			// D:\\develop\\lfc\\javadoc-to-latex\\src\\J2LParser.g:122:2: (before= OPEN_BRACE key= KEY_CODE inline_text= CLOSED_BRACE )
-			// D:\\develop\\lfc\\javadoc-to-latex\\src\\J2LParser.g:122:4: before= OPEN_BRACE key= KEY_CODE inline_text= CLOSED_BRACE
+			// D:\\develop\\lfc\\javadoc-to-latex\\src\\J2LParser.g:121:2: (before= OPEN_BRACE key= KEY_CODE inline_text= CLOSED_BRACE )
+			// D:\\develop\\lfc\\javadoc-to-latex\\src\\J2LParser.g:121:4: before= OPEN_BRACE key= KEY_CODE inline_text= CLOSED_BRACE
 			{
 			before=(Token)match(input,OPEN_BRACE,FOLLOW_OPEN_BRACE_in_inline735); 
 			key=(Token)match(input,KEY_CODE,FOLLOW_KEY_CODE_in_inline739); 
@@ -545,7 +540,7 @@ public class J2LParser extends Parser {
 	public static final BitSet FOLLOW_KEY_EXCEPTION_in_keyValue457 = new BitSet(new long[]{0x0000000000003002L});
 	public static final BitSet FOLLOW_inline_in_keyValue487 = new BitSet(new long[]{0x0000000000003002L});
 	public static final BitSet FOLLOW_TEXT_in_keyValue519 = new BitSet(new long[]{0x0000000000003002L});
-	public static final BitSet FOLLOW_KEY_AUTHOR_in_keyValue579 = new BitSet(new long[]{0x0000000000003000L});
+	public static final BitSet FOLLOW_KEY_AUTHOR_in_keyValue579 = new BitSet(new long[]{0x0000000000003002L});
 	public static final BitSet FOLLOW_inline_in_keyValue625 = new BitSet(new long[]{0x0000000000003002L});
 	public static final BitSet FOLLOW_TEXT_in_keyValue663 = new BitSet(new long[]{0x0000000000003002L});
 	public static final BitSet FOLLOW_OPEN_BRACE_in_inline735 = new BitSet(new long[]{0x0000000000000200L});

@@ -1,6 +1,7 @@
 package util;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Javadoc {
 
@@ -122,8 +123,10 @@ public class Javadoc {
         lastDescription = false;
         listPointer = authors;
 
-        // TODO: controllare se è un autore o una lista di autori
-        this.authors.add(author);
+        String[] output = author.trim().split(",");
+
+        listPointer.addAll(Arrays.asList(output));
+
         _debug(author);
     }
 
