@@ -99,12 +99,14 @@ keyValue
 	)							{ jd.addVersion(jd.buffer.toString()); }
 ;
 
-// @param {@code }
-
 inline:	(
 			before=OPEN_BRACE key=KEY_CODE inline_text=CLOSED_BRACE
-		)
-		{ jd.addInlineCode($before.text, $key, $inline_text.text); }
+		)						{ jd.addInlineCode($before.text, $key, $inline_text.text); }
+		|
+		(
+			before=OPEN_BRACE key=KEY_LINK inline_text=CLOSED_BRACE
+		)						{ jd.addInlineLink($before.text, $key, $inline_text.text); }
+
 		
 ;
 

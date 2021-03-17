@@ -134,23 +134,6 @@ public class Javadoc {
         _debug(author);
     }
 
-    /* ------- PRIVATE METHODS ------- */
-
-    private String[] _split(String content) {
-        String[] splitted;
-
-        // TODO if (content.length() > 0) splitted = content.split(" ", 2);
-        // TODO: ELSE
-        splitted = content.split(" ", 2);
-
-        String param = splitted[0];
-        String body = "" ;
-
-        if (splitted.length > 1) body = splitted[1];
-
-        return new String[] {param, body};
-    }
-
     public void addLastLine(String text) {
         if (lastDescription) {
             this.description.append(text);
@@ -168,13 +151,45 @@ public class Javadoc {
     }
 
     public void addInlineCode(String before, Token key, String inline) {
-
         if (this.buffer.toString().isEmpty() && before.length() <= 1)  {
             System.err.println("Undeclared parameter or missing description at line " + key.getLine() + " before the inline code.");
+            return;
         }
-        else {
-            this.buffer.append(before).append("\\texttt{").append(inline).append("}");
+        this.buffer.append(before).append("\\texttt{").append(inline).append("}");
+    }
+
+    public void addInlineLink(String before, Token key, String inline) {
+        if (this.buffer.toString().isEmpty() && before.length() <= 1)  {
+            System.err.println("Undeclared parameter or missing description at line " + key.getLine() + " before the inline link.");
+            return;
         }
+        String[] splitted = _split(inline);
+        String url = splitted[0];
+        String label = splitted[1];
+
+        if (label.length() == 0) label = url;
+
+        String result = "\\href{" + url + "}{" + label + "}";
+
+        this.buffer.append(before).append(result);
+    }
+
+
+    /* ------- PRIVATE METHODS ------- */
+
+    private String[] _split(String content) {
+        String[] splitted;
+
+        // TODO if (content.length() > 0) splitted = content.split(" ", 2);
+        // TODO: ELSE
+        splitted = content.split(" ", 2);
+
+        String param = splitted[0];
+        String body = "" ;
+
+        if (splitted.length > 1) body = splitted[1];
+
+        return new String[] {param, body};
     }
 
     private void _debug(String text) {

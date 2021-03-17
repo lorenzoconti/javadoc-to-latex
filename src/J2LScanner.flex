@@ -82,6 +82,7 @@ KEY_EXCEPTION   = ("@exception") [ \t\f]+
 KEY_AUTHOR      = ("@author") [ \t\f]+
 KEY_CODE        = ("@code") [ \t\f]+
 KEY_VERSION     = ("@version") [ \t\f]+
+KEY_LINK        = ("@link") [ \t\f]+
 // JDKV            = ("@param" | "@exception" | "@provides" | "@throws" | "@uses" | "@version") [ \t\f]+
 // JDKD            = ("@author" | "@deprecated" | "@return" | "@serial" | "@serialData" | "@since" | "@see")[ \t\f]+
 // JDKINLINE       = ("@code" | "@link" | "@linkplain") [ \t\f]+
@@ -144,6 +145,8 @@ CLOSED_BRACE    = "}"
   {KEY_VERSION}         { return symbol(sym.KEY_VERSION, yytext().trim()); }
 
   {KEY_CODE}            { return symbol(sym.KEY_CODE, yytext().trim()); }
+
+  {KEY_LINK}            { return symbol(sym.KEY_LINK, yytext().trim()); }
 
   {OPEN_BRACE}          {
                             Token token = symbol(sym.OPEN_BRACE, string.toString());
