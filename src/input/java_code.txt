@@ -1,9 +1,10 @@
 /**
 * Returns an Image object that 2*2 can then be painted on the screen.
 * @param ciao
-* @version 888
+* @deprecated pippo asdfasd
+* asdfasdf
 * @param aaa aaa
-* aaa
+* aaa with {@link https://github.com/test link a github} ciaoo
 */
 public Image getImage(URL url, String name) {
     /**

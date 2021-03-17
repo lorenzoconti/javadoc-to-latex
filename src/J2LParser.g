@@ -92,6 +92,15 @@ keyValue
 	)							{ jd.addAuthor(jd.buffer.toString()); }
 	|
 	(
+		key=KEY_DEPRECATED		{ jd.buffer.setLength(0);}
+		(
+			inline
+			|
+			text=TEXT			{ jd.buffer.append($text.text); }
+		)*
+	)							{ jd.addDeprecated(jd.buffer.toString()); }
+	|
+	(
 		key=KEY_VERSION			{ jd.buffer.setLength(0);}
 		(
 		text=TEXT				{ jd.buffer.append($text.text); }

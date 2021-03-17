@@ -12,6 +12,7 @@ public class Javadoc {
 
     public StringBuffer description;
     public StringBuffer version;
+    public StringBuffer deprecated;
 
     public ArrayList<String> listPointer = new ArrayList<String>();
     public StringBuffer stringPointer = new StringBuffer();
@@ -33,6 +34,7 @@ public class Javadoc {
         this.exceptions = new ArrayList<String>();
 
         this.description = new StringBuffer();
+        this.deprecated = new StringBuffer();
         this.version = new StringBuffer();
     }
 
@@ -45,6 +47,11 @@ public class Javadoc {
 
         if(this.version.length() > 0) {
             _append("\\textbf{Version:} :" + this.version.toString());
+            _append("");
+        }
+
+        if(this.deprecated.length() > 0) {
+            _append("Attention! This is deprecated: " + this.deprecated.toString());
             _append("");
         }
 
@@ -76,7 +83,7 @@ public class Javadoc {
     public void addParam(String content) {
 
         if (!listPointer.equals(params)) {
-            System.out.println("Warning: @param found among other Javadoc keywords.\nYou should put all the paramaters descriptions together.");
+            System.out.println("Warning: @param found among other Javadoc keywords. You should put all paramaters together.");
         }
 
         stringPointer = null;
@@ -123,7 +130,7 @@ public class Javadoc {
     public void addException(String content) {
 
         if (!listPointer.equals(exceptions)) {
-            System.out.println("Warning: @exception found among other Javadoc keywords.\nYou should put all the exceptions descriptions together.");
+            System.out.println("Warning: @exception found among other Javadoc keywords. You should put all exceptions together.");
         }
 
         stringPointer = null;
@@ -142,7 +149,7 @@ public class Javadoc {
     public void addAuthor(String author){
 
         if (!listPointer.equals(params)) {
-            System.out.println("Warning: @author found among other Javadoc keywords.\nYou should put all the authors together.");
+            System.out.println("Warning: @author found among other Javadoc keywords. You should put all authors together.");
         }
 
         stringPointer = null;
@@ -152,6 +159,14 @@ public class Javadoc {
         listPointer.addAll(Arrays.asList(output));
 
         _debug(author);
+    }
+
+    public void addDeprecated(String text){
+        stringPointer = this.deprecated;
+        listPointer = new ArrayList<>();
+
+        this.deprecated.append(text);
+        _debug(text);
     }
 
     /* ------- PRIVATE METHODS ------- */
