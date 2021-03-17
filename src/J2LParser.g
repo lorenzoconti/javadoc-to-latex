@@ -101,6 +101,15 @@ keyValue
 	)							{ jd.addDeprecated(jd.buffer.toString()); }
 	|
 	(
+		key=KEY_RETURN			{ jd.buffer.setLength(0);}
+		(
+			inline
+			|
+			text=TEXT			{ jd.buffer.append($text.text); }
+		)*
+	)							{ jd.addReturn(jd.buffer.toString()); }
+	|
+	(
 		key=KEY_VERSION			{ jd.buffer.setLength(0);}
 		(
 		text=TEXT				{ jd.buffer.append($text.text); }

@@ -81,6 +81,7 @@ KEY_PARAM       = ("@param") [ \t\f]+
 KEY_EXCEPTION   = ("@exception" | "@throws") [ \t\f]+
 KEY_AUTHOR      = ("@author") [ \t\f]+
 KEY_DEPRECATED  = ("@deprecated") [ \t\f]+
+KEY_RETURN  = ("@return") [ \t\f]+
 KEY_CODE        = ("@code") [ \t\f]+
 KEY_VERSION     = ("@version") [ \t\f]+
 KEY_LINK        = ("@link") [ \t\f]+
@@ -144,6 +145,8 @@ CLOSED_BRACE    = "}"
   {KEY_AUTHOR}          { return symbol(sym.KEY_AUTHOR, yytext().trim()); }
 
   {KEY_DEPRECATED}      { return symbol(sym.KEY_DEPRECATED, yytext().trim()); }
+
+  {KEY_RETURN}      	{ return symbol(sym.KEY_RETURN, yytext().trim()); }
 
   {KEY_VERSION}         { return symbol(sym.KEY_VERSION, yytext().trim()); }
 

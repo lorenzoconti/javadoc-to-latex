@@ -3,6 +3,7 @@
 * @param ciao
 * @deprecated pippo asdfasd
 * asdfasdf
+* @return miao
 * @param aaa aaa
 * aaa with {@link https://github.com/test link a github} ciaoo
 */

@@ -13,6 +13,7 @@ public class Javadoc {
     public StringBuffer description;
     public StringBuffer version;
     public StringBuffer deprecated;
+    public StringBuffer returns;
 
     public ArrayList<String> listPointer = new ArrayList<String>();
     public StringBuffer stringPointer = new StringBuffer();
@@ -35,6 +36,7 @@ public class Javadoc {
 
         this.description = new StringBuffer();
         this.deprecated = new StringBuffer();
+        this.returns = new StringBuffer();
         this.version = new StringBuffer();
     }
 
@@ -66,6 +68,12 @@ public class Javadoc {
             _append("\\begin{itemize}");
             for (String param : this.params) _append("  \\item" + param);
             _append("\\end{itemize}");
+            _append("");
+        }
+
+        if(this.deprecated.length() > 0) {
+            _append("\\textbf{Returns:}");
+            _append(this.returns.toString());
             _append("");
         }
 
@@ -166,6 +174,14 @@ public class Javadoc {
         listPointer = new ArrayList<>();
 
         this.deprecated.append(text);
+        _debug(text);
+    }
+
+    public void addReturn(String text){
+        stringPointer = this.returns;
+        listPointer = new ArrayList<>();
+
+        this.returns.append(text);
         _debug(text);
     }
 

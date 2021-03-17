@@ -7,12 +7,12 @@ public class sym {
     // line of code
     public static final int CODE = 5;
 
-    public static final int OPEN_BRACE = 15;
+    public static final int OPEN_BRACE = 16;
 
     public static final int CLOSED_BRACE = 4;
 
     // line of text
-    public static final int TEXT = 16;
+    public static final int TEXT = 17;
 
     // end of file
     public static final int EOF = -1;
@@ -25,7 +25,8 @@ public class sym {
     public static final int KEY_AUTHOR = 8;
     public static final int KEY_EXCEPTION = 11;
     public static final int KEY_CODE = 9;
-    public static final int KEY_VERSION = 14;
+    public static final int KEY_VERSION = 15;
     public static final int KEY_LINK = 12;
     public static final int KEY_DEPRECATED = 10;
+    public static final int KEY_RETURN = 14;
 }
