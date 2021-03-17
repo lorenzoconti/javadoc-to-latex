@@ -12,6 +12,8 @@ public class Javadoc {
 
     public StringBuffer description;
     public StringBuffer version;
+    public StringBuffer deprecated;
+    public StringBuffer returns;
 
     public ArrayList<String> listPointer = new ArrayList<>();
     public StringBuffer stringPointer = null;
@@ -32,6 +34,8 @@ public class Javadoc {
         this.exceptions = new ArrayList<String>();
 
         this.description = new StringBuffer();
+        this.deprecated = new StringBuffer();
+        this.returns = new StringBuffer();
         this.version = new StringBuffer();
     }
 
@@ -44,6 +48,11 @@ public class Javadoc {
 
         if(this.version.length() > 0) {
             _append("\\textbf{Version:}: " + this.version.toString());
+            _append("");
+        }
+
+        if(this.deprecated.length() > 0) {
+            _append("Attention! This is deprecated: " + this.deprecated.toString());
             _append("");
         }
 
@@ -64,6 +73,12 @@ public class Javadoc {
             _append("");
         }
 
+        if(this.deprecated.length() > 0) {
+            _append("\\textbf{Returns:}");
+            _append(this.returns.toString());
+            _append("");
+        }
+
         if(!this.exceptions.isEmpty()) {
             _append("\\textbf{Exceptions raised:}");
             _append("\\begin{itemize}");
@@ -80,7 +95,7 @@ public class Javadoc {
         requiresSplit = true;
 
         if (!(listPointer.equals(params))) {
-            System.out.println("Warning: @param found among other Javadoc keywords.\nYou should put all the paramaters descriptions together.");
+            System.out.println("Warning: @param found among other Javadoc keywords. You should put all paramaters together.");
         }
 
         stringPointer = null;
@@ -130,7 +145,7 @@ public class Javadoc {
         requiresSplit = true;
 
         if (!(listPointer.equals(exceptions))) {
-            System.out.println("Warning: @exception found among other Javadoc keywords.\nYou should put all the exceptions descriptions together.");
+            System.out.println("Warning: @exception found among other Javadoc keywords. You should put all exceptions together.");
         }
 
         stringPointer = null;
@@ -157,8 +172,8 @@ public class Javadoc {
 
     public void addAuthor(String author){
 
-        if (!(listPointer.equals(authors))) {
-            System.out.println("Warning: @author found among other Javadoc keywords.\nYou should put all the authors together.");
+        if (!listPointer.equals(authors)) {
+            System.out.println("Warning: @author found among other Javadoc keywords. You should put all authors together.");
         }
 
         stringPointer = null;
@@ -168,6 +183,22 @@ public class Javadoc {
         listPointer.addAll(Arrays.asList(output));
 
         _debug(author);
+    }
+
+    public void addDeprecated(String text){
+        stringPointer = this.deprecated;
+        listPointer = new ArrayList<>();
+
+        this.deprecated.append(text);
+        _debug(text);
+    }
+
+    public void addReturn(String text){
+        stringPointer = this.returns;
+        listPointer = new ArrayList<>();
+
+        this.returns.append(text);
+        _debug(text);
     }
 
     /* ------- PRIVATE METHODS ------- */
@@ -196,9 +227,9 @@ public class Javadoc {
         }
         else {
             if (requiresSplit) {
-                if (listPointer == this.params)             { addParam(text); }
-                if (listPointer == this.exceptions)         { addException(text); }
-                if (listPointer == this.authors)            { addAuthor(text); }
+                if (listPointer.equals(this.params))        { addParam(text); }
+                if (listPointer.equals(this.exceptions))    { addException(text); }
+                if (listPointer.equals(this.authors))       { addAuthor(text); }
             }
             else {
                 listPointer.set(listPointer.size() - 1, listPointer.get(listPointer.size() - 1).concat(" " + text));
@@ -207,19 +238,33 @@ public class Javadoc {
     }
 
     public void addInlineCode(String before, Token key, String inline) {
-
         if (this.buffer.toString().isEmpty() && before.length() <= 1)  {
             System.err.println("Undeclared parameter or missing description at line " + key.getLine() + " before the inline code.");
         }
         else {
             if (inline.trim().replace(" ", "").length() > 0) {
                 this.buffer.append(before).append("\\texttt{").append(inline).append("}");
-            }
-            else {
+            } else {
                 this.buffer.append(before);
                 System.err.println("Missing code block in @code at line " + key.getLine());
             }
         }
+    }
+
+    public void addInlineLink(String before, Token key, String inline) {
+        if (this.buffer.toString().isEmpty() && before.length() <= 1)  {
+            System.err.println("Undeclared parameter or missing description at line " + key.getLine() + " before the inline link.");
+            return;
+        }
+        String[] splitted = _split(inline);
+        String url = splitted[0];
+        String label = splitted[1];
+
+        if (label.length() == 0) label = url;
+
+        String result = "\\href{" + url + "}{" + label + "}";
+
+        this.buffer.append(before).append(result);
 
     }
 

@@ -92,6 +92,24 @@ keyValue
 	)							{ jd.addAuthor(jd.buffer.toString()); }
 	|
 	(
+		key=KEY_DEPRECATED		{ jd.buffer.setLength(0);}
+		(
+			inline
+			|
+			text=TEXT			{ jd.buffer.append($text.text); }
+		)*
+	)							{ jd.addDeprecated(jd.buffer.toString()); }
+	|
+	(
+		key=KEY_RETURN			{ jd.buffer.setLength(0);}
+		(
+			inline
+			|
+			text=TEXT			{ jd.buffer.append($text.text); }
+		)*
+	)							{ jd.addReturn(jd.buffer.toString()); }
+	|
+	(
 		key=KEY_VERSION			{ jd.buffer.setLength(0);}
 		(
 		text=TEXT				{ jd.buffer.append($text.text); }
@@ -99,12 +117,14 @@ keyValue
 	)							{ jd.addVersion(jd.buffer.toString()); }
 ;
 
-// @param {@code }
-
 inline:	(
 			before=OPEN_BRACE key=KEY_CODE inline_text=CLOSED_BRACE
-		)
-		{ jd.addInlineCode($before.text, $key, $inline_text.text); }
+		)						{ jd.addInlineCode($before.text, $key, $inline_text.text); }
+		|
+		(
+			before=OPEN_BRACE key=KEY_LINK inline_text=CLOSED_BRACE
+		)						{ jd.addInlineLink($before.text, $key, $inline_text.text); }
+
 		
 ;
 
