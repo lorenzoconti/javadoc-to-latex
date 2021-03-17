@@ -1,28 +1,11 @@
+
 /**
-* Returns an Image object that 2*2 can then be painted on the screen.
-* @param ciao
-* @version 888
-* @param aaa aaa
-* aaa
-*/
-public Image getImage(URL url, String name) {
-    /**
-     * @param parametro Lorenzo Conti, Paolo Fosci, Giuseppe Psaila
-    */
-    return getImage(new URL(url, "/**@author name"));
-    PRIMO
-  }
-}
-/** Returns an Image object that 2*2 can then be painted {@code prova con code} on the screen. */
-public Image getImage(URL url, String name) {
-    return getImage(new URL(url, "name"));
-    SECONDO
-}
-/** inline */
-    /** inline */
-
-
-        /**
-        * inline
-        *
-        */
+ * Descrizione
+ * @param nome descrizione parametro
+ * @version 1.1.1
+ * @exception aaa
+ * @param aaa
+ * @exception bbb
+ */
+ Codice
+ /** Javadoc Inline */

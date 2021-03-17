@@ -13,10 +13,9 @@ public class Javadoc {
     public StringBuffer description;
     public StringBuffer version;
 
-    public ArrayList<String> listPointer = new ArrayList<String>();
-    public StringBuffer stringPointer = new StringBuffer();
+    public ArrayList<String> listPointer = new ArrayList<>();
+    public StringBuffer stringPointer = null;
 
-    // boolean lastDescription = true;
     boolean requiresSplit = true;
 
     // used in J2LParser.g
@@ -44,7 +43,7 @@ public class Javadoc {
         }
 
         if(this.version.length() > 0) {
-            _append("\\textbf{Version:} :" + this.version.toString());
+            _append("\\textbf{Version:}: " + this.version.toString());
             _append("");
         }
 
@@ -52,6 +51,9 @@ public class Javadoc {
             _append("\\textbf{Description:}");
             _append(this.description.toString());
             _append("");
+        }
+        else {
+            System.out.println("Warning: you might put a description in your javadoc sections.");
         }
 
         if(!this.params.isEmpty()) {
@@ -75,7 +77,9 @@ public class Javadoc {
 
     public void addParam(String content) {
 
-        if (!listPointer.equals(params)) {
+        requiresSplit = true;
+
+        if (!(listPointer.equals(params))) {
             System.out.println("Warning: @param found among other Javadoc keywords.\nYou should put all the paramaters descriptions together.");
         }
 
@@ -101,7 +105,6 @@ public class Javadoc {
         else {
             requiresSplit = true;
         }
-
     }
 
     public void addDescription(String text) {
@@ -114,6 +117,8 @@ public class Javadoc {
 
     public void addVersion(String text) {
 
+        this.listPointer = new ArrayList<>();
+
         this.stringPointer = this.version;
 
         this.version.append(text);
@@ -122,26 +127,37 @@ public class Javadoc {
 
     public void addException(String content) {
 
-        if (!listPointer.equals(exceptions)) {
+        requiresSplit = true;
+
+        if (!(listPointer.equals(exceptions))) {
             System.out.println("Warning: @exception found among other Javadoc keywords.\nYou should put all the exceptions descriptions together.");
         }
 
         stringPointer = null;
         listPointer = exceptions;
 
-        String[] splitted = _split(content);
-        String param = splitted[0];
-        String body = splitted[1];
+        if (content.trim().length() > 0) {
+            String[] splitted = _split(content);
+            String param = splitted[0];
 
-        String output = "\\texttt{" + param + "} " + body;
+            String output = "\\texttt{" + param + "}";
 
-        this.exceptions.add(output);
-       _debug(output);
+            if (splitted.length > 1) {
+                String body = splitted[1];
+                output = output.concat(" " + body);
+            }
+
+            this.exceptions.add(output);
+            _debug(output);
+        }
+        else {
+            requiresSplit = true;
+        }
     }
 
     public void addAuthor(String author){
 
-        if (!listPointer.equals(params)) {
+        if (!(listPointer.equals(authors))) {
             System.out.println("Warning: @author found among other Javadoc keywords.\nYou should put all the authors together.");
         }
 
@@ -180,9 +196,9 @@ public class Javadoc {
         }
         else {
             if (requiresSplit) {
-                if (listPointer.equals(this.params))        { addParam(text); }
-                if (listPointer.equals(this.exceptions))    { addException(text); }
-                if (listPointer.equals(this.authors))       { addAuthor(text); }
+                if (listPointer == this.params)             { addParam(text); }
+                if (listPointer == this.exceptions)         { addException(text); }
+                if (listPointer == this.authors)            { addAuthor(text); }
             }
             else {
                 listPointer.set(listPointer.size() - 1, listPointer.get(listPointer.size() - 1).concat(" " + text));
@@ -196,8 +212,15 @@ public class Javadoc {
             System.err.println("Undeclared parameter or missing description at line " + key.getLine() + " before the inline code.");
         }
         else {
-            this.buffer.append(before).append("\\texttt{").append(inline).append("}");
+            if (inline.trim().replace(" ", "").length() > 0) {
+                this.buffer.append(before).append("\\texttt{").append(inline).append("}");
+            }
+            else {
+                this.buffer.append(before);
+                System.err.println("Missing code block in @code at line " + key.getLine());
+            }
         }
+
     }
 
     private void _debug(String text) {
@@ -205,6 +228,6 @@ public class Javadoc {
     }
 
     private void _append(String text) {
-        this.output.append(text + "\n");
+        this.output.append(text).append("\n");
     }
 }

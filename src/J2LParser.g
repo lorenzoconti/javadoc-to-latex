@@ -51,7 +51,7 @@ jdSection:
     										translation.append(c.getTranslation()); }
     									{ jd.buffer.setLength(0);}
 		(
-			description=TEXT			{ jd.buffer.append($description.text); }
+			description=TEXT			{ jd.buffer.append($description.text + " "); }
 			|
 			inline
 		)*								{ jd.addDescription(jd.buffer.toString());}
@@ -69,7 +69,7 @@ keyValue
 		(
 			inline
 			|
-			text=TEXT			{ jd.buffer.append($text.text); }
+			text=TEXT			{ jd.buffer.append($text.text + " "); }
 		)*
 	)							{ jd.addParam(jd.buffer.toString()); }
 	|
@@ -78,7 +78,7 @@ keyValue
 		(
 			inline
 			|
-			text=TEXT			{ jd.buffer.append($text.text); }
+			text=TEXT			{ jd.buffer.append($text.text + " "); }
 		)*
 	)							{ jd.addException(jd.buffer.toString()); }
 	|
@@ -87,7 +87,7 @@ keyValue
 		(
 			inline
 			|
-			text=TEXT			{ jd.buffer.append($text.text); }
+			text=TEXT			{ jd.buffer.append($text); }
 		)*
 	)							{ jd.addAuthor(jd.buffer.toString()); }
 	|
