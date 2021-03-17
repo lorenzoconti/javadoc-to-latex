@@ -14,8 +14,9 @@ public class Javadoc {
     public StringBuffer version;
 
     public ArrayList<String> listPointer = new ArrayList<String>();
+    public StringBuffer stringPointer = new StringBuffer();
 
-    boolean lastDescription = true;
+    // boolean lastDescription = true;
     boolean requiresSplit = true;
 
     // used in J2LParser.g
@@ -78,7 +79,7 @@ public class Javadoc {
             System.out.println("Warning: @param found among other Javadoc keywords.\nYou should put all the paramaters descriptions together.");
         }
 
-        lastDescription = false;
+        stringPointer = null;
         listPointer = params;
 
         if (content.trim().length() > 0) {
@@ -105,11 +106,16 @@ public class Javadoc {
 
     public void addDescription(String text) {
 
+        this.stringPointer = this.description;
+
         this.description.append(text);
         _debug(text);
     }
 
     public void addVersion(String text) {
+
+        this.stringPointer = this.version;
+
         this.version.append(text);
         _debug(text);
     }
@@ -120,7 +126,7 @@ public class Javadoc {
             System.out.println("Warning: @exception found among other Javadoc keywords.\nYou should put all the exceptions descriptions together.");
         }
 
-        lastDescription = false;
+        stringPointer = null;
         listPointer = exceptions;
 
         String[] splitted = _split(content);
@@ -139,7 +145,7 @@ public class Javadoc {
             System.out.println("Warning: @author found among other Javadoc keywords.\nYou should put all the authors together.");
         }
 
-        lastDescription = false;
+        stringPointer = null;
         listPointer = authors;
 
         String[] output = author.trim().split(",");
@@ -163,10 +169,14 @@ public class Javadoc {
         return new String[] {param, body};
     }
 
-    public void addLastLine(String text) {
+    public void addLastLine(Token token) {
 
-        if (lastDescription) {
-            this.description.append(text);
+        String text = token.getText();
+
+        if (stringPointer == this.description) { this.description.append(text); }
+        if (stringPointer == this.version) {
+            if (version.length() > 0) { System.err.println("Version number must be specified on a single line at line " + token.getLine()); }
+            else { this.version.append(text);}
         }
         else {
             if (requiresSplit) {
@@ -175,7 +185,7 @@ public class Javadoc {
                 if (listPointer.equals(this.authors))       { addAuthor(text); }
             }
             else {
-                listPointer.set(listPointer.size() - 1, listPointer.get(listPointer.size() - 1).concat(text));
+                listPointer.set(listPointer.size() - 1, listPointer.get(listPointer.size() - 1).concat(" " + text));
             }
         }
     }
