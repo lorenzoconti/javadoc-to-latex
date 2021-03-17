@@ -1,7 +1,9 @@
 /**
 * Returns an Image object that 2*2 can then be painted on the screen.
-* @version 3.8
- * @author Lorenzo Conti, Paolo Fosci, Giuseppe Psaila
+* @param ciao
+* @version 888
+* @param aaa aaa
+* aaa
 */
 public Image getImage(URL url, String name) {
     /**

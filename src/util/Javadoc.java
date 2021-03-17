@@ -14,8 +14,9 @@ public class Javadoc {
     public StringBuffer version;
 
     public ArrayList<String> listPointer = new ArrayList<String>();
+    public StringBuffer stringPointer = new StringBuffer();
 
-    boolean lastDescription = true;
+    // boolean lastDescription = true;
     boolean requiresSplit = true;
 
     // used in J2LParser.g
@@ -73,7 +74,12 @@ public class Javadoc {
     }
 
     public void addParam(String content) {
-        lastDescription = false;
+
+        if (!listPointer.equals(params)) {
+            System.out.println("Warning: @param found among other Javadoc keywords.\nYou should put all the paramaters descriptions together.");
+        }
+
+        stringPointer = null;
         listPointer = params;
 
         if (content.trim().length() > 0) {
@@ -99,19 +105,28 @@ public class Javadoc {
     }
 
     public void addDescription(String text) {
-        String output = text;
-        this.description.append(output);
-        _debug(output);
+
+        this.stringPointer = this.description;
+
+        this.description.append(text);
+        _debug(text);
     }
 
     public void addVersion(String text) {
-        String output = text;
-        this.version.append(output);
-        _debug(output);
+
+        this.stringPointer = this.version;
+
+        this.version.append(text);
+        _debug(text);
     }
 
     public void addException(String content) {
-        lastDescription = false;
+
+        if (!listPointer.equals(exceptions)) {
+            System.out.println("Warning: @exception found among other Javadoc keywords.\nYou should put all the exceptions descriptions together.");
+        }
+
+        stringPointer = null;
         listPointer = exceptions;
 
         String[] splitted = _split(content);
@@ -125,7 +140,12 @@ public class Javadoc {
     }
 
     public void addAuthor(String author){
-        lastDescription = false;
+
+        if (!listPointer.equals(params)) {
+            System.out.println("Warning: @author found among other Javadoc keywords.\nYou should put all the authors together.");
+        }
+
+        stringPointer = null;
         listPointer = authors;
 
         String[] output = author.trim().split(",");
@@ -134,9 +154,29 @@ public class Javadoc {
         _debug(author);
     }
 
-    public void addLastLine(String text) {
-        if (lastDescription) {
-            this.description.append(text);
+    /* ------- PRIVATE METHODS ------- */
+
+    private String[] _split(String content) {
+        String[] splitted;
+
+        splitted = content.split(" ", 2);
+
+        String param = splitted[0];
+        String body = "" ;
+
+        if (splitted.length > 1) body = splitted[1];
+
+        return new String[] {param, body};
+    }
+
+    public void addLastLine(Token token) {
+
+        String text = token.getText();
+
+        if (stringPointer == this.description) { this.description.append(text); }
+        if (stringPointer == this.version) {
+            if (version.length() > 0) { System.err.println("Version number must be specified on a single line at line " + token.getLine()); }
+            else { this.version.append(text);}
         }
         else {
             if (requiresSplit) {
@@ -145,7 +185,7 @@ public class Javadoc {
                 if (listPointer.equals(this.authors))       { addAuthor(text); }
             }
             else {
-                listPointer.set(listPointer.size() - 1, listPointer.get(listPointer.size() - 1).concat(text));
+                listPointer.set(listPointer.size() - 1, listPointer.get(listPointer.size() - 1).concat(" " + text));
             }
         }
     }
@@ -172,24 +212,6 @@ public class Javadoc {
         String result = "\\href{" + url + "}{" + label + "}";
 
         this.buffer.append(before).append(result);
-    }
-
-
-    /* ------- PRIVATE METHODS ------- */
-
-    private String[] _split(String content) {
-        String[] splitted;
-
-        // TODO if (content.length() > 0) splitted = content.split(" ", 2);
-        // TODO: ELSE
-        splitted = content.split(" ", 2);
-
-        String param = splitted[0];
-        String body = "" ;
-
-        if (splitted.length > 1) body = splitted[1];
-
-        return new String[] {param, body};
     }
 
     private void _debug(String text) {
