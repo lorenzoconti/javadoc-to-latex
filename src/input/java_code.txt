@@ -28,3 +28,14 @@ public Image getImage(URL url, String name) {
         * inline
         *
         */
+
+/**
+ *	@provides key1 text1
+ *	@provides key2 text2
+ *	@provides key3 text3
+ *	@uses key4 text4
+ *	@uses key5 text5
+ *	@uses key6 text6
+ *  @see https://google.com
+ *  @see https://yahoo.com
+*/

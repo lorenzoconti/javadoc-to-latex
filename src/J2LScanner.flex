@@ -81,13 +81,13 @@ KEY_PARAM       = ("@param") [ \t\f]+
 KEY_EXCEPTION   = ("@exception" | "@throws") [ \t\f]+
 KEY_AUTHOR      = ("@author") [ \t\f]+
 KEY_DEPRECATED  = ("@deprecated") [ \t\f]+
-KEY_RETURN  = ("@return") [ \t\f]+
+KEY_RETURN  	= ("@return") [ \t\f]+
 KEY_CODE        = ("@code") [ \t\f]+
 KEY_VERSION     = ("@version") [ \t\f]+
 KEY_LINK        = ("@link") [ \t\f]+
-// JDKV            = ("@provides" | "@uses" ) [ \t\f]+
-// JDKD            = ("@see")[ \t\f]+
-MD              = "#"+ {InputChar}* LineTerm
+KEY_PROVIDES	= ("@provides") [ \t\f]+
+KEY_USES		= ("@uses") [ \t\f]+
+KEY_SEE			= ("@see") [ \t\f]+
 OPEN_BRACE      = "{"
 CLOSED_BRACE    = "}"
 
@@ -104,12 +104,12 @@ CLOSED_BRACE    = "}"
                             yybegin(JAVADOC);
                             return token;
                         }
+
   // STRING
   \"                    {
                             string.append(yytext());
                             yybegin(STRING);
                         }
-
 
   // CODE
   {LineTerm}            {
@@ -120,7 +120,6 @@ CLOSED_BRACE    = "}"
 
   // APPEND
   .                     { string.append(yytext()); }
-
 }
 
 
@@ -132,10 +131,6 @@ CLOSED_BRACE    = "}"
                             yybegin(YYINITIAL);
                             return token;
                         }
-
-  // {JDKV}             { return symbol(sym.KEY, yytext().trim()); }
-
-  // {JDKD}             { return symbol(sym.KEY, yytext().trim()); }
 
   {KEY_PARAM}           { return symbol(sym.KEY_PARAM, yytext().trim()); }
 
@@ -152,6 +147,12 @@ CLOSED_BRACE    = "}"
   {KEY_CODE}            { return symbol(sym.KEY_CODE, yytext().trim()); }
 
   {KEY_LINK}            { return symbol(sym.KEY_LINK, yytext().trim()); }
+
+  {KEY_PROVIDES}		{ return symbol(sym.KEY_PROVIDES, yytext().trim()); }
+
+  {KEY_USES}            { return symbol(sym.KEY_USES, yytext().trim()); }
+
+  {KEY_SEE}				{ return symbol(sym.KEY_SEE, yytext().trim()); }
 
   {OPEN_BRACE}          {
                             Token token = symbol(sym.OPEN_BRACE, string.toString());
