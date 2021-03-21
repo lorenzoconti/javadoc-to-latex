@@ -1,16 +1,41 @@
 /**
-* The HelloWorld program implements an application that
-* simply displays "Hello World!" to the standard output.
-*
-* @author  Mario Rossi
-* @version 1.0
-* @since   2014-03-31
-* @version 1.0
+* Returns an Image object that 2*2 can then be painted on the screen.
+* @param ciao
+* @deprecated pippo asdfasd
+* asdfasdf
+* @return miao
+* @param aaa aaa
+* aaa with {@link https://github.com/test link a github} ciaoo
 */
-public class HelloWorld {
-
-   public static void main(String[] args) {
-      // Prints Hello, World! on standard output.
-      System.out.println("Hello World!");
-   }
+public Image getImage(URL url, String name) {
+    /**
+     * @param parametro Lorenzo Conti, Paolo Fosci, Giuseppe Psaila
+    */
+    return getImage(new URL(url, "/**@author name"));
+    PRIMO
+  }
 }
+/** Returns an Image object that 2*2 can then be painted {@code prova con code} on the screen. */
+public Image getImage(URL url, String name) {
+    return getImage(new URL(url, "name"));
+    SECONDO
+}
+/** inline */
+    /** inline */
+
+
+        /**
+        * inline
+        *
+        */
+
+/**
+ *	@provides key1 text1
+ *	@provides key2 text2
+ *	@provides key3 text3
+ *	@uses key4 text4
+ *	@uses key5 text5
+ *	@uses key6 text6
+ *  @see https://google.com
+ *  @see https://yahoo.com
+*/
