@@ -51,13 +51,13 @@ public class Javadoc {
             _append("");
         }
 
-        if(this.version.length() > 0) {
-            _append("\\textbf{Version:}: " + this.version.toString());
+        if(this.deprecated.length() > 0) {
+            _append("\\importantbox{\\textbf{Deprecated:} " + this.deprecated.toString() + "}");
             _append("");
         }
 
-        if(this.deprecated.length() > 0) {
-            _append("Attention! This is deprecated: " + this.deprecated.toString());
+        if(this.version.length() > 0) {
+            _append("\\textbf{Version:}: " + this.version.toString());
             _append("");
         }
 
@@ -116,7 +116,7 @@ public class Javadoc {
             _append("");
         }
 
-        return this.output.toString();
+        return this.output.toString().replace("_", "\\_");
     }
 
     public void addDescription(String text) {

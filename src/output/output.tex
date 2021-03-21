@@ -1,12 +1,21 @@
 \documentclass{article}
 \usepackage[utf8]{inputenc}
-
+\usepackage{hyperref}
 \usepackage{listings}
 \usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{awesomebox}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue,
+  filecolor=magenta,
+  urlcolor=blue,
+}
+\urlstyle{same}
 
 \setlength\parindent{0pt}
 \setlength{\parskip}{12pt}
-\usepackage{enumitem}
 \setlist{nolistsep}
 
 \definecolor{codegreen}{rgb}{0,0.6,0}
@@ -36,43 +45,20 @@
 
 \title{JavaDoc to LaTeX}
 \begin{document}
-\textbf{Description:}
-Inline
-
-\textbf{Description:}
-Inline with \texttt{inline_code }
-
-\begin{lstlisting}[language=Java]
-public void aFunction() {
-	System.out.println("I'm useless");
-}
-\end{lstlisting}
-\textbf{Description:}
-Inline with \href{inline_link}{inline_link}
-
-\textbf{Description:}
-Inline not starting at beginning
-
-\textbf{Description:}
- Description with only one line.
-
-\textbf{Description:}
- Description with only one line that starts with a tab.
-
 \textbf{Authors:} An Author,  Another Author,  An another one., Also a less important author \href{https://website.net}{with a website} 
+
+\importantbox{\textbf{Deprecated:} This was deprecated for this reason, this other reason and also for this one. You should not use this.  }
 
 \textbf{Version:}: 1.0.0 
 
-Attention! This is deprecated: for this reason  
-
 \textbf{Description:}
- Description with \texttt{inline_code} and two lines.  
+ Description with \texttt{inline\_code} and two lines. Example: $x\times y + \frac{x}{y} + x^y + x\log y$  
 
 \textbf{Parameters:}
 \begin{itemize}
   \item\texttt{SomeParameter} with its description 
   \item\texttt{ParameterWithoutDescription}
-  \item\texttt{AParameter} 		after a return @raises		AnException when \texttt{something} happens 
+  \item\texttt{AParameter} 		after a return 
 \end{itemize}
 
 \textbf{Returns:}
@@ -80,6 +66,7 @@ A longer return description with two lines.
 
 \textbf{Exceptions raised:}
 \begin{itemize}
+  \item\texttt{AnException} when \texttt{something} happens 
   \item\texttt{TheSameException}  
 \end{itemize}
 
@@ -102,5 +89,12 @@ A longer return description with two lines.
   \item\href{https://yahoo.com}{https://yahoo.com}
 \end{itemize}
 
+\begin{lstlisting}[language=Java]
+public class Test {
+	public void aFunction() {
+		System.out.println("I'm useless");
+	}
+}
+\end{lstlisting}
 
 \end{document}

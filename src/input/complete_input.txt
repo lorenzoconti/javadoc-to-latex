@@ -1,26 +1,11 @@
-/** Inline */
-/** Inline with {@code inline_code } */
-public void aFunction() {
-	System.out.println("I'm useless");
-}
-
-/** Inline with {@link inline_link } */
-	/** Inline not starting at beginning */
-
-/**
-*	Description with only one line.
-*/
-
-/**
-	*	Description with only one line that starts with a tab.
-*/
-
 /**
 *	Description with {@code inline_code} and
 *	two lines.
+* 	Example: $x\times y + \frac{x}{y} + x^y + x\log y$
 *
 *	@version 1.0.0
-* 	@deprecated for this reason
+* 	@deprecated This was deprecated for this reason, this other reason
+*				and also for this one. You should not use this.
 *
 *	@provides	ThisService		That does this thing
 *	@provides 	AnotherService	That does another thing
@@ -32,7 +17,7 @@ public void aFunction() {
 *	@return 	A longer return description with
 *				two lines.
 *	@param		AParameter 		after a return
-*	@raises		AnException when {@code something} happens
+*	@exception	AnException when {@code something} happens
 * 	@throws		TheSameException
 *
 *	@see		https://google.com The best search engine
@@ -42,5 +27,9 @@ public void aFunction() {
 *	@author An Author, Another Author, An another one.
 *	@author	Also a less important author {@link https://website.net with a website}
 *
-*
 */
+public class Test {
+	public void aFunction() {
+		System.out.println("I'm useless");
+	}
+}
