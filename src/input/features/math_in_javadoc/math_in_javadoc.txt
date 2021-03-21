@@ -1,0 +1,14 @@
+/**
+* The Calculator program implements an application that
+* simply displays the random calculation result.
+*
+* @author  Mario Rossi
+* @version 1.0
+*/
+public class Calculator {
+
+    /** Calculate $x\times y + \frac{x}{y} + x^y + x\log y$ */
+    public void randomCalculation(int x, int y) {
+        System.out.print(x*y + x/y + x**y + x*logy);
+    }
+}

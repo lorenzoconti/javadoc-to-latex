@@ -51,7 +51,7 @@ jdSection:
     										translation.append(c.getTranslation()); }
     									{ jd.buffer.setLength(0);}
 		(
-			description=TEXT			{ jd.buffer.append($description.text + " "); }
+			plain_text
 			|
 			inline
 		)*								{ jd.addDescription(jd.buffer.toString());}
@@ -62,14 +62,13 @@ jdSection:
 	)
 ;
 
-
 keyValue
 	: (
 		key=KEY_PARAM			{ jd.buffer.setLength(0);}
 		(
 			inline
 			|
-			text=TEXT			{ jd.buffer.append($text.text + " "); }
+			plain_text
 		)*
 	)							{ jd.addParam(jd.buffer.toString()); }
 	|
@@ -78,7 +77,7 @@ keyValue
 		(
 			inline
 			|
-			text=TEXT			{ jd.buffer.append($text.text + " "); }
+			plain_text
 		)*
 	)							{ jd.addException(jd.buffer.toString()); }
 	|
@@ -87,7 +86,7 @@ keyValue
 		(
 			inline
 			|
-			text=TEXT			{ jd.buffer.append($text); }
+			plain_text
 		)*
 	)							{ jd.addAuthor(jd.buffer.toString()); }
 	|
@@ -96,7 +95,7 @@ keyValue
 		(
 			inline
 			|
-			text=TEXT			{ jd.buffer.append($text.text); }
+			plain_text
 		)*
 	)							{ jd.addDeprecated(jd.buffer.toString()); }
 	|
@@ -105,14 +104,14 @@ keyValue
 		(
 			inline
 			|
-			text=TEXT			{ jd.buffer.append($text.text); }
+			plain_text
 		)*
 	)							{ jd.addReturn(jd.buffer.toString()); }
 	|
 	(
 		key=KEY_VERSION			{ jd.buffer.setLength(0);}
 		(
-		text=TEXT				{ jd.buffer.append($text.text); }
+		plain_text
 		)?
 	)							{ jd.addVersion(jd.buffer.toString()); }
 ;
@@ -124,7 +123,13 @@ inline:	(
 		(
 			before=OPEN_BRACE key=KEY_LINK inline_text=CLOSED_BRACE
 		)						{ jd.addInlineLink($before.text, $key, $inline_text.text); }
+;
 
-		
+plain_text:
+		(
+			description=TEXT						{ jd.buffer.append($description.text + " "); }
+			|
+			(open=OPEN_BRACE closed=CLOSED_BRACE) 	{ jd.buffer.append($open.text + "{"+ $closed.text + "}"); }
+		)
 ;
 

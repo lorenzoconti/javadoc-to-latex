@@ -56,7 +56,7 @@ public class Javadoc {
             _append("");
         }
 
-        if(this.description.length() > 0) {
+        if(this.description.toString().trim().replace(" ", "").length() > 0) {
             _append("\\textbf{Description:}");
             _append(this.description.toString());
             _append("");
@@ -94,7 +94,7 @@ public class Javadoc {
 
         requiresSplit = true;
 
-        if (!(listPointer.equals(params))) {
+        if (!(listPointer.equals(params)) && params.size() > 0) {
             System.out.println("Warning: @param found among other Javadoc keywords. You should put all paramaters together.");
         }
 
@@ -221,7 +221,7 @@ public class Javadoc {
         String text = token.getText();
 
         if (stringPointer == this.description) { this.description.append(text); }
-        if (stringPointer == this.version) {
+        else if (stringPointer == this.version) {
             if (version.length() > 0) { System.err.println("Version number must be specified on a single line at line " + token.getLine()); }
             else { this.version.append(text);}
         }

@@ -4,7 +4,6 @@
 *
 * @author  Mario Rossi
 * @version 1.0
-* @since   2014-03-31
 * @version 1.0
 */
 public class HelloWorld {

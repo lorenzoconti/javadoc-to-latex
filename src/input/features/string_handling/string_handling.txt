@@ -4,13 +4,11 @@
 *
 * @author  Mario Rossi
 * @version 1.0
-* @since   2014-03-31
-* @version 1.0
 */
 public class HelloWorld {
 
    public static void main(String[] args) {
       // Prints Hello, World! on standard output.
-      System.out.println("Hello World!");
+      System.out.println("/** @author Mario Rossi */");
    }
 }
