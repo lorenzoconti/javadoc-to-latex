@@ -23,16 +23,15 @@ Easily compile and format util.Javadoc entities to LaTeX.
 1. Run main
 
 # To do
-* Gestire liste delle chiavi e dei tag inline
-* Implementazione del resto
-  
-* trim spazi e tab all'inizio
-
-* Formattare Latex
+* Inserire nuove chiavi
 
 * Commentare Javadoc.java e code.java con javadoc
 
 * Creare situazioni di errore per relazione
 * Relazione
 * Presentazione
+
+
+* Formattare Latex
+* trim spazi e tab all'inizio
 
