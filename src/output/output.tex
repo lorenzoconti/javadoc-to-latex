@@ -1,3 +1,41 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+
+\usepackage{listings}
+\usepackage{xcolor}
+
+\setlength\parindent{0pt}
+\setlength{\parskip}{12pt}
+\usepackage{enumitem}
+\setlist{nolistsep}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+  backgroundcolor=\color{backcolour},   commentstyle=\color{codegreen},
+  keywordstyle=\color{magenta},
+  numberstyle=\tiny\color{codegray},
+  stringstyle=\color{codepurple},
+  basicstyle=\ttfamily\footnotesize,
+  breakatwhitespace=false,
+  breaklines=true,
+  captionpos=b,
+  keepspaces=true,
+  numbers=left,
+  numbersep=5pt,
+  showspaces=false,
+  showstringspaces=false,
+  showtabs=false,
+  tabsize=2
+}
+
+\lstset{style=mystyle}
+
+\title{JavaDoc to LaTeX}
+\begin{document}
 \textbf{Description:}
 Inline
 
@@ -21,7 +59,7 @@ Inline not starting at beginning
 \textbf{Description:}
  Description with only one line that starts with a tab.
 
-\textbf{Authors:} An Author,  Another Author,  An another one., Also a less important author \href{https://website.net}{with a website}
+\textbf{Authors:} An Author,  Another Author,  An another one., Also a less important author \href{https://website.net}{with a website} 
 
 \textbf{Version:}: 1.0.0 
 
@@ -34,10 +72,11 @@ Attention! This is deprecated: for this reason
 \begin{itemize}
   \item\texttt{SomeParameter} with its description 
   \item\texttt{ParameterWithoutDescription}
+  \item\texttt{AParameter} 		after a return @raises		AnException when \texttt{something} happens 
 \end{itemize}
 
 \textbf{Returns:}
-A longer return description with two lines. @raises		AnException when \texttt{something} happens 
+A longer return description with two lines. 
 
 \textbf{Exceptions raised:}
 \begin{itemize}
@@ -63,3 +102,5 @@ A longer return description with two lines. @raises		AnException when \texttt{so
   \item\href{https://yahoo.com}{https://yahoo.com}
 \end{itemize}
 
+
+\end{document}

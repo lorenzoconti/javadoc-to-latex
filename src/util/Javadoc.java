@@ -149,14 +149,14 @@ public class Javadoc {
 
     public void addParam(String content) {
         requiresSplit = true;
-        if (!listPointer.equals(params)) {
+        if (!listPointer.equals(params) && params.size() > 0) {
             System.out.println("Warning: @param found among other Javadoc keywords. You should put all paramaters together.");
         }
         if (content.trim().length() == 0) return;
 
         requiresSplit = false;
         stringPointer = null;
-        listPointer = params;
+        listPointer = this.params;
 
         String[] splitted = _split(content);
         String param = splitted[0];
@@ -171,14 +171,14 @@ public class Javadoc {
 
     public void addException(String content) {
         requiresSplit = true;
-        if (!listPointer.equals(exceptions)) {
+        if (!listPointer.equals(exceptions) && exceptions.size() > 0) {
             System.out.println("Warning: @exception found among other Javadoc keywords. You should put all exceptions together.");
         }
         if (content.trim().length() == 0) return;
 
-        requiresSplit = true;
+        requiresSplit = false;
         stringPointer = null;
-        listPointer = exceptions;
+        listPointer = this.exceptions;
 
         String[] splitted = _split(content);
         String param = splitted[0];
@@ -193,14 +193,14 @@ public class Javadoc {
 
     public void addProvides(String content) {
         requiresSplit = true;
-        if (!listPointer.equals(provides)) {
+        if (!listPointer.equals(provides) && provides.size() > 0) {
             System.out.println("Warning: @provides found among other Javadoc keywords. You should put all @provides together.");
         }
         if (content.trim().length() == 0) return;
 
-        requiresSplit = true;
+        requiresSplit = false;
         stringPointer = null;
-        listPointer = provides;
+        listPointer = this.provides;
 
         String[] splitted = _split(content);
         String param = splitted[0];
@@ -215,14 +215,14 @@ public class Javadoc {
 
     public void addUses(String content) {
         requiresSplit = true;
-        if (!listPointer.equals(uses)) {
+        if (!listPointer.equals(uses)  && uses.size() > 0) {
             System.out.println("Warning: @uses found among other Javadoc keywords. You should put all @uses together.");
         }
         if (content.trim().length() == 0) return;
 
-        requiresSplit = true;
+        requiresSplit = false;
         stringPointer = null;
-        listPointer = uses;
+        listPointer = this.uses;
 
         String[] splitted = _split(content);
         String param = splitted[0];
@@ -237,14 +237,14 @@ public class Javadoc {
 
     public void addSee(String content){
         requiresSplit = true;
-        if (!listPointer.equals(see)) {
+        if (!listPointer.equals(see)  && see.size() > 0) {
             System.out.println("Warning: @see found among other Javadoc keywords. You should put all @see together.");
         }
         if (content.trim().length() == 0) return;
 
-        requiresSplit = true;
+        requiresSplit = false;
         stringPointer = null;
-        listPointer = see;
+        listPointer = this.see;
 
         String[] splitted = _split(content);
         String param = splitted[0];
@@ -258,13 +258,13 @@ public class Javadoc {
     }
 
     public void addAuthor(String content){
-        if (!listPointer.equals(authors)) {
+        if (!listPointer.equals(authors)  && authors.size() > 0) {
             System.out.println("Warning: @author found among other Javadoc keywords. You should put all authors together.");
         }
         if (content.trim().length() == 0) return;
 
         stringPointer = null;
-        listPointer = authors;
+        listPointer = this.authors;
 
         String[] output = content.trim().split(",");
 

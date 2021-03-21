@@ -31,6 +31,7 @@ public void aFunction() {
 *	@param		ParameterWithoutDescription
 *	@return 	A longer return description with
 *				two lines.
+*	@param		AParameter 		after a return
 *	@raises		AnException when {@code something} happens
 * 	@throws		TheSameException
 *
