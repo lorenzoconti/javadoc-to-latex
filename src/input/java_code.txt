@@ -6,6 +6,8 @@
 * @return miao
 * @param aaa aaa
 * aaa with {@link https://github.com/test link a github} ciaoo
+* @exception QualcosaException quando succede qualcosa
+* @exception QualcosaltroException quando succede qualcos'altro
 */
 public Image getImage(URL url, String name) {
     /**

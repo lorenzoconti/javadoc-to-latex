@@ -119,168 +119,157 @@ public class Javadoc {
         return this.output.toString();
     }
 
-    public void addParam(String content) {
-
-        if (!(listPointer.equals(params)) && params.size() > 0) {
-            System.out.println("Warning: @param found among other Javadoc keywords. You should put all paramaters together.");
-        }
-
-        requiresSplit = true;
-        stringPointer = null;
-        listPointer = params;
-
-        if (content.trim().length() > 0) {
-            requiresSplit = false;
-
-            String[] splitted = _split(content);
-            String param = splitted[0];
-            String output = "\\texttt{" + param + "}";
-
-            if (splitted.length > 1) {
-                String body = splitted[1];
-                output = output.concat(" " + body);
-            }
-
-            this.params.add(output);
-            _debug(output);
-        }
-    }
-
     public void addDescription(String text) {
+        this.listPointer = new ArrayList<>();
         this.stringPointer = this.description;
-        this.description.append(text);
+        this.stringPointer.append(text);
         _debug(text);
     }
 
     public void addVersion(String text) {
         this.listPointer = new ArrayList<>();
         this.stringPointer = this.version;
-        this.version.append(text);
+        this.stringPointer.append(text);
         _debug(text);
     }
 
+    public void addDeprecated(String text){
+        this.listPointer = new ArrayList<>();
+        this.stringPointer = this.deprecated;
+        this.stringPointer.append(text);
+        _debug(text);
+    }
+
+    public void addReturn(String text){
+        this.listPointer = new ArrayList<>();
+        this.stringPointer = this.returns;
+        this.stringPointer.append(text);
+        _debug(text);
+    }
+
+    public void addParam(String content) {
+        requiresSplit = true;
+        if (!listPointer.equals(params)) {
+            System.out.println("Warning: @param found among other Javadoc keywords. You should put all paramaters together.");
+        }
+        if (content.trim().length() == 0) return;
+
+        requiresSplit = false;
+        stringPointer = null;
+        listPointer = params;
+
+        String[] splitted = _split(content);
+        String param = splitted[0];
+        String body = splitted[1];
+
+        String output = "\\texttt{" + param + "}";
+        if (body.length() > 0) output = output.concat(" " + body);
+
+        this.params.add(output);
+        _debug(output);
+    }
+
     public void addException(String content) {
-        if (!(listPointer.equals(exceptions))) {
+        requiresSplit = true;
+        if (!listPointer.equals(exceptions)) {
             System.out.println("Warning: @exception found among other Javadoc keywords. You should put all exceptions together.");
         }
+        if (content.trim().length() == 0) return;
 
         requiresSplit = true;
         stringPointer = null;
         listPointer = exceptions;
 
-        if (content.trim().length() > 0) {
-            String[] splitted = _split(content);
-            String param = splitted[0];
-            String output = "\\texttt{" + param + "}";
+        String[] splitted = _split(content);
+        String param = splitted[0];
+        String body = splitted[1];
 
-            if (splitted.length > 1) {
-                String body = splitted[1];
-                output = output.concat(" " + body);
-            }
+        String output = "\\texttt{" + param + "}";
+        if (body.length() > 0) output = output.concat(" " + body);
 
-            this.exceptions.add(output);
-            _debug(output);
-        }
+        this.exceptions.add(output);
+        _debug(output);
     }
 
     public void addProvides(String content) {
-        if (!(listPointer.equals(provides))) {
+        requiresSplit = true;
+        if (!listPointer.equals(provides)) {
             System.out.println("Warning: @provides found among other Javadoc keywords. You should put all @provides together.");
         }
+        if (content.trim().length() == 0) return;
 
         requiresSplit = true;
         stringPointer = null;
         listPointer = provides;
 
-        if (content.trim().length() > 0) {
-            String[] splitted = _split(content);
-            String param = splitted[0];
-            String output = "\\texttt{" + param + "}";
+        String[] splitted = _split(content);
+        String param = splitted[0];
+        String body = splitted[1];
 
-            if (splitted.length > 1) {
-                String body = splitted[1];
-                output = output.concat(" " + body);
-            }
+        String output = "\\texttt{" + param + "}";
+        if (body.length() > 0) output = output.concat(" " + body);
 
-            listPointer.add(output);
-            _debug(output);
-        }
+        listPointer.add(output);
+        _debug(output);
     }
 
     public void addUses(String content) {
-        if (!(listPointer.equals(uses))) {
+        requiresSplit = true;
+        if (!listPointer.equals(uses)) {
             System.out.println("Warning: @uses found among other Javadoc keywords. You should put all @uses together.");
         }
+        if (content.trim().length() == 0) return;
 
         requiresSplit = true;
         stringPointer = null;
         listPointer = uses;
 
-        if (content.trim().length() > 0) {
-            String[] splitted = _split(content);
-            String param = splitted[0];
-            String output = "\\texttt{" + param + "}";
+        String[] splitted = _split(content);
+        String param = splitted[0];
+        String body = splitted[1];
 
-            if (splitted.length > 1) {
-                String body = splitted[1];
-                output = output.concat(" " + body);
-            }
+        String output = "\\texttt{" + param + "}";
+        if (body.length() > 0) output = output.concat(" " + body);
 
-            listPointer.add(output);
-            _debug(output);
-        }
+        listPointer.add(output);
+        _debug(output);
     }
 
     public void addSee(String content){
-        if (!(listPointer.equals(see))) {
+        requiresSplit = true;
+        if (!listPointer.equals(see)) {
             System.out.println("Warning: @see found among other Javadoc keywords. You should put all @see together.");
         }
+        if (content.trim().length() == 0) return;
 
         requiresSplit = true;
         stringPointer = null;
         listPointer = see;
 
-        if (content.trim().length() > 0) {
-            String[] splitted = _split(content);
-            String url = splitted[0];
-            String label = splitted[1];
+        String[] splitted = _split(content);
+        String param = splitted[0];
+        String body = splitted[1];
 
-            if (label.length() == 0) label = url;
+        if (body.length() == 0) body = param;
+        String output = "\\href{" + param + "}{" + body + "}";
 
-            String output = "\\href{" + url + "}{" + label + "}";
-            listPointer.add(output);
-            _debug(output);
-        }
+        listPointer.add(output);
+        _debug(output);
     }
 
-    public void addAuthor(String author){
+    public void addAuthor(String content){
         if (!listPointer.equals(authors)) {
             System.out.println("Warning: @author found among other Javadoc keywords. You should put all authors together.");
         }
+        if (content.trim().length() == 0) return;
 
         stringPointer = null;
         listPointer = authors;
 
-        String[] output = author.trim().split(",");
+        String[] output = content.trim().split(",");
+
         listPointer.addAll(Arrays.asList(output));
-
-        _debug(author);
-    }
-
-    public void addDeprecated(String text){
-        this.stringPointer = this.deprecated;
-        listPointer = new ArrayList<>();
-
-        this.deprecated.append(text);
-        _debug(text);
-    }
-
-    public void addReturn(String text){
-        stringPointer = this.returns;
-        listPointer = new ArrayList<>();
-
-        this.returns.append(text);
-        _debug(text);
+        _debug(content);
     }
 
     public void addLastLine(Token token) {
@@ -297,8 +286,8 @@ public class Javadoc {
                 if (listPointer.equals(this.exceptions))    { addException(text); }
                 if (listPointer.equals(this.authors))       { addAuthor(text); }
                 if (listPointer.equals(this.provides))      { addProvides(text); }
-                if (listPointer.equals(this.uses))       { addUses(text); }
-                if (listPointer.equals(this.see))       { addSee(text); }
+                if (listPointer.equals(this.uses))          { addUses(text); }
+                if (listPointer.equals(this.see))           { addSee(text); }
             }
             else {
                 listPointer.set(listPointer.size() - 1, listPointer.get(listPointer.size() - 1).concat(" " + text));
@@ -309,14 +298,14 @@ public class Javadoc {
     public void addInlineCode(String before, Token key, String inline) {
         if (this.buffer.toString().isEmpty() && before.length() <= 1)  {
             System.err.println("Undeclared parameter or missing description at line " + key.getLine() + " before the inline code.");
+            return;
         }
-        else {
-            if (inline.trim().replace(" ", "").length() > 0) {
-                this.buffer.append(before).append("\\texttt{").append(inline).append("}");
-            } else {
-                this.buffer.append(before);
-                System.err.println("Missing code block in @code at line " + key.getLine());
-            }
+
+        if (inline.trim().replace(" ", "").length() > 0) {
+            this.buffer.append(before).append("\\texttt{").append(inline).append("}");
+        } else {
+            this.buffer.append(before);
+            System.err.println("Missing code block in @code at line " + key.getLine());
         }
     }
 
@@ -325,12 +314,12 @@ public class Javadoc {
             System.err.println("Undeclared parameter or missing description at line " + key.getLine() + " before the inline link.");
             return;
         }
+
         String[] splitted = _split(inline);
         String url = splitted[0];
         String label = splitted[1];
 
         if (label.length() == 0) label = url;
-
         String result = "\\href{" + url + "}{" + label + "}";
 
         this.buffer.append(before).append(result);

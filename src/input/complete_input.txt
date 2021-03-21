@@ -1,0 +1,45 @@
+/** Inline */
+/** Inline with {@code inline_code } */
+public void aFunction() {
+	System.out.println("I'm useless");
+}
+
+/** Inline with {@link inline_link } */
+	/** Inline not starting at beginning */
+
+/**
+*	Description with only one line.
+*/
+
+/**
+	*	Description with only one line that starts with a tab.
+*/
+
+/**
+*	Description with {@code inline_code} and
+*	two lines.
+*
+*	@version 1.0.0
+* 	@deprecated for this reason
+*
+*	@provides	ThisService		That does this thing
+*	@provides 	AnotherService	That does another thing
+*	@uses		ThisOne			For this reason
+* 	@uses		TheOtherOne		For the other reason
+*
+*	@param		SomeParameter with its description
+*	@param		ParameterWithoutDescription
+*	@return 	A longer return description with
+*				two lines.
+*	@raises		AnException when {@code something} happens
+* 	@throws		TheSameException
+*
+*	@see		https://google.com The best search engine
+*	@see		https://bing.com The worst search engine
+*	@see		https://yahoo.com
+*
+*	@author An Author, Another Author, An another one.
+*	@author	Also a less important author {@link https://website.net with a website}
+*
+*
+*/

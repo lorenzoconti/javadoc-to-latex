@@ -16,13 +16,10 @@ parser grammar J2LParser;
     }
  
     public void displayRecognitionError(String[] tokenNames, RecognitionException e) {
-      	
 		String msg = getErrorMessage(e, tokenNames);    
 		String capmsg = msg.substring(0, 1).toUpperCase() + msg.substring(1); 
 		
-		System.err.println(
-			"JavadocToLatex Parser ERROR at line " + e.line + " and column " + e.charPositionInLine + ".\n"
-			+ capmsg);
+		System.err.println("JavadocToLatex Parser ERROR at line " + e.line + " and column " + e.charPositionInLine + ". " + capmsg);
 	}
 }
 
@@ -33,7 +30,7 @@ start:
 		codeSection
 	)*
 	eof=EOF						{ 	if ($eof != null) c.addCode($eof.text);
-										translation.append(c.getTranslation()); }
+									translation.append(c.getTranslation()); }
 ;
 
 
@@ -47,7 +44,7 @@ codeSection:					{ c = new Code(debug); }
 jdSection:
 		(						{ 	jd = new Javadoc(debug); }
 			code=JDS        	{ 	if ($code != null) c.addCode($code.text);
-    									translation.append(c.getTranslation()); }
+    								translation.append(c.getTranslation()); }
     							{ jd.buffer.setLength(0);}
 		(
 			plain_text
