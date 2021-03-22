@@ -7,7 +7,7 @@
 * 	@deprecated This was deprecated for this reason, this other reason
 *				and also for this one. You should not use this.
 *
-*	@provides	ThisService		That does this thing
+*	@provides	ThisService		That does this thing for this long-written thing
 *	@provides 	AnotherService	That does another thing
 *	@uses		ThisOne			For this reason
 * 	@uses		TheOtherOne		For the other reason

@@ -46,8 +46,8 @@ public class Javadoc {
 
     public String getTranslation() {
         if(this.description.toString().trim().replace(" ", "").length() > 0) {
-            _append("\\textbf{Description:}");
-            _append(this.description.toString());
+            _append("\\mybox{Description}{blue!30}{blue!5}{");
+            _append(this.description.toString() + "}");
             _append("");
         }
         else {
@@ -92,20 +92,21 @@ public class Javadoc {
             _append("");
         }
 
-        if(!this.provides.isEmpty()) {
-            _append("\\textbf{Provides:}");
-            _append("\\begin{itemize}");
-            for (String exc : this.provides) _append("  \\item" + exc);
-            _append("\\end{itemize}");
-            _append("");
-        }
-
-        if(!this.uses.isEmpty()) {
-            _append("\\textbf{Uses:}");
-            _append("\\begin{itemize}");
-            for (String exc : this.uses) _append("  \\item" + exc);
-            _append("\\end{itemize}");
-            _append("");
+        if(!this.provides.isEmpty() || !this.uses.isEmpty()) {
+            _append("\\begin{table}[!h]\\centering");
+            _append("\\begin{tabular}{|l|p{0.25\\textwidth}|p{0.5\\textwidth}|}");
+            _append("\\hline & \\textbf{Service} & \\textbf{Description} \\\\ \\hline");
+            if(!this.provides.isEmpty()) {
+                _append("\\multirow{" + provides.size() + "}{*}{\\textbf{Provides}}");
+                for (String p : this.provides) _append("& " + p + " \\\\");
+                _append("\\hline");
+            }
+            if(!this.uses.isEmpty()) {
+                _append("\\multirow{" + uses.size() + "}{*}{\\textbf{Uses}}");
+                for (String u : this.uses) _append("& " + u + " \\\\");
+                _append("\\hline");
+            }
+            _append("\\end{tabular}\\end{table}");
         }
 
         if(!this.see.isEmpty()) {
@@ -206,7 +207,7 @@ public class Javadoc {
         String param = splitted[0];
         String body = splitted[1];
 
-        String output = "\\texttt{" + param + "}";
+        String output = "\\texttt{" + param + "} &";
         if (body.length() > 0) output = output.concat(" " + body);
 
         listPointer.add(output);
@@ -228,7 +229,7 @@ public class Javadoc {
         String param = splitted[0];
         String body = splitted[1];
 
-        String output = "\\texttt{" + param + "}";
+        String output = "\\texttt{" + param + "} &";
         if (body.length() > 0) output = output.concat(" " + body);
 
         listPointer.add(output);

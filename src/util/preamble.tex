@@ -5,6 +5,8 @@
 \usepackage{xcolor}
 \usepackage{enumitem}
 \usepackage{awesomebox}
+\usepackage{multirow}
+\usepackage{tikz}
 
 \hypersetup{
   colorlinks=true,
@@ -42,6 +44,16 @@
 }
 
 \lstset{style=mystyle}
+
+\newcommand{\mybox}[4]{
+  \begin{figure}[h]
+    \centering
+    \begin{tikzpicture}
+      \node[anchor=text,text width=\columnwidth-1.2cm, draw, rounded corners, line width=1pt, fill=#3, inner sep=5mm] (big) {\\#4};
+      \node[draw, rounded corners, line width=.5pt, fill=#2, anchor=west, xshift=5mm] (small) at (big.north west) {#1};
+    \end{tikzpicture}
+  \end{figure}
+}
 
 \title{JavaDoc to LaTeX}
 \begin{document}
