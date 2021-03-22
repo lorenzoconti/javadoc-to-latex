@@ -45,22 +45,6 @@ public class Javadoc {
     }
 
     public String getTranslation() {
-        if(!this.authors.isEmpty()) {
-            if(this.authors.size() == 1) _append("\\textbf{Author:} " + this.authors.get(0));
-            else _append("\\textbf{Authors:} " + String.join(", ", this.authors));
-            _append("");
-        }
-
-        if(this.deprecated.length() > 0) {
-            _append("\\importantbox{\\textbf{Deprecated:} " + this.deprecated.toString() + "}");
-            _append("");
-        }
-
-        if(this.version.length() > 0) {
-            _append("\\textbf{Version:}: " + this.version.toString());
-            _append("");
-        }
-
         if(this.description.toString().trim().replace(" ", "").length() > 0) {
             _append("\\textbf{Description:}");
             _append(this.description.toString());
@@ -68,6 +52,22 @@ public class Javadoc {
         }
         else {
             System.out.println("Warning: you might put a description in your javadoc sections.");
+        }
+
+        if(!this.authors.isEmpty()) {
+            if(this.authors.size() == 1) _append("\\textbf{Author:} " + this.authors.get(0));
+            else _append("\\textbf{Authors:} " + String.join(", ", this.authors));
+            _append("");
+        }
+
+        if(this.version.length() > 0) {
+            _append("\\textbf{Version:} " + this.version.toString());
+            _append("");
+        }
+
+        if(this.deprecated.length() > 0) {
+            _append("\\importantbox{\\textbf{Deprecated:} " + this.deprecated.toString() + "}");
+            _append("");
         }
 
         if(!this.params.isEmpty()) {
@@ -78,7 +78,7 @@ public class Javadoc {
             _append("");
         }
 
-        if(this.deprecated.length() > 0) {
+        if(this.returns.length() > 0) {
             _append("\\textbf{Returns:}");
             _append(this.returns.toString());
             _append("");
@@ -329,7 +329,7 @@ public class Javadoc {
 
     private String[] _split(String content) {
         String[] splitted;
-        splitted = content.split(" ", 2);
+        splitted = content.split("\\s+", 2);
 
         String param = splitted[0];
         String body = "" ;
