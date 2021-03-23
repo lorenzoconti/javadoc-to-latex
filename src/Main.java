@@ -7,7 +7,7 @@ import org.antlr.runtime.*;
 public class Main {
     static public void main(String argv[]) {
         try {
-            J2LScanner scanner = new J2LScanner(new FileReader("src/input/complete_input.txt"));
+            J2LScanner scanner = new J2LScanner(new FileReader("src/util/Javadoc.java"));
             CommonTokenStream tokenStream = new CommonTokenStream(scanner);
             J2LParser parser = new J2LParser(tokenStream);
             try {

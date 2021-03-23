@@ -33,3 +33,8 @@ public class Test {
 		System.out.println("I'm useless");
 	}
 }
+/**
+* Aggiunge la descrizione della sezione Javadoc alla classe.
+*
+* @param text Testo della descrizione
+*/

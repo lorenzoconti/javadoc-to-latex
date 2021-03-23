@@ -44,6 +44,7 @@
 }
 
 \lstset{style=mystyle}
+\newcommand\atsign{@}
 
 \newcommand{\mybox}[4]{
   \begin{figure}[h]
@@ -57,55 +58,477 @@
 
 \title{JavaDoc to LaTeX}
 \begin{document}
-\mybox{Description}{blue!30}{blue!5}{
- Description with \texttt{inline\_code} and two lines. Example: $x\times y + \frac{x}{y} + x^y + x\log y$  }
+\begin{lstlisting}[language=Java]
+package util;
+import java.util.ArrayList;
+import java.util.Arrays;
+import org.antlr.runtime.Token;
+\end{lstlisting}
+\textbf{Description:}  Classe di utility per la generazione della traduzione di una sezione di Javadoc.  Essa viene istanziata nel momento in cui viene riconosciuto un token JDS. Tutte le parole chiave di Javadoc supportate trovano una corrispondenza in un attributo della classe, il quale contiene il loro valore. Si hanno due tipi di attributi: sottoforma di \texttt{ArrayList} nel caso in cui Javadoc preveda la possibile presenza di più istanze del suddetto tag, oppure sottoforma di \texttt{StringBuffer} nel caso contrario.  
 
-\textbf{Authors:} An Author,  Another Author,  An another one., Also a less important author \href{https://website.net}{with a website} 
+\textbf{Authors:} Lorenzo Conti        (\href{https://www.lorenzoconti.dev}{sito web}), Fabio Sangregorio    (\href{https://fabio.sangregorio.dev}{sito web})
 
-\textbf{Version:} 1.0.0 
+\textbf{Version:} 1.0.0
 
-\importantbox{\textbf{Deprecated:} This was deprecated for this reason, this other reason and also for this one. You should not use this.  }
+\begin{table}[!h]\centering
+\begin{tabular}{|l|p{0.25\textwidth}|p{0.5\textwidth}|}
+\hline & \textbf{Service} & \textbf{Description} \\ \hline
+\multirow{1}{*}{\textbf{Uses}}
+& \texttt{org.antlr.runtime} & Per la gestione degli oggetti Token \\
+\hline
+\end{tabular}\end{table}
+\begin{lstlisting}[language=Java]
+public class Javadoc {
+\end{lstlisting}
+\textbf{Description:}  Di seguito sono presenti gli attributi corrispondenti a tag multipli, quindi sottoforma di \texttt{ArrayList}.
+
+\begin{lstlisting}[language=Java]
+    public ArrayList<String> params;
+    public ArrayList<String> authors;
+    public ArrayList<String> exceptions;
+    public ArrayList<String> provides;
+    public ArrayList<String> uses;
+    public ArrayList<String> see;
+\end{lstlisting}
+\textbf{Description:}  Di seguito sono presenti gli attributi corrispondenti a tag singoli, quindi sottoforma di \texttt{ArrayList}.
+
+\begin{lstlisting}[language=Java]
+    public StringBuffer description;
+    public StringBuffer version;
+    public StringBuffer deprecated;
+    public StringBuffer returns;
+\end{lstlisting}
+\textbf{Description:}  \texttt{listPointer} tiene traccia dell'ultima lista utilizzata, in modo da riconoscere eventuali tag di un tipo mischiati a tag di altri tipi. \texttt{stringPointer} fa la stessa cosa per i tag che possono apparire solo una volta nella sezione di Javadoc.
+
+\begin{lstlisting}[language=Java]
+    public ArrayList<String> listPointer = new ArrayList<>();
+    public StringBuffer stringPointer = null;
+\end{lstlisting}
+\textbf{Description:} Indica che il tag richiede uno split tra chiave e valore.
+
+\begin{lstlisting}[language=Java]
+    boolean requiresSplit = true;
+\end{lstlisting}
+\textbf{Description:} Buffer interno usato nella specifica ANTLR per la gestione dei tag inline.
+
+\begin{lstlisting}[language=Java]
+    public StringBuffer buffer = new StringBuffer();
+\end{lstlisting}
+\textbf{Description:} Indica se mostrare messaggi di debug su stdout.
+
+\begin{lstlisting}[language=Java]
+    boolean debug;
+\end{lstlisting}
+\textbf{Description:} Buffer contenente la traduzione finale di outpu della sezione.
+
+\begin{lstlisting}[language=Java]
+    StringBuffer output = new StringBuffer();
+\end{lstlisting}
+\textbf{Description:}  Costruttore della classe, il quale inizializza le liste e i buffer.  debug Indica se mostrare messaggi di debug su stdout.
+
+\begin{lstlisting}[language=Java]
+    public Javadoc(boolean debug) {
+        this.debug = debug;
+        this.params = new ArrayList<String>();
+        this.authors = new ArrayList<String>();
+        this.exceptions = new ArrayList<String>();
+        this.provides = new ArrayList<String>();
+        this.uses = new ArrayList<String>();
+        this.see = new ArrayList<String>();
+        this.description = new StringBuffer();
+        this.deprecated = new StringBuffer();
+        this.returns = new StringBuffer();
+        this.version = new StringBuffer();
+    }
+\end{lstlisting}
+\textbf{Description:}  Ritorna la traduzione di tutti gli elementi Javadoc accumulati fino ad ora, formattata in formato LaTeX.  
+
+\textbf{Returns:}
+Stringa di testo contente la traduzione.  
+
+\mybox{Raises}{orange!30}{orange!5}{
+\begin{itemize}
+  \item\texttt{Warning} Se la sezione di Javadoc non contiene una  descrizione
+\end{itemize}
+}
+\begin{lstlisting}[language=Java]
+    public String getTranslation() {
+        if(this.description.toString().trim().replace(" ", "").length() > 0) {
+            _append("\\textbf{Description:} " + this.description.toString());
+            _append("");
+        }
+        else {
+            System.out.println("Warning: you might put a description in your javadoc sections.");
+        }
+        if(!this.authors.isEmpty()) {
+            if(this.authors.size() == 1) _append("\\textbf{Author:} " + this.authors.get(0));
+            else _append("\\textbf{Authors:} " + String.join(", ", this.authors));
+            _append("");
+        }
+        if(this.version.length() > 0) {
+            _append("\\textbf{Version:} " + this.version.toString());
+            _append("");
+        }
+        if(this.deprecated.length() > 0) {
+            _append("\\importantbox{\\textbf{Deprecated:} " + this.deprecated.toString() + "}");
+            _append("");
+        }
+        if(!this.params.isEmpty()) {
+            _append("\\textbf{Parameters:}");
+            _append("\\begin{itemize}");
+            for (String param : this.params) _append("  \\item" + param);
+            _append("\\end{itemize}");
+            _append("");
+        }
+        if(this.returns.length() > 0) {
+            _append("\\textbf{Returns:}");
+            _append(this.returns.toString());
+            _append("");
+        }
+        if(!this.exceptions.isEmpty()) {
+            _append("\\mybox{Raises}{orange!30}{orange!5}{");
+            _append("\\begin{itemize}");
+            for (String exc : this.exceptions) _append("  \\item" + exc);
+            _append("\\end{itemize}");
+            _append("}");
+        }
+        if(!this.provides.isEmpty() || !this.uses.isEmpty()) {
+            _append("\\begin{table}[!h]\\centering");
+            _append("\\begin{tabular}{|l|p{0.25\\textwidth}|p{0.5\\textwidth}|}");
+            _append("\\hline & \\textbf{Service} & \\textbf{Description} \\\\ \\hline");
+            if(!this.provides.isEmpty()) {
+                _append("\\multirow{" + provides.size() + "}{*}{\\textbf{Provides}}");
+                for (String p : this.provides) _append("& " + p + " \\\\");
+                _append("\\hline");
+            }
+            if(!this.uses.isEmpty()) {
+                _append("\\multirow{" + uses.size() + "}{*}{\\textbf{Uses}}");
+                for (String u : this.uses) _append("& " + u + " \\\\");
+                _append("\\hline");
+            }
+            _append("\\end{tabular}\\end{table}");
+        }
+        if(!this.see.isEmpty()) {
+            _append("\\textbf{See also:}");
+            _append("\\begin{itemize}");
+            for (String exc : this.see) _append("  \\item" + exc);
+            _append("\\end{itemize}");
+            _append("");
+        }
+        return this.output.toString().replace("_", "\\_").replace("@", "\\atsign ");
+    }
+\end{lstlisting}
+\textbf{Description:}  Aggiunge la descrizione della sezione Javadoc alla classe. text Testo della descrizione
+
+\begin{lstlisting}[language=Java]
+    public void addDescription(String text) {
+        this.listPointer = new ArrayList<>();
+        this.stringPointer = this.description;
+        this.stringPointer.append(text);
+        _debug(text);
+    }
+\end{lstlisting}
+\textbf{Description:}  Aggiunge la versione della sezione Javadoc alla classe. text Numero di versione
+
+\begin{lstlisting}[language=Java]
+    public void addVersion(String text) {
+        this.listPointer = new ArrayList<>();
+        this.stringPointer = this.version;
+        this.stringPointer.append(text);
+        _debug(text);
+    }
+\end{lstlisting}
+\textbf{Description:}  Aggiunge la descrizione della deprecazione alla classe. text motivo della deprecazione
+
+\begin{lstlisting}[language=Java]
+    public void addDeprecated(String text){
+        this.listPointer = new ArrayList<>();
+        this.stringPointer = this.deprecated;
+        this.stringPointer.append(text);
+        _debug(text);
+    }
+\end{lstlisting}
+\textbf{Description:}  Aggiunge la descrizione dell'oggetto di ritorno alla classe. text Descrizione dell'oggetto ritornato
+
+\begin{lstlisting}[language=Java]
+    public void addReturn(String text){
+        this.listPointer = new ArrayList<>();
+        this.stringPointer = this.returns;
+        this.stringPointer.append(text);
+        _debug(text);
+    }
+\end{lstlisting}
+\textbf{Description:}  Aggiunge un parametro alla lista dei parametri della classe. 
 
 \textbf{Parameters:}
 \begin{itemize}
-  \item\texttt{SomeParameter} with its description 
-  \item\texttt{ParameterWithoutDescription}
-  \item\texttt{AParameter} after a return 
+  \item\texttt{content} Testo contenente il nome e la descrizione del parametro  
+  \item\texttt{Warning} Se la lista di è interrotta da altri  tag
 \end{itemize}
 
-\textbf{Returns:}
-A longer return description with two lines. 
+\begin{lstlisting}[language=Java]
+    public void addParam(String content) {
+        requiresSplit = true;
+        if (!listPointer.equals(params) && params.size() > 0) {
+            System.out.println("Warning: @param found among other Javadoc keywords. You should put all paramaters together.");
+        }
+        if (content.trim().length() == 0) return;
+        requiresSplit = false;
+        stringPointer = null;
+        listPointer = this.params;
+        String[] splitted = _split(content);
+        String param = splitted[0];
+        String body = splitted[1];
+        String output = "\\texttt{" + param + "}";
+        if (body.length() > 0) output = output.concat(" " + body);
+        this.params.add(output);
+        _debug(output);
+    }
+\end{lstlisting}
+\textbf{Description:}  Aggiunge un'eccezione alla lista delle eccezioni della classe. 
 
-\textbf{Exceptions raised:}
+\textbf{Parameters:}
 \begin{itemize}
-  \item\texttt{AnException} when \texttt{something} happens 
-  \item\texttt{TheSameException}
+  \item\texttt{content} Testo contenente il nome e la descrizione dell' eccezione  
+\end{itemize}
+
+\mybox{Raises}{orange!30}{orange!5}{
+\begin{itemize}
+  \item\texttt{Warning} Se la lista di è interrotta da altri  tag
+\end{itemize}
+}
+\begin{lstlisting}[language=Java]
+    public void addException(String content) {
+        requiresSplit = true;
+        if (!listPointer.equals(exceptions) && exceptions.size() > 0) {
+            System.out.println("Warning: @exception found among other Javadoc keywords. You should put all exceptions together.");
+        }
+        if (content.trim().length() == 0) return;
+        requiresSplit = false;
+        stringPointer = null;
+        listPointer = this.exceptions;
+        String[] splitted = _split(content);
+        String param = splitted[0];
+        String body = splitted[1];
+        String output = "\\texttt{" + param + "}";
+        if (body.length() > 0) output = output.concat(" " + body);
+        this.exceptions.add(output);
+        _debug(output);
+    }
+\end{lstlisting}
+\textbf{Description:}  Aggiunge un provides alla lista dei provides della classe. 
+
+\textbf{Parameters:}
+\begin{itemize}
+  \item\texttt{content} Testo contenente il nome e la descrizione del provides  
 \end{itemize}
 
 \begin{table}[!h]\centering
 \begin{tabular}{|l|p{0.25\textwidth}|p{0.5\textwidth}|}
 \hline & \textbf{Service} & \textbf{Description} \\ \hline
-\multirow{2}{*}{\textbf{Provides}}
-& \texttt{ThisService} & That does this thing for this long-written thing \\
-& \texttt{AnotherService} & That does another thing \\
-\hline
-\multirow{2}{*}{\textbf{Uses}}
-& \texttt{ThisOne} & For this reason \\
-& \texttt{TheOtherOne} & For the other reason \\
+\multirow{1}{*}{\textbf{Provides}}
+& \texttt{Warning} & Se la lista di è interrotta da altri tag \\
 \hline
 \end{tabular}\end{table}
+\begin{lstlisting}[language=Java]
+    public void addProvides(String content) {
+        requiresSplit = true;
+        if (!listPointer.equals(provides) && provides.size() > 0) {
+            System.out.println("Warning: @provides found among other Javadoc keywords. You should put all @provides together.");
+        }
+        if (content.trim().length() == 0) return;
+        requiresSplit = false;
+        stringPointer = null;
+        listPointer = this.provides;
+        String[] splitted = _split(content);
+        String param = splitted[0];
+        String body = splitted[1];
+        String output = "\\texttt{" + param + "} &";
+        if (body.length() > 0) output = output.concat(" " + body);
+        listPointer.add(output);
+        _debug(output);
+    }
+\end{lstlisting}
+\textbf{Description:}  Aggiunge uno uses alla lista degli uses della classe. 
+
+\textbf{Parameters:}
+\begin{itemize}
+  \item\texttt{content} Testo contenente il nome e la descrizione dello uses  
+\end{itemize}
+
+\begin{table}[!h]\centering
+\begin{tabular}{|l|p{0.25\textwidth}|p{0.5\textwidth}|}
+\hline & \textbf{Service} & \textbf{Description} \\ \hline
+\multirow{1}{*}{\textbf{Uses}}
+& \texttt{Warning} & Se la lista di è interrotta da altri tag \\
+\hline
+\end{tabular}\end{table}
+\begin{lstlisting}[language=Java]
+    public void addUses(String content) {
+        requiresSplit = true;
+        if (!listPointer.equals(uses)  && uses.size() > 0) {
+            System.out.println("Warning: @uses found among other Javadoc keywords. You should put all @uses together.");
+        }
+        if (content.trim().length() == 0) return;
+        requiresSplit = false;
+        stringPointer = null;
+        listPointer = this.uses;
+        String[] splitted = _split(content);
+        String param = splitted[0];
+        String body = splitted[1];
+        String output = "\\texttt{" + param + "} &";
+        if (body.length() > 0) output = output.concat(" " + body);
+        listPointer.add(output);
+        _debug(output);
+    }
+\end{lstlisting}
+\textbf{Description:}  Aggiunge un see alla lista dei see della classe. 
+
+\textbf{Parameters:}
+\begin{itemize}
+  \item\texttt{content} Testo contenente la descrizione del see  
+\end{itemize}
+
 \textbf{See also:}
 \begin{itemize}
-  \item\href{https://google.com}{The best search engine}
-  \item\href{https://bing.com}{The worst search engine}
-  \item\href{https://yahoo.com}{https://yahoo.com}
+  \item\href{Warning}{Se la lista di è interrotta da altri} tag
 \end{itemize}
 
 \begin{lstlisting}[language=Java]
-public class Test {
-	public void aFunction() {
-		System.out.println("I'm useless");
-	}
+    public void addSee(String content){
+        requiresSplit = true;
+        if (!listPointer.equals(see)  && see.size() > 0) {
+            System.out.println("Warning: @see found among other Javadoc keywords. You should put all @see together.");
+        }
+        if (content.trim().length() == 0) return;
+        requiresSplit = false;
+        stringPointer = null;
+        listPointer = this.see;
+        String[] splitted = _split(content);
+        String param = splitted[0];
+        String body = splitted[1];
+        if (body.length() == 0) body = param;
+        String output = "\\href{" + param + "}{" + body + "}";
+        listPointer.add(output);
+        _debug(output);
+    }
+\end{lstlisting}
+\textbf{Description:}  Aggiunge un autore alla lista degli autori della classe. 
+
+\textbf{Authors:} Warning Se la lista di è interrotta da altri, tag
+
+\textbf{Parameters:}
+\begin{itemize}
+  \item\texttt{content} Testo contenente uno o più autori, separati da virgola  
+\end{itemize}
+
+\begin{lstlisting}[language=Java]
+    public void addAuthor(String content){
+        if (!listPointer.equals(authors)  && authors.size() > 0) {
+            System.out.println("Warning: @author found among other Javadoc keywords. You should put all authors together.");
+        }
+        if (content.trim().length() == 0) return;
+        stringPointer = null;
+        listPointer = this.authors;
+        String[] output = content.trim().split(",");
+        listPointer.addAll(Arrays.asList(output));
+        _debug(content);
+    }
+\end{lstlisting}
+\textbf{Description:}  Aggiunge l'ultima linea di testo (portata dal token JDE) al buffer o lista a cui appartiene. 
+
+\textbf{Version:} Error Se è specificato su più righe
+
+\textbf{Parameters:}
+\begin{itemize}
+  \item\texttt{token} Token di ANTLR  
+\end{itemize}
+
+\begin{lstlisting}[language=Java]
+    public void addLastLine(Token token) {
+        String text = token.getText();
+        if (stringPointer == this.description) { this.description.append(text); }
+        else if (stringPointer == this.version) {
+            if (version.length() > 0) { System.err.println("Version number must be specified on a single line at line " + token.getLine()); }
+            else { this.version.append(text);}
+        }
+        else {
+            if (requiresSplit) {
+                if (listPointer.equals(this.params))        { addParam(text); }
+                if (listPointer.equals(this.exceptions))    { addException(text); }
+                if (listPointer.equals(this.authors))       { addAuthor(text); }
+                if (listPointer.equals(this.provides))      { addProvides(text); }
+                if (listPointer.equals(this.uses))          { addUses(text); }
+                if (listPointer.equals(this.see))           { addSee(text); }
+            }
+            else {
+                listPointer.set(listPointer.size() - 1, listPointer.get(listPointer.size() - 1).concat(" " + text));
+            }
+        }
+    }
+\end{lstlisting}
+\textbf{Description:}  Gestisce il tag inline \atsign code, aggiungendo il testo prima della parentesi al buffer interno di accumulo, e formattando il contenuto di \atsign code, prima di appenderlo al buffer.  
+
+\textbf{Parameters:}
+\begin{itemize}
+  \item\texttt{before} Testo prima della parentesi 
+  \item\texttt{key} Token contenente la chiave 
+  \item\texttt{inline} Testo prima della parentesi  
+  \item\texttt{Error} Se manca la descizione di \atsign code
+\end{itemize}
+
+\begin{lstlisting}[language=Java]
+    public void addInlineCode(String before, Token key, String inline) {
+        if (this.buffer.toString().isEmpty() && before.length() <= 1)  {
+            System.err.println("Undeclared parameter or missing description at line " + key.getLine() + " before the inline code.");
+            return;
+        }
+        if (inline.trim().replace(" ", "").length() > 0) {
+            this.buffer.append(before).append("\\texttt{").append(inline).append("}");
+        } else {
+            this.buffer.append(before);
+            System.err.println("Missing code block in @code at line " + key.getLine());
+        }
+    }
+\end{lstlisting}
+\textbf{Description:}  Gestisce il tag inline \atsign link, aggiungendo il testo prima della parentesi al buffer interno di accumulo, e formattando il contenuto di \atsign link, prima di appenderlo al buffer.  
+
+\textbf{Parameters:}
+\begin{itemize}
+  \item\texttt{before} Testo prima della parentesi 
+  \item\texttt{key} Token contenente la chiave 
+  \item\texttt{inline} Testo prima della parentesi  
+  \item\texttt{Error} Se manca la descizione di \atsign code
+\end{itemize}
+
+\begin{lstlisting}[language=Java]
+    public void addInlineLink(String before, Token key, String inline) {
+        if (this.buffer.toString().isEmpty() && before.length() <= 1)  {
+            System.err.println("Undeclared parameter or missing description at line " + key.getLine() + " before the inline link.");
+            return;
+        }
+        String[] splitted = _split(inline);
+        String url = splitted[0];
+        String label = splitted[1];
+        if (label.length() == 0) label = url;
+        String result = "\\href{" + url + "}{" + label + "}";
+        this.buffer.append(before).append(result);
+    }
+    /* ------- PRIVATE METHODS ------- */
+    private String[] _split(String content) {
+        String[] splitted;
+        splitted = content.split("\\s+", 2);
+        String param = splitted[0];
+        String body = "" ;
+        if (splitted.length > 1) body = splitted[1];
+        return new String[] {param, body};
+    }
+    private void _debug(String text) {
+        if(this.debug) System.out.println("DEBUG: " + text);
+    }
+    private void _append(String text) {
+        this.output.append(text).append("\n");
+    }
 }
 \end{lstlisting}
 

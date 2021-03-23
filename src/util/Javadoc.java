@@ -4,7 +4,29 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import org.antlr.runtime.Token;
 
+/**
+ * Classe di utility per la generazione della traduzione di una sezione di
+ * Javadoc.
+ *
+ * Essa viene istanziata nel momento in cui viene riconosciuto un token JDS.
+ * Tutte le parole chiave di Javadoc supportate trovano una corrispondenza in
+ * un attributo della classe, il quale contiene il loro valore. Si hanno due
+ * tipi di attributi: sottoforma di {@code ArrayList} nel caso in cui Javadoc
+ * preveda la possibile presenza di più istanze del suddetto tag, oppure
+ * sottoforma di {@code StringBuffer} nel caso contrario.
+ *
+ * @uses org.antlr.runtime Per la gestione degli oggetti Token
+ *
+ * @author Lorenzo Conti        ({@link https://www.lorenzoconti.dev sito web})
+ * @author Fabio Sangregorio    ({@link https://fabio.sangregorio.dev sito web})
+ *
+ * @version 1.0.0
+ */
 public class Javadoc {
+    /**
+     * Di seguito sono presenti gli attributi corrispondenti a tag multipli,
+     * quindi sottoforma di {@code ArrayList}.
+     */
     public ArrayList<String> params;
     public ArrayList<String> authors;
     public ArrayList<String> exceptions;
@@ -12,22 +34,43 @@ public class Javadoc {
     public ArrayList<String> uses;
     public ArrayList<String> see;
 
+    /**
+     * Di seguito sono presenti gli attributi corrispondenti a tag singoli,
+     * quindi sottoforma di {@code ArrayList}.
+     */
     public StringBuffer description;
     public StringBuffer version;
     public StringBuffer deprecated;
     public StringBuffer returns;
 
+    /**
+     * {@code listPointer} tiene traccia dell'ultima lista utilizzata, in
+     * modo da riconoscere eventuali tag di un tipo mischiati a tag di
+     * altri tipi.
+     * {@code stringPointer} fa la stessa cosa per i tag che possono
+     * apparire solo una volta nella sezione di Javadoc.
+     */
     public ArrayList<String> listPointer = new ArrayList<>();
     public StringBuffer stringPointer = null;
 
+    /** Indica che il tag richiede uno split tra chiave e valore. */
     boolean requiresSplit = true;
 
-    // used in J2LParser.g
+    /** Buffer interno usato nella specifica ANTLR per la gestione
+     * dei tag inline. */
     public StringBuffer buffer = new StringBuffer();
+    /** Indica se mostrare messaggi di debug su stdout. */
     boolean debug;
 
+    /** Buffer contenente la traduzione finale di outpu della sezione. */
     StringBuffer output = new StringBuffer();
 
+    /**
+     * Costruttore della classe, il quale inizializza le liste e i
+     * buffer.
+     *
+     * @param debug Indica se mostrare messaggi di debug su stdout.
+     */
     public Javadoc(boolean debug) {
         this.debug = debug;
 
@@ -44,10 +87,18 @@ public class Javadoc {
         this.version = new StringBuffer();
     }
 
+    /**
+     * Ritorna la traduzione di tutti gli elementi Javadoc accumulati
+     * fino ad ora, formattata in formato LaTeX.
+     *
+     * @return Stringa di testo contente la traduzione.
+     *
+     * @throws Warning Se la sezione di Javadoc non contiene una
+     *  descrizione
+     */
     public String getTranslation() {
         if(this.description.toString().trim().replace(" ", "").length() > 0) {
-            _append("\\mybox{Description}{blue!30}{blue!5}{");
-            _append(this.description.toString() + "}");
+            _append("\\textbf{Description:} " + this.description.toString());
             _append("");
         }
         else {
@@ -85,11 +136,11 @@ public class Javadoc {
         }
 
         if(!this.exceptions.isEmpty()) {
-            _append("\\textbf{Exceptions raised:}");
+            _append("\\mybox{Raises}{orange!30}{orange!5}{");
             _append("\\begin{itemize}");
             for (String exc : this.exceptions) _append("  \\item" + exc);
             _append("\\end{itemize}");
-            _append("");
+            _append("}");
         }
 
         if(!this.provides.isEmpty() || !this.uses.isEmpty()) {
@@ -117,9 +168,13 @@ public class Javadoc {
             _append("");
         }
 
-        return this.output.toString().replace("_", "\\_");
+        return this.output.toString().replace("_", "\\_").replace("@", "\\atsign ");
     }
 
+    /**
+     * Aggiunge la descrizione della sezione Javadoc alla classe.
+     * @param text Testo della descrizione
+     */
     public void addDescription(String text) {
         this.listPointer = new ArrayList<>();
         this.stringPointer = this.description;
@@ -127,6 +182,10 @@ public class Javadoc {
         _debug(text);
     }
 
+    /**
+     * Aggiunge la versione della sezione Javadoc alla classe.
+     * @param text Numero di versione
+     */
     public void addVersion(String text) {
         this.listPointer = new ArrayList<>();
         this.stringPointer = this.version;
@@ -134,6 +193,10 @@ public class Javadoc {
         _debug(text);
     }
 
+    /**
+     * Aggiunge la descrizione della deprecazione alla classe.
+     * @param text motivo della deprecazione
+     */
     public void addDeprecated(String text){
         this.listPointer = new ArrayList<>();
         this.stringPointer = this.deprecated;
@@ -141,6 +204,10 @@ public class Javadoc {
         _debug(text);
     }
 
+    /**
+     * Aggiunge la descrizione dell'oggetto di ritorno alla classe.
+     * @param text Descrizione dell'oggetto ritornato
+     */
     public void addReturn(String text){
         this.listPointer = new ArrayList<>();
         this.stringPointer = this.returns;
@@ -148,6 +215,14 @@ public class Javadoc {
         _debug(text);
     }
 
+    /**
+     * Aggiunge un parametro alla lista dei parametri della classe.
+     * @param content Testo contenente il nome e la descrizione del
+     *                parametro
+     *
+     * @throws Warning Se la lista di @param è interrotta da altri
+     * tag
+     */
     public void addParam(String content) {
         requiresSplit = true;
         if (!listPointer.equals(params) && params.size() > 0) {
@@ -170,6 +245,14 @@ public class Javadoc {
         _debug(output);
     }
 
+    /**
+     * Aggiunge un'eccezione alla lista delle eccezioni della classe.
+     * @param content Testo contenente il nome e la descrizione dell'
+     *                eccezione
+     *
+     * @throws Warning Se la lista di @exception è interrotta da altri
+     * tag
+     */
     public void addException(String content) {
         requiresSplit = true;
         if (!listPointer.equals(exceptions) && exceptions.size() > 0) {
@@ -192,6 +275,14 @@ public class Javadoc {
         _debug(output);
     }
 
+    /**
+     * Aggiunge un provides alla lista dei provides della classe.
+     * @param content Testo contenente il nome e la descrizione del
+     *                provides
+     *
+     * @throws Warning Se la lista di @provides è interrotta da altri
+     * tag
+     */
     public void addProvides(String content) {
         requiresSplit = true;
         if (!listPointer.equals(provides) && provides.size() > 0) {
@@ -214,6 +305,14 @@ public class Javadoc {
         _debug(output);
     }
 
+    /**
+     * Aggiunge uno uses alla lista degli uses della classe.
+     * @param content Testo contenente il nome e la descrizione dello
+     *                uses
+     *
+     * @throws Warning Se la lista di @uses è interrotta da altri
+     * tag
+     */
     public void addUses(String content) {
         requiresSplit = true;
         if (!listPointer.equals(uses)  && uses.size() > 0) {
@@ -236,6 +335,13 @@ public class Javadoc {
         _debug(output);
     }
 
+    /**
+     * Aggiunge un see alla lista dei see della classe.
+     * @param content Testo contenente la descrizione del see
+     *
+     * @throws Warning Se la lista di @see è interrotta da altri
+     * tag
+     */
     public void addSee(String content){
         requiresSplit = true;
         if (!listPointer.equals(see)  && see.size() > 0) {
@@ -258,6 +364,14 @@ public class Javadoc {
         _debug(output);
     }
 
+    /**
+     * Aggiunge un autore alla lista degli autori della classe.
+     * @param content Testo contenente uno o più autori, separati
+     *                da virgola
+     *
+     * @throws Warning Se la lista di @author è interrotta da altri
+     * tag
+     */
     public void addAuthor(String content){
         if (!listPointer.equals(authors)  && authors.size() > 0) {
             System.out.println("Warning: @author found among other Javadoc keywords. You should put all authors together.");
@@ -273,6 +387,13 @@ public class Javadoc {
         _debug(content);
     }
 
+    /**
+     * Aggiunge l'ultima linea di testo (portata dal token JDE) al
+     * buffer o lista a cui appartiene.
+     * @param token Token di ANTLR
+     *
+     * @throws Error Se @version è specificato su più righe
+     */
     public void addLastLine(Token token) {
         String text = token.getText();
 
@@ -296,6 +417,17 @@ public class Javadoc {
         }
     }
 
+    /**
+     * Gestisce il tag inline @code, aggiungendo il testo prima della parentesi
+     * al buffer interno di accumulo, e formattando il contenuto di
+     * @code, prima di appenderlo al buffer.
+     *
+     * @param before    Testo prima della parentesi
+     * @param key       Token contenente la chiave
+     * @param inline    Testo prima della parentesi
+     *
+     * @exception Error Se manca la descizione di @code
+     */
     public void addInlineCode(String before, Token key, String inline) {
         if (this.buffer.toString().isEmpty() && before.length() <= 1)  {
             System.err.println("Undeclared parameter or missing description at line " + key.getLine() + " before the inline code.");
@@ -310,6 +442,17 @@ public class Javadoc {
         }
     }
 
+    /**
+     * Gestisce il tag inline @link, aggiungendo il testo prima della parentesi
+     * al buffer interno di accumulo, e formattando il contenuto di
+     * @link, prima di appenderlo al buffer.
+     *
+     * @param before    Testo prima della parentesi
+     * @param key       Token contenente la chiave
+     * @param inline    Testo prima della parentesi
+     *
+     * @exception Error Se manca la descizione di @code
+     */
     public void addInlineLink(String before, Token key, String inline) {
         if (this.buffer.toString().isEmpty() && before.length() <= 1)  {
             System.err.println("Undeclared parameter or missing description at line " + key.getLine() + " before the inline link.");
