@@ -97,6 +97,7 @@ public class Javadoc {
      *  descrizione
      */
     public String getTranslation() {
+        _append("\\vspace{0.5cm}");
         if(this.description.toString().trim().replace(" ", "").length() > 0) {
             _append("\\textbf{Description:} " + this.description.toString());
             _append("");
@@ -228,12 +229,9 @@ public class Javadoc {
         if (!listPointer.equals(params) && params.size() > 0) {
             System.out.println("Warning: @param found among other Javadoc keywords. You should put all paramaters together.");
         }
-
         stringPointer = null;
         listPointer = this.params;
-
         if (content.trim().length() == 0)  return;
-
         requiresSplit = false;
 
         String[] splitted = _split(content);
@@ -260,12 +258,9 @@ public class Javadoc {
         if (!listPointer.equals(exceptions) && exceptions.size() > 0) {
             System.out.println("Warning: @exception found among other Javadoc keywords. You should put all exceptions together.");
         }
-
         stringPointer = null;
         listPointer = this.exceptions;
-
         if (content.trim().length() == 0) return;
-
         requiresSplit = false;
 
         String[] splitted = _split(content);
@@ -292,12 +287,9 @@ public class Javadoc {
         if (!listPointer.equals(provides) && provides.size() > 0) {
             System.out.println("Warning: @provides found among other Javadoc keywords. You should put all @provides together.");
         }
-
         stringPointer = null;
         listPointer = this.provides;
-
         if (content.trim().length() == 0) return;
-
         requiresSplit = false;
 
         String[] splitted = _split(content);
@@ -324,12 +316,9 @@ public class Javadoc {
         if (!listPointer.equals(uses)  && uses.size() > 0) {
             System.out.println("Warning: @uses found among other Javadoc keywords. You should put all @uses together.");
         }
-
         stringPointer = null;
         listPointer = this.uses;
-
         if (content.trim().length() == 0) return;
-
         requiresSplit = false;
 
         String[] splitted = _split(content);
@@ -355,12 +344,9 @@ public class Javadoc {
         if (!listPointer.equals(see)  && see.size() > 0) {
             System.out.println("Warning: @see found among other Javadoc keywords. You should put all @see together.");
         }
-
         stringPointer = null;
         listPointer = this.see;
-
         if (content.trim().length() == 0) return;
-
         requiresSplit = false;
 
         String[] splitted = _split(content);
@@ -383,13 +369,13 @@ public class Javadoc {
      * tag
      */
     public void addAuthor(String content){
+        requiresSplit = true;
         if (!listPointer.equals(authors)  && authors.size() > 0) {
             System.out.println("Warning: @author found among other Javadoc keywords. You should put all authors together.");
         }
-        if (content.trim().length() == 0) return;
-
         stringPointer = null;
         listPointer = this.authors;
+        if (content.trim().length() == 0) return;
 
         String[] output = content.trim().split(",");
 
@@ -412,6 +398,8 @@ public class Javadoc {
             if (version.length() > 0) { System.err.println("Version number must be specified on a single line at line " + token.getLine()); }
             else { this.version.append(text);}
         }
+        else if (stringPointer == this.returns) { this.returns.append(text); }
+        else if (stringPointer == this.deprecated) { this.deprecated.append(text); }
         else {
             if (requiresSplit) {
                 if (listPointer.equals(this.params))        { addParam(text); }
@@ -481,6 +469,14 @@ public class Javadoc {
 
     /* ------- PRIVATE METHODS ------- */
 
+    /**
+     * Esegue lo split della string in input (tipicamente il testo di un
+     * tag Javadoc) nelle due componenti di nome e descrizione del tag.
+     *
+     * @param content Stringa contenente il testo del tag
+     * @return Un array di lunghezza pari 2, in cui il primo elemento
+     * corrisponde al nome del parametro e il secondo alla descrizione.
+     */
     private String[] _split(String content) {
         String[] splitted;
         splitted = content.split("\\s+", 2);
@@ -493,10 +489,19 @@ public class Javadoc {
         return new String[] {param, body};
     }
 
+    /**
+     * Esegue il print del testo in input se debug è true
+     * @param text Testo da mandare in output
+     */
     private void _debug(String text) {
         if(this.debug) System.out.println("DEBUG: " + text);
     }
 
+    /**
+     * Aggiunge il testo in input al buffer di output della sezione
+     * di Javadoc, corredato di un fine linea.
+     * @param text Testo da aggiungere
+     */
     private void _append(String text) {
         this.output.append(text).append("\n");
     }
