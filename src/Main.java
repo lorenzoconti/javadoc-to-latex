@@ -7,7 +7,9 @@ import org.antlr.runtime.*;
 public class Main {
     static public void main(String argv[]) {
         try {
-            J2LScanner scanner = new J2LScanner(new FileReader("src/util/Javadoc.java"));
+            // J2LScanner scanner = new J2LScanner(new FileReader("src/util/Javadoc.java"));
+
+            J2LScanner scanner = new J2LScanner(new FileReader("D:\\develop\\lfc\\javadoc-to-latex\\src\\input\\java_code.txt"));
             CommonTokenStream tokenStream = new CommonTokenStream(scanner);
             J2LParser parser = new J2LParser(tokenStream);
             try {
@@ -33,3 +35,4 @@ public class Main {
         }
     }
 }
+
