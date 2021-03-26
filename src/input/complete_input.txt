@@ -1,0 +1,40 @@
+/**
+*	Description with {@code inline_code} and
+*	two lines.
+* 	Example: $x\times y + \frac{x}{y} + x^y + x\log y$
+*
+*	@version 1.0.0
+* 	@deprecated This was deprecated for this reason, this other reason
+*				and also for this one. You should not use this.
+*
+*	@provides	ThisService		That does this thing for this long-written thing
+*	@provides 	AnotherService	That does another thing
+*	@uses		ThisOne			For this reason
+* 	@uses		TheOtherOne		For the other reason
+*
+*	@param		SomeParameter with its description
+*	@param		ParameterWithoutDescription
+*	@return 	A longer return description with
+*				two lines.
+*	@param		AParameter 		after a return
+*	@exception	AnException when {@code something} happens
+* 	@throws		TheSameException
+*
+*	@see		https://google.com The best search engine
+*	@see		https://bing.com The worst search engine
+*	@see		https://yahoo.com
+*
+*	@author An Author, Another Author, An another one.
+*	@author	Also a less important author {@link https://website.net with a website}
+*
+*/
+public class Test {
+	public void aFunction() {
+		System.out.println("I'm useless");
+	}
+}
+/**
+* Aggiunge la descrizione della sezione Javadoc alla classe.
+*
+* @param text Testo della descrizione
+*/
