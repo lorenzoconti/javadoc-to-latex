@@ -62,7 +62,7 @@ public class Javadoc {
     /** Indica se mostrare messaggi di debug su stdout. */
     boolean debug;
 
-    /** Buffer contenente la traduzione finale di outpu della sezione. */
+    /** Buffer contenente la traduzione finale di output della sezione. */
     StringBuffer output = new StringBuffer();
 
     /**
@@ -138,9 +138,14 @@ public class Javadoc {
 
         if(!this.exceptions.isEmpty()) {
             _append("\\mybox{Raises}{orange!30}{orange!5}{");
-            _append("\\begin{itemize}");
-            for (String exc : this.exceptions) _append("  \\item" + exc);
-            _append("\\end{itemize}");
+            if(this.exceptions.size() > 1) {
+                _append("\\begin{itemize}");
+                for (String exc : this.exceptions) _append("  \\item" + exc);
+                _append("\\end{itemize}");
+            } else {
+                _append(this.exceptions.get(0));
+            }
+
             _append("}");
         }
 
@@ -221,7 +226,7 @@ public class Javadoc {
      * @param content Testo contenente il nome e la descrizione del
      *                parametro
      *
-     * @throws Warning Se la lista di @param è interrotta da altri
+     * @throws Warning Se la lista di param è interrotta da altri
      * tag
      */
     public void addParam(String content) {
@@ -239,7 +244,7 @@ public class Javadoc {
         String body = splitted[1];
 
         String output = "\\texttt{" + param + "}";
-        if (body.length() > 0) output = output.concat(" " + body);
+        if (body.length() > 0) output = output.concat(": " + body);
 
         this.params.add(output);
         _debug(output);
@@ -250,7 +255,7 @@ public class Javadoc {
      * @param content Testo contenente il nome e la descrizione dell'
      *                eccezione
      *
-     * @throws Warning Se la lista di @exception è interrotta da altri
+     * @throws Warning Se la lista di exception è interrotta da altri
      * tag
      */
     public void addException(String content) {
@@ -268,7 +273,7 @@ public class Javadoc {
         String body = splitted[1];
 
         String output = "\\texttt{" + param + "}";
-        if (body.length() > 0) output = output.concat(" " + body);
+        if (body.length() > 0) output = output.concat(": " + body);
 
         this.exceptions.add(output);
         _debug(output);
@@ -279,7 +284,7 @@ public class Javadoc {
      * @param content Testo contenente il nome e la descrizione del
      *                provides
      *
-     * @throws Warning Se la lista di @provides è interrotta da altri
+     * @throws Warning Se la lista di provides è interrotta da altri
      * tag
      */
     public void addProvides(String content) {
@@ -308,7 +313,7 @@ public class Javadoc {
      * @param content Testo contenente il nome e la descrizione dello
      *                uses
      *
-     * @throws Warning Se la lista di @uses è interrotta da altri
+     * @throws Warning Se la lista di uses è interrotta da altri
      * tag
      */
     public void addUses(String content) {
@@ -336,7 +341,7 @@ public class Javadoc {
      * Aggiunge un see alla lista dei see della classe.
      * @param content Testo contenente la descrizione del see
      *
-     * @throws Warning Se la lista di @see è interrotta da altri
+     * @throws Warning Se la lista di see è interrotta da altri
      * tag
      */
     public void addSee(String content){
@@ -365,7 +370,7 @@ public class Javadoc {
      * @param content Testo contenente uno o più autori, separati
      *                da virgola
      *
-     * @throws Warning Se la lista di @author è interrotta da altri
+     * @throws Warning Se la lista di author è interrotta da altri
      * tag
      */
     public void addAuthor(String content){
@@ -388,7 +393,7 @@ public class Javadoc {
      * buffer o lista a cui appartiene.
      * @param token Token di ANTLR
      *
-     * @throws Error Se @version è specificato su più righe
+     * @throws Error Se version è specificato su più righe
      */
     public void addLastLine(Token token) {
         String text = token.getText();
@@ -416,7 +421,7 @@ public class Javadoc {
     }
 
     /**
-     * Gestisce il tag inline @code, aggiungendo il testo prima della parentesi
+     * Gestisce il tag inline code, aggiungendo il testo prima della parentesi
      * al buffer interno di accumulo, e formattando il contenuto di
      * @code, prima di appenderlo al buffer.
      *
@@ -441,7 +446,7 @@ public class Javadoc {
     }
 
     /**
-     * Gestisce il tag inline @link, aggiungendo il testo prima della parentesi
+     * Gestisce il tag inline link, aggiungendo il testo prima della parentesi
      * al buffer interno di accumulo, e formattando il contenuto di
      * @link, prima di appenderlo al buffer.
      *
