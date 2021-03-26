@@ -8,7 +8,6 @@ init with {:
 :};
 
 parser code {:
-  // String buffer used to store output program
   public StringBuffer outputBuffer;
 :}
 
@@ -32,41 +31,35 @@ file ::= section:sec
     String outText = parser.outputBuffer.toString();
     out.write(outText);
     out.close();
-    //TODO try catch
 :}
 ;
 
 section ::= javadoc:jd section:sec
 {:
-    System.out.println("JAVADOC SECTION\n");
     RESULT = jd + "\n" + sec;
 :}
 ;
 
 section ::= CODE:code section:sec
 {:
-    System.out.println("CODE SECTION\n");
     RESULT = code + sec;
 :}
 ;
 
 section ::=
 {:
-    System.out.println("NULL SECTION\n");
     RESULT = "";
 :}
 ;
 
 javadoc ::= TEXT:text
 {:
-    System.out.println("TEXT\n");
     RESULT = text;
 :}
 ;
 
 javadoc ::= KEY_VALUE:key TEXT:text
 {:
-    System.out.println("KEY_VALUE TEXT\n");
     RESULT = key + " " + text;
 :}
 ;
