@@ -21,14 +21,3 @@ Easily compile and format util.Javadoc entities to LaTeX.
     javac -cp ../lib/java-cup-11b-runtime.jar *.java
     ```
 1. Run main
-
-# To do
-* Commentare Javadoc.java e code.java con javadoc
-
-* Relazione
-* Presentazione
-
-
-* Formattare Latex
-* trim spazi e tab all'inizio
-
